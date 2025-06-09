@@ -1,0 +1,23 @@
+
+# Note making: https://github.com/usememos/memos/releases
+# https://www.usememos.com/docs/install/self-hosting. Exposes 5230
+services:
+  memos:
+    image: ghcr.io/usememos/memos:0.24.4
+    container_name: memos
+    hostname: memos
+    user: "${PUID}:${PGID}"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    restart: unless-stopped
+    volumes:
+      - "${DATA_DIR}/memos:/var/opt/memos"
+    networks:
+      - memos
+
+networks:
+  memos:
+    name: memos
+    external: true

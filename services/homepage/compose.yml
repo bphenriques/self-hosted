@@ -1,0 +1,23 @@
+# https://github.com/gethomepage/homepage/releases/
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v1.3.2
+    container_name: homepage
+    restart: unless-stopped
+    hostname: homepage
+    user: "${PUID}:${PGID}"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/homepage.env"
+    environment:
+      - "HOMEPAGE_VAR_BASE_URL=${HOME_SERVER_BASE_URL}"
+      - HOMEPAGE_ALLOWED_HOSTS=*
+      - LOG_TARGETS=stdout
+    volumes:
+      - ./config:/app/config:ro
+      - ./public/images:/app/public/images:ro
+    networks:
+      - homepage
+
+networks:
+  homepage:
+    external: true

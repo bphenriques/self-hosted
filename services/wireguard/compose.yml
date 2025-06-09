@@ -1,0 +1,29 @@
+---
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    hostname: wireguard
+    cap_add:
+      - NET_ADMIN   # Required to create the VPN
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - PEERS=BrunoPhone
+      - LOG_CONFS=true # Show QR codes in the logs
+    volumes:
+      - "${DATA_DIR}/wireguard-linuxserver:/config"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/wireguard.env"
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true

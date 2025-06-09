@@ -1,0 +1,4 @@
+services:
+  bazarr:
+    ports:
+      - "3002:6767"

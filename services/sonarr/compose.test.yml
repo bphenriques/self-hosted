@@ -1,0 +1,4 @@
+services:
+  sonarr:
+    ports:
+      - "3011:8989"

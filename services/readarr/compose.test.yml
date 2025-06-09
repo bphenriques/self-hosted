@@ -1,0 +1,4 @@
+services:
+  readarr:
+    ports:
+      - "8787:8787"

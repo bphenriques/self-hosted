@@ -1,0 +1,22 @@
+services:
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    hostname: calibre-web
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      #- OAUTHLIB_RELAX_TOKEN_SCOPE=1
+    volumes:
+      - "${DATA_DIR}/calibre-web:/config"
+      - "${BOOKS_DIR}:/books"
+      - "${BOOKS_INBOX_DIR}:/inbox"
+    restart: unless-stopped
+    networks:
+      - calibre-web
+
+networks:
+  calibre-web:
+    external: true

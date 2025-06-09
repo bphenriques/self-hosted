@@ -1,0 +1,19 @@
+services:
+  server:
+    image: gitea/gitea:1.23.8
+    container_name: gitea
+    restart: unless-stopped
+    hostname: gitea
+    environment:
+      - USER_UID=${PUID}
+      - USER_GID=${PGID}
+    volumes:
+      - "${DATA_DIR}/gitea:/data"
+      - /etc/TZ:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - gitea
+
+networks:
+  gitea:
+    external: true

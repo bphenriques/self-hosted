@@ -1,0 +1,4 @@
+services:
+  radarr:
+    ports:
+      - "3010:7878"

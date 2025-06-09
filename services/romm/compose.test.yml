@@ -1,0 +1,6 @@
+services:
+  romm:
+    environment:
+      - DISABLE_CSRF_PROTECTION=true
+    ports:
+      - "3042:8080"

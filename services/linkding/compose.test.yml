@@ -1,0 +1,4 @@
+services:
+  linkding:
+    ports:
+      - "3005:9090"

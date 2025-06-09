@@ -1,0 +1,4 @@
+services:
+  jellyseerr:
+    ports:
+      - "3008:5055"

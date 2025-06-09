@@ -1,0 +1,44 @@
+# https://github.com/miniflux/v2/releases
+services:
+  miniflux:
+    image: miniflux/miniflux:2.2.9
+    container_name: miniflux
+    hostname: miniflux
+    user: "${PUID}:${PGID}"
+    depends_on:
+      miniflux-db:
+        condition: service_healthy
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/miniflux.env"
+    environment:
+      - RUN_MIGRATIONS=1
+      - CREATE_ADMIN=1
+    restart: unless-stopped
+    networks:
+      - miniflux-private
+      - miniflux
+    healthcheck:
+      test: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
+
+  miniflux-db:
+    image: postgres:15
+    container_name: miniflux-db
+    hostname: miniflux-db
+    user: "${PUID}:${PGID}"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/miniflux.env"
+    volumes:
+      - "${DATA_DIR}/miniflux-db:/var/lib/postgresql/data"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "miniflux"]
+      interval: 10s
+      start_period: 30s
+    networks:
+      - miniflux-private
+
+networks:
+  miniflux-private:
+    name: miniflux-private
+  miniflux:
+    external: true

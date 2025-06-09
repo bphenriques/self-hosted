@@ -1,0 +1,54 @@
+# Bookmark manager: https://github.com/hoarder-app/hoarder
+services:
+  hoarder-web:
+    image: ghcr.io/hoarder-app/hoarder:0.24.1
+    container_name: hoarder-web
+    hostname: hoarder-web
+    restart: unless-stopped
+    volumes:
+      - "${DATA_DIR}/hoarder/data:/data"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/hoarder.env"
+    environment:
+      MEILI_ADDR: http://hoarder-meilisearch:7700
+      BROWSER_WEB_URL: http://hoarder-chrome:9222
+      DATA_DIR: /data
+      # OPENAI_API_KEY: ...
+    networks:
+      - hoarder-private
+      - hoarder
+
+  hoarder-chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    container_name: hoarder-chrome
+    hostname: hoarder-chrome
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+    networks:
+      - hoarder-private
+  hoarder-meilisearch:
+    image: getmeili/meilisearch:v1.6
+    container_name: hoarder-meilisearch
+    hostname: hoarder-meilisearch
+    restart: unless-stopped
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/hoarder.env"
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - "${DATA_DIR}/hoarder/meilisearch-data:/meili_data"
+    networks:
+      - hoarder-private
+
+networks:
+  hoarder:
+    external: true
+  hoarder-private:
+    external: true
+

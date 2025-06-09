@@ -1,0 +1,46 @@
+services:
+  romm:
+    image: rommapp/romm:3.9.0
+    container_name: romm
+    hostname: romm
+    user: "${PUID}:${PGID}"
+    restart: unless-stopped
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/romm.env"
+    environment:
+      - DB_HOST=romm-db
+      - DB_NAME=romm
+      - DB_USER=romm-user
+    volumes:
+      - "${DATA_DIR}/romm/resources:/romm/resources"  # Resources fetched from IGDB (covers, screenshots, etc.)
+      - "${DATA_DIR}/romm/redis:/redis-data"          # Cached data for background tasks
+      - "${EMULATION_DIR}:/romm/library:ro"           # Read-only library
+      - "${DATA_DIR}/romm/assets:/romm/assets"        # Uploaded saves, states, etc.
+      - "${DATA_DIR}/romm/config:/romm/config"        # configuration
+    depends_on:
+      - romm-db
+    networks:
+      - romm-internal
+      - romm
+
+  romm-db:
+    image: mariadb:latest
+    user: "${PUID}:${PGID}"
+    container_name: romm-db
+    hostname: romm-db
+    restart: unless-stopped
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/romm.env"
+    environment:
+      - MYSQL_DATABASE=romm
+      - MYSQL_USER=romm-user
+    volumes:
+      - "${DATA_DIR}/romm/mysql:/var/lib/mysql"
+    networks:
+      - romm-internal
+
+networks:
+  romm-internal:
+    external: true
+  romm:
+    external: true

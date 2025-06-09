@@ -1,0 +1,45 @@
+# Shared *rr tool to manager indexers, trackers and notifications.
+# https://github.com/Prowlarr/Prowlarr/releases
+# https://docs.linuxserver.io/images/docker-prowlarr/
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    hostname: prowlarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - "${DATA_DIR}/prowlarr:/config"
+    restart: unless-stopped
+    networks:
+      - prowlarr
+      - sonarr
+      - radarr
+      - readarr
+      - mylar3
+      - transmission
+
+networks:
+  prowlarr:
+    name: prowlarr
+    external: true
+  sonarr:
+    name: sonarr
+    external: true
+  radarr:
+    name: radarr
+    external: true
+  transmission:
+    name: transmission
+    external: true
+  readarr:
+    name: readarr
+    external: true
+  mylar3:
+    name: mylar3
+    external: true
+
+
+

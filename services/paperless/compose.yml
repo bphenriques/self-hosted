@@ -1,0 +1,68 @@
+# https://github.com/paperless-ngx/paperless-ngx/
+services:
+  broker:
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    user: "${PUID}:${PGID}"
+    hostname: paperless-redis
+    container_name: paperless-redis
+    volumes:
+      - "${DATA_DIR}/paperless/redis:/data"
+    networks:
+      - paperless-internal
+
+  db:
+    image: docker.io/library/postgres:15
+    restart: unless-stopped
+    hostname: paperless-db
+    container_name: paperless-db
+    user: "${PUID}:${PGID}"
+    volumes:
+      - "${DATA_DIR}/paperless/pgdata:/var/lib/postgresql/data"
+    networks:
+      - paperless-internal
+
+  paperless:
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.16.1
+    restart: unless-stopped
+    hostname: paperless
+    container_name: paperless
+    depends_on:
+      - db
+      - broker
+    volumes:
+      - "${DATA_DIR}/paperless/data:/usr/src/paperless/data"
+      - "${BPHENRIQUES_DOCUMENTS}:/usr/src/paperless/media"
+      - "${BPHENRIQUES_DOCUMENTS_CONSUME}:/usr/src/paperless/consume"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/paperless.env"
+    environment:
+      PAPERLESS_APP_TITLE: "Documents"
+      USERMAP_UID: "${PUID}"
+      USERMAP_GID: "${PGID}"
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_ADMIN_USER: bphenriques
+      PAPERLESS_DBHOST: db
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DATA_DIR: "/usr/src/paperless/data"
+      PAPERLESS_MEDIA_ROOT: "/usr/src/paperless/media"
+      PAPERLESS_FILENAME_FORMAT: "uncategorized/{created_year}/{correspondent}/{title}"
+      PAPERLESS_TIME_ZONE: "Europe/Lisbon"
+      PAPERLESS_OCR_LANGUAGES: "eng+por"
+      PAPERLESS_OCR_LANGUAGE: eng
+      PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'  # Store the original if signed.
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "-S", "--max-time", "2", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - paperless-internal
+      - paperless
+
+networks:
+  paperless:
+    external: true
+  paperless-internal:
+    name: paperless-internal

@@ -1,0 +1,19 @@
+services:
+  service:
+    image: tombursch/kitchenowl:v0.6.15
+    container_name: kitchenowl
+    hostname: kitchenowl
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - FRONT_URL="http://kitchenowl.${HOME_SERVER_BASE_URL}"
+    volumes:
+      - "${DATA_DIR}/kitchenowl/app:/data"
+    networks:
+      - kitchenowl
+
+networks:
+  kitchenowl:
+    external: true

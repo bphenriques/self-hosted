@@ -1,0 +1,20 @@
+[global]
+use-profiles = ["secrets"]
+
+[repository]
+repository = "opendal:dropbox"
+# password passed as env variable
+
+[repository.options]
+# root = "..."
+# access_token = "..."
+
+[backup]
+tags = ["documents"]
+
+[[backup.snapshots]]
+sources = [ "/data/target-backup" ]
+
+[forget]
+prune = true
+keep-last = 5

@@ -1,0 +1,83 @@
+# https://github.com/immich-app/immich/releases
+# https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml. Exposes 3001
+services:
+  immich-server:
+    container_name: immich_server
+    hostname: immich_server
+    image: ghcr.io/immich-app/immich-server:v1.133.0
+    user: "${PUID}:${PGID}"
+    volumes:
+      - "${BPHENRIQUES_PHOTOS_LIBRARY}:/mnt/media/bphenriques:ro"           # Using external library
+      #- "${BPHENRIQUES_PHOTOS_INBOX}:/usr/src/app/upload/library/admin"    # TODO: perhaps create a subfolder inbox?
+      - "${DATA_DIR}/immich/cache/library:/usr/src/app/upload/library"
+      - "${DATA_DIR}/immich/cache/uploads:/usr/src/app/upload/upload"
+      - "${DATA_DIR}/immich/cache/backups:/usr/src/app/upload/backups"
+      - "${DATA_DIR}/immich/cache/thumbs:/usr/src/app/upload/thumbs"
+      - "${DATA_DIR}/immich/cache/profile:/usr/src/app/upload/profile"
+      - "${DATA_DIR}/immich/cache/encoded-video:/usr/src/app/upload/encoded-video"
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      - DB_USERNAME=postgres
+      - DB_DATABASE_NAME=immich
+      - DB_HOSTNAME=immich_postgres
+      - REDIS_HOSTNAME=immich_redis
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/immich.env"
+    depends_on:
+      - redis
+      - database
+    restart: unless-stopped
+    networks:
+      - immich
+      - immich-private
+
+  # https://immich.app/docs/FAQ#how-can-i-lower-immichs-cpu-usage
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    hostname: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:v1.133.0
+    user: "${PUID}:${PGID}"
+    environment:
+      - MPLCONFIGDIR=/data/matplotlib-cache
+    volumes:
+      - "${DATA_DIR}/immich/machine-learning/cache:/cache"
+      - "${DATA_DIR}/immich/machine-learning/matplotlib-cache:/data/matplotlib-cache"
+    restart: unless-stopped
+    networks:
+      - immich-private
+
+  redis:
+    container_name: immich_redis
+    hostname: immich_redis
+    image: docker.io/valkey/valkey:8-bookworm@sha256:ff21bc0f8194dc9c105b769aeabf9585fea6a8ed649c0781caeac5cb3c247884
+    healthcheck:
+      test: redis-cli ping || exit 1
+    user: "${PUID}:${PGID}"
+    restart: unless-stopped
+    volumes:
+      - "${DATA_DIR}/immich/redis:/data"
+    networks:
+      - immich-private
+
+  database:
+    container_name: immich_postgres
+    hostname: immich_postgres
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0
+    user: "${PUID}:${PGID}"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/immich.env"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=immich
+    volumes:
+      - "${DATA_DIR}/immich/postgres:/var/lib/postgresql/data"
+    restart: unless-stopped
+    networks:
+      - immich-private
+
+networks:
+  immich-private:
+    name: immich-private
+  immich:
+    external: true
+

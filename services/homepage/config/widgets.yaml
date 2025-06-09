@@ -1,0 +1,16 @@
+#- glances:
+#    url: https://glances.{{HOMEPAGE_VAR_BASE_URL}}
+#    username: glances
+#    password: "{{HOMEPAGE_VAR_GLANCES_PASSWORD}}"
+#    cpu: true
+#    mem: true
+#    uptime: true
+#    expanded: true
+
+- openmeteo:
+      label: Lisbon
+      latitude: 38.736946
+      longitude: -9.142685
+      timezone: Europe/Lisbon
+      units: metric
+      cache: 30 # In minutes

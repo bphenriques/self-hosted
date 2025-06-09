@@ -1,0 +1,30 @@
+# https://github.com/navidrome/navidrome
+# https://www.navidrome.org/docs/usage/configuration-options/
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    hostname: navidrome
+    user: "${PUID}:${PGID}"
+    restart: unless-stopped
+    environment:
+      ND_SCANSCHEDULE: "@every 12h"
+      ND_SESSIONTIMEOUT: 24h
+      ND_ADDRESS: "0.0.0.0"
+      # Misc
+      ND_ENABLECOVERANIMATION: false    # Do not rotate the album picture
+      # Disable most extras that I do not use. Rather have everything working out-of-the-box
+      ND_ENABLEEXTERNALSERVICES: false
+      ND_ENABLEFAVOURITES: false
+      ND_ENABLESTARRATING: false
+      ND_LASTFM_ENABLED: false
+      ND_LISTENBRAINZ_ENABLED: false
+    volumes:
+      - "${DATA_DIR}/navidrome:/data"
+      - "${MUSIC_DIR}:/music:ro"
+    networks:
+      - navidrome
+
+networks:
+  navidrome:
+    external: true

@@ -1,0 +1,4 @@
+services:
+  memos:
+    ports:
+      - "5230:5230"

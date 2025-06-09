@@ -1,0 +1,19 @@
+services:
+  komga:
+    image: gotson/komga:1.21.3
+    hostname: komga
+    user: "${PUID}:${PGID}"
+    container_name: komga
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - "${DATA_DIR}/komga/config:/config"
+      - "${BOOKS_DIR}:/data/books"
+      - "${COMICS_DIR}:/data/comics"
+    networks:
+      - komga
+
+networks:
+  komga:
+    external: true

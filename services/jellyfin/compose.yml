@@ -1,0 +1,23 @@
+# https://github.com/TomBursch/kitchenowl
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    restart: unless-stopped
+    container_name: jellyfin
+    hostname: jellyfin
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - JELLYFIN_PublishedServerUrl="http://jellyfin.${HOME_SERVER_BASE_URL}"
+    volumes:
+      - "${DATA_DIR}/jellyfin:/config"
+      - "${MOVIES_DIR}:/data/movies"
+      - "${TV_SHOWS_DIR}:/data/tvshows"
+      - "${MUSIC_DIR}:/data/music:ro"
+    networks:
+      - jellyfin
+
+networks:
+  jellyfin:
+    external: true

@@ -1,0 +1,26 @@
+services:
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    hostname: readarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - "${DATA_DIR}/readarr:/config"
+      - "${BOOKS_INBOX_DIR}:/data/books"
+      - "${DOWNLOADS_DIR}:/data/downloads"
+    restart: unless-stopped
+    networks:
+      - readarr
+      - prowlarr
+      - transmission
+
+networks:
+  readarr:
+    external: true
+  prowlarr:
+    external: true
+  transmission:
+    external: true

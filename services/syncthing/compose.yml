@@ -1,0 +1,23 @@
+# Web GUI in 8384:8384
+# https://github.com/linuxserver/docker-syncthing
+# https://github.com/syncthing/syncthing/blob/main/README-Docker.md
+# Requires writable directories: https://docs.syncthing.net/users/faq.html#how-do-i-serve-a-folder-from-a-read-only-filesystem
+services:
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    hostname: syncthing
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - "${DATA_DIR}/syncthing:/config"
+      - "${MUSIC_DIR}:/data/music"
+      - "${GAMING_ROMS_DIR}:/data/gaming_roms"
+      - "${BPHENRIQUES_PHONE_BACKUP}:/data/bphenriques_phone_backup"
+      - "${BPHENRIQUES_SHARED}:/data/bphenriques_shared"
+      - "${BPHENRIQUES_NOTES}:/data/bphenriques_notes"
+      - "${BPHENRIQUES_PHOTOS_INBOX}:/data/bphenriques_photos_inbox"

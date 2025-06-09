@@ -1,0 +1,4 @@
+services:
+  kapowarr:
+    ports:
+      - "5656:5656"

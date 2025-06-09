@@ -1,0 +1,29 @@
+# TV Shows tracker.
+# https://github.com/Sonarr/Sonarr/releases
+# https://docs.linuxserver.io/images/docker-sonarr/
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    hostname: sonarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - "${DATA_DIR}/sonarr:/config"
+      - "${TV_SHOWS_DIR}:/data/tv"
+      - "${DOWNLOADS_DIR}:/data/downloads" # The target volume **MUST** match torrent client.
+    restart: unless-stopped
+    networks:
+      - sonarr
+      - transmission
+      - prowlarr
+
+networks:
+  sonarr:
+    external: true
+  transmission:
+    external: true
+  prowlarr:
+    external: true

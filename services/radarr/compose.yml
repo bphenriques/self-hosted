@@ -1,0 +1,31 @@
+# Movies tracker
+# https://github.com/Radarr/Radarr/releases
+# https://docs.linuxserver.io/images/docker-radarr/
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    hostname: radarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - "${DATA_DIR}/radarr:/config"
+      - "${MOVIES_DIR}:/data/movies"
+      - "${DOWNLOADS_DIR}:/data/downloads" # The target volume **MUST** match torrent client.
+    restart: unless-stopped
+    networks:
+      - radarr
+      - transmission
+      - prowlarr
+
+networks:
+  radarr:
+    name: radarr
+    external: true
+  transmission:
+    name: transmission
+    external: true
+  prowlarr:
+    external: true

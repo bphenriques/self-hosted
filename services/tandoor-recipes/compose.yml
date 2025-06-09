@@ -1,0 +1,41 @@
+services:
+  db_recipes:
+    image: postgres:16-alpine
+    container_name: tandoor-db
+    hostname: tandoor-db
+    user: "${PUID}:${PGID}"
+    volumes:
+      - "${DATA_DIR}/tandoor-recipes/db:/var/lib/postgresql/data"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/tandoor-recipes.env"
+    restart: unless-stopped
+    networks:
+      - tandoor-private
+
+  web_recipes:
+    image: vabene1111/recipes:1.5.34
+    restart: unless-stopped
+    container_name: tandoor-web
+    hostname: tandoor-web
+    user: "${PUID}:${PGID}"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - "ALLOWED_HOSTS=*" # FIXME as it incldues the port and I cant...
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/tandoor-recipes.env"
+    volumes:
+      - "${DATA_DIR}/tandoor-recipes/web/staticfiles:/opt/recipes/staticfiles"
+      - "${DATA_DIR}/tandoor-recipes/web/mediafiles:/opt/recipes/mediafiles"
+    depends_on:
+      - db_recipes
+    networks:
+      - tandoor-private
+      - tandoor-public
+
+networks:
+  tandoor-private:
+    external: true
+  tandoor-public:
+    external: true

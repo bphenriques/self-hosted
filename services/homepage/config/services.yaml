@@ -1,0 +1,116 @@
+# Docs: https://gethomepage.dev/v0.8.3/configs/services/
+# Icons: https://github.com/walkxcode/dashboard-icons
+- Media:
+    - Miniflux:
+        href: https://miniflux.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://miniflux.{{HOMEPAGE_VAR_BASE_URL}}
+        description: RSS Server
+        icon: miniflux.svg
+        widget:
+          type: miniflux
+          url: https://miniflux.{{HOMEPAGE_VAR_BASE_URL}}
+          key: {{HOMEPAGE_VAR_MINIFLUX_TOKEN}}
+    - Immich:
+        href: https://photos.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://photos.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Photo & Video Gallery
+        icon: immich.svg
+        widget:
+          type: immich
+          url: https://photos.{{HOMEPAGE_VAR_BASE_URL}}
+          key: {{HOMEPAGE_VAR_IMMICH_TOKEN}}
+    - Paperless:
+        href: https://paperless.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://paperless.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Documents
+        icon: paperless.svg
+        widget:
+          type: paperlessngx
+          url: https://paperless.{{HOMEPAGE_VAR_BASE_URL}}
+          key: {{HOMEPAGE_VAR_PAPERLESS_TOKEN}}
+    - Jellyfin:
+        href: https://jellyfin.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Media Player
+        icon: jellyfin.svg
+    - Transmission:
+        href: https://transmission.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://transmission.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Torrent Client
+        icon: transmission.svg
+    - Linkding:
+        href: https://linkding.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://linkding.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Bookmark Manager
+        icon: linkding.svg
+    - Jellyseerr:
+        href: https://jellyseerr.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://jellyseerr.{{HOMEPAGE_VAR_BASE_URL}}
+        description: TV / Movie Finder
+        icon: jellyseerr.svg
+    - Radarr:
+        href: https://radarr.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://radarr.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Movie Tracker
+        icon: radarr.svg
+    - Sonarr:
+        href: https://sonarr.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://sonarr.{{HOMEPAGE_VAR_BASE_URL}}
+        description: TV Tracker
+        icon: sonarr.svg
+    - Stirling PDF:
+        href: https://pdf.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://pdf.{{HOMEPAGE_VAR_BASE_URL}}
+        description: PDF Tools
+        icon: stirling-pdf.svg
+    - Emulation:
+        href: https://romm.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://romm.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Romm
+        icon: romm.svg
+    - Readarr:
+        href: https://readarr.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://readarr.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Readarr
+        icon: readarr.svg
+    - Komga:
+        href: https://komga.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://komga.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Komga
+        icon: komga.svg
+    - Tandoor:
+        href: https://tandoor.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://tandoor.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Tandoor
+        icon: tandoor.svg
+    - Hoarder:
+        href: https://hoarder.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://hoarder.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Hoarder
+        icon: hoarder.svg
+    - Gitea:
+        href: https://gitea.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://gitea.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Gitea
+        icon: gitea.svg
+
+- Admin:
+  - Synology:
+        href: https://synology.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://synology.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Synology Administration
+        icon: synology.svg
+  - Syncthing:
+        href: https://syncthing.{{HOMEPAGE_VAR_BASE_URL}}
+        siteMonitor: https://syncthing.{{HOMEPAGE_VAR_BASE_URL}}
+        description: Peer-to-peer file server
+        icon: syncthing.svg
+  - Prowlarr:
+      href: https://prowlarr.{{HOMEPAGE_VAR_BASE_URL}}
+      siteMonitor: https://prowlarr.{{HOMEPAGE_VAR_BASE_URL}}
+      description: Manage *rr services
+      icon: prowlarr.svg
+  - Bazarr:
+      href: https://bazarr.{{HOMEPAGE_VAR_BASE_URL}}
+      siteMonitor: https://bazarr.{{HOMEPAGE_VAR_BASE_URL}}
+      description: Subtitles Manager
+      icon: bazarr.svg

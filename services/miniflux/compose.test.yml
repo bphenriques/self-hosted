@@ -1,0 +1,4 @@
+services:
+  miniflux:
+    ports:
+      - "3006:8080"

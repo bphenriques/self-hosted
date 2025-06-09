@@ -1,0 +1,22 @@
+# https://github.com/Stirling-Tools/Stirling-PDF/releases
+services:
+  s-pdf:
+    image: stirlingtools/stirling-pdf:0.46.2
+    container_name: s-pdf
+    hostname: s-pdf
+    user: "${PUID}:${PGID}"
+    environment:
+      - DOCKER_ENABLE_SECURITY=false  # No need as I do not want logic-page. This is an internal tool.
+      - SECURITY_ENABLE_LOGIN=false   # No need as I do not want logic-page. This is an internal tool.
+    restart: unless-stopped
+    volumes:
+      - "${DATA_DIR}/stirling-pdf/configs:/configs"
+      - "${DATA_DIR}/stirling-pdf/custom-files:/customFiles"
+      - "${DATA_DIR}/stirling-pdf/logs:/logs"
+      - "./config/training-data-ocr:/usr/share/tesseract-ocr/5/tessdata"
+    networks:
+      - s-pdf
+
+networks:
+  s-pdf:
+    external: true

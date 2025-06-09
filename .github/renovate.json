@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "prHourlyLimit": 100,
+  "enabledManagers": ["dockerfile", "docker-compose"],
+  "prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}",
+  "packageRules": [
+    {
+      "matchManagers": ["docker-compose", "dockerfile"],
+      "matchPackageNames": ["redis", "postgres", "docker.io/library/postgres"],
+      "enabled": false
+    },
+    {
+      "packagePatterns": ["*"],
+      "automerge": false
+    }
+  ],
+  "extends": [
+    ":dependencyDashboard",
+    ":semanticPrefixFixDepsChoreOthers",
+    ":ignoreModulesAndTests",
+    "group:monorepos",
+    "group:recommended",
+    "replacements:all",
+    "workarounds:all"
+  ]
+}

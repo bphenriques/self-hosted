@@ -1,0 +1,20 @@
+# Bookmark manager: https://github.com/sissbruecker/linkding/releases
+services:
+  linkding:
+    image: sissbruecker/linkding:1.40.0
+    container_name: linkding
+    hostname: linkding
+    user: "${PUID}:${PGID}"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/linkding.env"
+    environment:
+      LD_SUPERUSER_NAME: bphenriques
+    volumes:
+      - "${DATA_DIR}/linkding:/etc/linkding/data"
+    restart: unless-stopped
+    networks:
+      - linkding
+
+networks:
+  linkding:
+    external: true

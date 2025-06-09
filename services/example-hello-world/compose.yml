@@ -1,0 +1,14 @@
+services:
+  sample-server:
+    build: .
+    container_name: hello-world-http
+    hostname: hello-world-http
+    user: "${PUID}:${PGID}"
+    ports:
+      - "5344:8080"
+    networks:
+      - hello-world-http
+
+networks:
+  hello-world-http:
+    external: true

@@ -1,0 +1,4 @@
+services:
+  immich-server:
+    ports:
+      - "3004:2283"

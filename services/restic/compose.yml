@@ -1,0 +1,21 @@
+services:
+  restic-dropbox:
+    build: docker
+    image: restic-rclone:v1
+    container_name: restic-dropbox
+    hostname: restic-dropbox
+    user: "${PUID}:${PGID}"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/restic.env"
+    environment:
+      - RESTIC_FORGET_POLICY=--keep-last 5
+      - "RESTIC_PASSWORD=${RESTIC_DROPBOX_REPOSITORY_PASSWORD}"
+    volumes:
+      - "${DATA_DIR}/restic:/data/.cache"
+      - "${RCLONE_CONFIG_DIR}:/config/rclone" # Can't be automatically inferred from $HOME as docker may run as sudo.
+      # Actual files to be backed-up
+      - "${BPHENRIQUES_DOCUMENTS}:/backup-target/documents:ro"
+      - "${BACKUP_DROPBOX_WORKING_DIR}:/backup-target/docker:ro"
+
+networks:
+  restic-dropbox:

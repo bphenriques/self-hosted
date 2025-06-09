@@ -1,0 +1,28 @@
+# https://github.com/Fallenbagel/jellyseerr/releases
+services:
+  jellyseerr:
+    image: fallenbagel/jellyseerr:2.5.2
+    container_name: jellyseerr
+    hostname: jellyseerr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - "${DATA_DIR}/jellyseerr:/app/config"
+    restart: unless-stopped
+    networks:
+      - jellyseerr
+      - jellyfin
+      - sonarr
+      - radarr
+
+networks:
+  jellyseerr:
+    external: true
+  sonarr:
+    external: true
+  radarr:
+    external: true
+  jellyfin:
+    external: true

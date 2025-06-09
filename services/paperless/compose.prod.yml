@@ -1,0 +1,4 @@
+services:
+  paperless:
+    environment:
+      PAPERLESS_URL: https://paperless.${HOME_SERVER_BASE_URL}

@@ -1,0 +1,22 @@
+# https://github.com/transmission/transmission/releases
+# https://docs.linuxserver.io/images/docker-transmission/
+services:
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    hostname: transmission
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - "${DATA_DIR}/transmission:/config"
+      - "${DOWNLOADS_DIR}:/data/downloads"        # The target volume **MUST** match *rr services.
+      - "${DOWNLOADS_WATCH_DIR}:/data/torrents"
+    restart: unless-stopped
+    networks:
+      - transmission
+
+networks:
+  transmission:
+    external: true

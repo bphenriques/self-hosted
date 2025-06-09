@@ -1,0 +1,6 @@
+services:
+  homepage:
+    environment:
+      - "HOMEPAGE_VAR_BASE_URL=${HOME_SERVER_BASE_URL}"
+    ports:
+      - "3000:3000"

@@ -1,0 +1,4 @@
+services:
+  hoarder-web:
+    environment:
+      NEXTAUTH_URL: https://hoarder.${HOME_SERVER_BASE_URL}

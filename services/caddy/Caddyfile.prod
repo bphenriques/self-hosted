@@ -1,0 +1,104 @@
+# Requires a DuckDNS account and domain. Copy the token to `DUCK_DNS_TOKEN`. This is used to validate that we own the domain.
+
+*.{$HOME_SERVER_CNAME}, {$HOME_SERVER_CNAME} {
+  tls {
+    dns duckdns {$DUCK_DNS_TOKEN}
+  }
+}
+
+www.{$HOME_SERVER_CNAME}, dashboard.{$HOME_SERVER_CNAME} {
+  reverse_proxy homepage:3000
+}
+
+synology.{$HOME_SERVER_CNAME} {
+  reverse_proxy {$HOME_SERVER_CNAME}:5000
+}
+
+miniflux.{$HOME_SERVER_CNAME}, rss.{$HOME_SERVER_CNAME} {
+  reverse_proxy miniflux:8080
+}
+
+transmission.{$HOME_SERVER_CNAME}, torrents.{$HOME_SERVER_CNAME} {
+  reverse_proxy transmission:9091
+}
+
+syncthing.{$HOME_SERVER_CNAME} {
+  reverse_proxy {$HOME_SERVER_CNAME}:8384    # Host mode... Can probably use host.docker.internal in Docker 3 when it gets available.
+}
+
+jellyfin.{$HOME_SERVER_CNAME} {
+  reverse_proxy jellyfin:8096
+}
+
+pdf.{$HOME_SERVER_CNAME} {
+  reverse_proxy s-pdf:8080
+}
+
+jellyseerr.{$HOME_SERVER_CNAME} {
+  reverse_proxy jellyseerr:5055
+}
+
+sonarr.{$HOME_SERVER_CNAME} {
+  reverse_proxy sonarr:8989
+}
+
+radarr.{$HOME_SERVER_CNAME} {
+  reverse_proxy radarr:7878
+}
+
+bazarr.{$HOME_SERVER_CNAME} {
+  reverse_proxy bazarr:6767
+}
+
+mylar3.{$HOME_SERVER_CNAME} {
+  reverse_proxy mylar3:8090
+}
+
+prowlarr.{$HOME_SERVER_CNAME} {
+  reverse_proxy prowlarr:9696
+}
+
+photos.{$HOME_SERVER_CNAME}, immich.{$HOME_SERVER_CNAME} {
+  request_body {
+    max_size 50000M # https://immich.app/docs/FAQ#why-are-only-photos-and-not-videos-being-uploaded-to-immich
+  }
+
+  reverse_proxy immich-server:2283
+}
+
+linkding.{$HOME_SERVER_CNAME}, bookmarks.{$HOME_SERVER_CNAME} {
+  reverse_proxy linkding:9090
+}
+
+paperless.{$HOME_SERVER_CNAME}, docs.{$HOME_SERVER_CNAME} {
+  reverse_proxy paperless:8000
+}
+
+romm.{$HOME_SERVER_CNAME} {
+  reverse_proxy romm:8080
+}
+
+readarr.{$HOME_SERVER_CNAME} {
+  reverse_proxy readarr:8787
+}
+
+komga.{$HOME_SERVER_CNAME} {
+  reverse_proxy komga:25600
+}
+
+hoarder.{$HOME_SERVER_CNAME} {
+  reverse_proxy hoarder-web:3000
+}
+
+gitea.{$HOME_SERVER_CNAME} {
+  reverse_proxy gitea:3000
+}
+
+kitchenowl.{$HOME_SERVER_CNAME} {
+  reverse_proxy kitchenowl:8080
+}
+
+tandoor.{$HOME_SERVER_CNAME}, recipes.{$HOME_SERVER_CNAME} {
+  reverse_proxy tandoor-web:8080
+}
+
