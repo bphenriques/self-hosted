@@ -1,7 +1,7 @@
 # Bookmark manager: https://github.com/hoarder-app/hoarder
 services:
   hoarder-web:
-    image: ghcr.io/hoarder-app/hoarder:0.24.1
+    image: ghcr.io/hoarder-app/hoarder:0.25.0
     container_name: hoarder-web
     hostname: hoarder-web
     restart: unless-stopped
