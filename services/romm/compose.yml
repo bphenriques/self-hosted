@@ -1,6 +1,6 @@
 services:
   romm:
-    image: rommapp/romm:3.9.0
+    image: rommapp/romm:3.10.2
     container_name: romm
     hostname: romm
     user: "${PUID}:${PGID}"
