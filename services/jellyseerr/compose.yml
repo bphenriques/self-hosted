@@ -1,7 +1,7 @@
 # https://github.com/Fallenbagel/jellyseerr/releases
 services:
   jellyseerr:
-    image: fallenbagel/jellyseerr:2.5.2
+    image: fallenbagel/jellyseerr:2.6.0
     container_name: jellyseerr
     hostname: jellyseerr
     environment:
