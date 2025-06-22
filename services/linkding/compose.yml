@@ -1,7 +1,7 @@
 # Bookmark manager: https://github.com/sissbruecker/linkding/releases
 services:
   linkding:
-    image: sissbruecker/linkding:1.40.0
+    image: sissbruecker/linkding:1.41.0
     container_name: linkding
     hostname: linkding
     user: "${PUID}:${PGID}"
