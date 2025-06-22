@@ -23,7 +23,7 @@ services:
       - paperless-internal
 
   paperless:
-    image: ghcr.io/paperless-ngx/paperless-ngx:2.16.1
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.17.1
     restart: unless-stopped
     hostname: paperless
     container_name: paperless
