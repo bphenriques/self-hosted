@@ -1,6 +1,6 @@
 services:
   komga:
-    image: gotson/komga:1.21.3
+    image: gotson/komga:1.22.0
     hostname: komga
     user: "${PUID}:${PGID}"
     container_name: komga
