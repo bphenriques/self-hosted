@@ -50,10 +50,6 @@ bazarr.{$HOME_SERVER_CNAME} {
   reverse_proxy bazarr:6767
 }
 
-mylar3.{$HOME_SERVER_CNAME} {
-  reverse_proxy mylar3:8090
-}
-
 prowlarr.{$HOME_SERVER_CNAME} {
   reverse_proxy prowlarr:9696
 }
@@ -78,16 +74,8 @@ romm.{$HOME_SERVER_CNAME} {
   reverse_proxy romm:8080
 }
 
-readarr.{$HOME_SERVER_CNAME} {
-  reverse_proxy readarr:8787
-}
-
 komga.{$HOME_SERVER_CNAME} {
   reverse_proxy komga:25600
-}
-
-hoarder.{$HOME_SERVER_CNAME} {
-  reverse_proxy hoarder-web:3000
 }
 
 gitea.{$HOME_SERVER_CNAME} {
