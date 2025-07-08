@@ -15,10 +15,6 @@
         siteMonitor: https://photos.{{HOMEPAGE_VAR_BASE_URL}}
         description: Photo & Video Gallery
         icon: immich.svg
-        widget:
-          type: immich
-          url: https://photos.{{HOMEPAGE_VAR_BASE_URL}}
-          key: {{HOMEPAGE_VAR_IMMICH_TOKEN}}
     - Paperless:
         href: https://paperless.{{HOMEPAGE_VAR_BASE_URL}}
         siteMonitor: https://paperless.{{HOMEPAGE_VAR_BASE_URL}}
@@ -82,11 +78,6 @@
         siteMonitor: https://tandoor.{{HOMEPAGE_VAR_BASE_URL}}
         description: Tandoor
         icon: tandoor.svg
-    - Hoarder:
-        href: https://hoarder.{{HOMEPAGE_VAR_BASE_URL}}
-        siteMonitor: https://hoarder.{{HOMEPAGE_VAR_BASE_URL}}
-        description: Hoarder
-        icon: hoarder.svg
     - Gitea:
         href: https://gitea.{{HOMEPAGE_VAR_BASE_URL}}
         siteMonitor: https://gitea.{{HOMEPAGE_VAR_BASE_URL}}
