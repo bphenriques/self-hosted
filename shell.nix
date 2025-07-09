@@ -5,6 +5,6 @@ pkgs.mkShellNoCC {
   packages = [
     pkgs.git          # The usual
     pkgs.shellcheck   # Scripting sanity checks
-    pkgs.shfmt             # Format shell scripts
+    pkgs.shfmt        # Format shell scripts
   ];
 }

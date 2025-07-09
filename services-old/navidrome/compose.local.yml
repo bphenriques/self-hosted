@@ -1,4 +1,0 @@
-services:
-  navidrome:
-    ports:
-      - "3007:4533"

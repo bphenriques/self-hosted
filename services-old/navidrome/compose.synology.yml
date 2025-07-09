@@ -1,4 +1,0 @@
-services:
-  navidrome:
-    environment:
-      ND_BASEURL: https://navidrome.${HOME_SERVER_BASE_URL}

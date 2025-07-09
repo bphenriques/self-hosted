@@ -16,7 +16,7 @@ The guidelines I am trying to follow:
 
 ## Installation
 
-Refer to the `README.md` in the correct [environment](./environments).
+Refer to the `README.md` under [environment](./environments).
 
 ## Scripts
 

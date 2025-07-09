@@ -1,4 +1,0 @@
-services:
-  calibre-web:
-    ports:
-      - 8083:8083

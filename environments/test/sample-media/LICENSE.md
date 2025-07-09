@@ -5,6 +5,3 @@ All credits go to the original author. The intent is to use these files to perfo
 - Document: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
 - Gameboy Color ROM: https://www.romhacking.net/homebrew/168/ under the GPL-3.0 license.
 - Book: https://www.gutenberg.org/ebooks/2701 under the public domain in the USA.
-- Comic: https://digitalcomicmuseum.com/index.php?dlid=28711 under the public domain.
-
-TODO: Comic e sample download file

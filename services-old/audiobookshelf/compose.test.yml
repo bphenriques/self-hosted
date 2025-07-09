@@ -1,5 +1,0 @@
-
-services:
-  audiobookshelf:
-    ports:
-      - "3020:80"
