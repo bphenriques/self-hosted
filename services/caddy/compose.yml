@@ -37,7 +37,6 @@ services:
       - romm
       - komga
       - gitea
-      - kitchenowl
       - tandoor-public
 
 networks:
@@ -67,8 +66,6 @@ networks:
     external: true
   linkding:
     external: true
-  mylar3:
-    external: true
   paperless:
     external: true
   romm:
@@ -77,11 +74,7 @@ networks:
     external: true
   komga:
     external: true
-  hoarder:
-    external: true
   gitea:
-    external: true
-  kitchenowl:
     external: true
   tandoor-public:
     external: true

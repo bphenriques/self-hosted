@@ -1,4 +1,3 @@
-# https://github.com/TomBursch/kitchenowl
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest

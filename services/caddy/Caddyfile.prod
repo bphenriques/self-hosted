@@ -82,10 +82,6 @@ gitea.{$HOME_SERVER_CNAME} {
   reverse_proxy gitea:3000
 }
 
-kitchenowl.{$HOME_SERVER_CNAME} {
-  reverse_proxy kitchenowl:8080
-}
-
 tandoor.{$HOME_SERVER_CNAME}, recipes.{$HOME_SERVER_CNAME} {
   reverse_proxy tandoor-web:8080
 }

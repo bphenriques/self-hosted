@@ -6,7 +6,7 @@ cd "$SCRIPT_PATH/../.." || exit 2
 
 rustic_dropbox() { bin/home-service.sh compose rustic run --rm rustic-dropbox "$@"; }
 
-# TODO: git, hoarder, kitchenowl,
+# TODO: gitea
 prepare() {
   mkdir -p "$1"/test
   echo "Backing up hello"
