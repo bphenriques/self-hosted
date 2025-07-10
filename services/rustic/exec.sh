@@ -12,9 +12,10 @@ prepare() {
   echo "Backing up hello"
   echo "Hello" > "$1"/test/file.txt
   home-server exec gitea backup "$1" || error "Backup gitea failed!"
-  home-server exec linkding backup "$1" || error "Backup gitea failed!"
-  #home-server backup linkding "$1" || error "Backup linkding failed!"
+  home-server exec linkding backup "$1" || error "Backup linkding failed!"
   #home-server backup miniflux "$1" || error "Backup miniflux failed!"
+
+  # TODO: chmod everything inside $1
 }
 
 # photos

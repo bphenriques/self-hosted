@@ -4,6 +4,7 @@ case "${1:-}" in
   backup)
     # FIXME it has to be shutdown during
     shift
+    echo "Backing up gitea to $1"
     # https://github.com/sissbruecker/linkding/blob/master/docs/backup.md#database
     test -d "$1" || error "Not a directory or does not exist: $1"
 
