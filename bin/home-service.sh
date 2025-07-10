@@ -164,7 +164,7 @@ shell_completions::bash() {
 
 # export is required so that docker compose can read from it
 export HOME_SERVER_CONFIG_DIR
-export HOME_SERVER_SECRETS_DIR="${CONFIG_DIR}/secrets"
+export HOME_SERVER_SECRETS_DIR="${HOME_SERVER_CONFIG_DIR}/secrets"
 
 cd "$HOME_SERVER_INSTALL_DIR" || fatal "failed to go to the root of the home-server project"
 
