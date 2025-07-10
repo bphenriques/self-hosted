@@ -2,6 +2,19 @@
 
 Non-exhaustive documentation regarding how I am setting up my server.
 
+## Users
+
+| User             | Type          | Extra Groups                                         | Services |
+|------------------|---------------|------------------------------------------------------|----------|
+| `guest`          | Disabled      | -                                                    | -        |
+| `admin`          | Disabled      | -                                                    | -        |
+| `Bruno-Admin`    | Admin         | `docker`, `docker-data-private`, `docker-data-media` | All      |
+| `Bruno`          | User          | `private`, `media`                                   | Only SMB |
+| `docker-media`   | Internal User | `docker-data-media`                                  | None     |
+| `docker-private` | Internal User | `docker-data-private`, `docker-data-media`           | None     |
+
+Note: `Bruno-Admin` must share some groups with `docker` and `docker-private` in order to set group permissions correctly to run containers.
+
 ## Shared Folders
 
 | Folder        | Storage Type | Recycle Bin | Snapshot | Hidden     | Media | Description                                                           |
@@ -22,22 +35,9 @@ Non-exhaustive documentation regarding how I am setting up my server.
 | `private`             | No          | Yes           | No    | R+W permissions to private media files.                                                  |
 | `media`               | No          | No            | Yes   | R+W permissions to non-private media files.                                              |
 
-## Users
-
-| User             | Type          | Extra Groups                                         | Services |
-|------------------|---------------|------------------------------------------------------|----------|
-| `guest`          | Disabled      | -                                                    | -        |
-| `admin`          | Disabled      | -                                                    | -        |
-| `Bruno-Admin`    | Admin         | `docker`, `docker-data-private`, `docker-data-media` | All      |
-| `Bruno`          | User          | `private`, `media`                                   | Only SMB |
-| `docker-media`   | Internal User | `docker-data-media`                                  | None     |
-| `docker-private` | Internal User | `docker-data-private`, `docker-data-media`           | None     |
-
-Note: `Bruno-Admin` must share some groups with `docker` and `docker-private` in order to set group permissions correctly to run containers.
-
 ## Snapshots
 
-Under Snapshot Replication application, setup the snapshot service per folder. For example:
+Under Snapshot Replication application, I setup the snapshot service per folder. For example:
 - Every 2h at midnight.
 - Retain all snapshots for 5 days.
 - Retain the latest snapshot per day for 60 days.
@@ -97,7 +97,7 @@ Setup Github authentication using a SSH key:
 Following this and in a SSH session:
 1. Clone the repo: `git clone git@github.com:bphenriques/home-server.git`.
 2. Create the configuration files and run the basic setup:
-```declarative
+```shell
 $ mkdir -p .config/home-server
 $ cd home-server
 $ environments/synology.setup.sh
@@ -115,6 +115,17 @@ intrusive for my liking).
 Finally:
 1. Depending on the service, you will likely need to copy secrets to `$HOME/.config/home-server/secrets`.
 2. Follow the instructions on the `README.md` on how to run the services.
+
+## Tailscale
+
+I use Tailscale as it is directly supported, albeit I will consider setting up a separate headless server just for Wireguard.
+
+1. Follow the Synology instructions: https://tailscale.com/kb/1131/synology
+2. Add the `192.168.1.192/32` subnet so that only that IP is exposed. The same IP is being pointed by my DuckDNS account.
+3. Enable Exit Node so that all traffic goes through my NAS. Also enable exit node local network access.
+4. Approve the requests in the admin console.
+5. Enable device approval.
+6. Disable SSH access. I rather have that disabled and it likely won't work as my servers use a different default port.
 
 ## Misc
 

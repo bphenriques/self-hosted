@@ -1,4 +1,8 @@
-# Web GUI in 8384:8384
+# Ports:
+# - 8384:8384       # Web UI
+# - 22000:22000/tcp # TCP file transfers
+# - 22000:22000/udp # QUIC file transfers
+# - 21027:21027/udp # Receive local discovery broadcasts
 # https://github.com/linuxserver/docker-syncthing
 # https://github.com/syncthing/syncthing/blob/main/README-Docker.md
 # Requires writable directories: https://docs.syncthing.net/users/faq.html#how-do-i-serve-a-folder-from-a-read-only-filesystem
@@ -8,7 +12,7 @@ services:
     container_name: syncthing
     hostname: syncthing
     restart: unless-stopped
-    network_mode: host
+    network_mode: host # https://github.com/syncthing/syncthing/blob/main/README-Docker.md#discovery
     environment:
       - PUID=${PUID}
       - PGID=${PGID}

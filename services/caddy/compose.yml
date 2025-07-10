@@ -12,7 +12,7 @@ services:
     environment:
       - HOME_SERVER_CNAME=${HOME_SERVER_CNAME}
     ports:
-      - "8480:80"
+      - "8482:80"
       - "8443:443"
       - "8443:443/udp"
     volumes:
