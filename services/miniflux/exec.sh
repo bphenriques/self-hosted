@@ -3,6 +3,7 @@
 
 case "${1:-}" in
   backup)
+    shift
     test -d "$1" || error "Not a directory or does not exist: $1"
     target_dir="$1/miniflux"
     echo "Backing up miniflux: ${target_dir}"

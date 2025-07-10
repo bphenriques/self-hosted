@@ -2,6 +2,7 @@
 
 case "${1:-}" in
   backup)
+    shift
     # https://github.com/sissbruecker/linkding/blob/master/docs/backup.md#database
     echo "Backing up linkding to $1"
     test -d "$1" || error "Not a directory or does not exist: $1"
