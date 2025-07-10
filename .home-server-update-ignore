@@ -1,1 +1,8 @@
+# Requires building the image
+caddy
+
+# One-off administrative tasks
 rustic
+
+# Not using
+memos

@@ -2,6 +2,7 @@
 
 info()    { printf '[ .. ] %s\n' "$1"; }
 success() { printf '[ OK ] %s\n' "$1"; }
+warn()    { printf '[ WARN ] %s\n' "$1"; }
 fatal()   { printf '[FAIL] %s\n' "$1" 1>&2; exit 1; }
 debug() { [ "$DEBUG" = "1" ] && printf '[DEBG] %s\n' "$*"; }
 
