@@ -21,13 +21,20 @@ I use Tailscale as I can install it directly on my NAS with little fuss. I will 
 Have this policy in-place that only grants access to my NAS exposed web-server and syncthing:
 ```json
 {
-	"grants": [		
-		// Home Server running on Synology NAS.
-		{"src": ["autogroup:member"], "dst": ["192.168.1.192"], "ip": ["tcp:8442-8443"]},
+  "grants": [
+    // Home Server running on Synology NAS.
+    {
+      "src": ["autogroup:member"],
+      "dst": ["192.168.1.192"],
+      "ip":  ["tcp:8442-8443"],
+    },
 
-		
-		// Syncthing file sharing running on Synology NAS. Access to specific folders is controlled by the service
-		{"src": ["autogroup:member"], "dst": ["192.168.1.192"], "ip": ["tcp:22000", "udp:22000" ]}
-	]
+    // Syncthing file sharing running on Synology NAS. Access to specific folders is controlled by the service
+    {
+      "src": ["autogroup:member"],
+      "dst": ["192.168.1.192"],
+      "ip":  ["tcp:22000", "udp:22000"],
+    },
+  ],
 }
 ```

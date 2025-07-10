@@ -7,7 +7,6 @@ services:
     environment:
       - USER_UID=${PUID}
       - USER_GID=${PGID}
-      - ALLOWED_DOMAINS="github.com, *.github.com"
     volumes:
       - "${DATA_DIR}/gitea:/data"
       - /etc/TZ:/etc/timezone:ro

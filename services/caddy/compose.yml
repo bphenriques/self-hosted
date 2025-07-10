@@ -16,7 +16,7 @@ services:
       - "8443:443"
       - "8443:443/udp"
     volumes:
-      - ./Caddyfile.${HOME_SERVER_ENV}:/etc/caddy/Caddyfile:ro
+      - .config/Caddyfile.${HOME_SERVER_ENV}:/etc/caddy/Caddyfile:ro
       - "${DATA_DIR}/caddy:/data"
       - "${DATA_DIR}/caddy:/config"   # Not using read-only volumes due to permissions
     networks:

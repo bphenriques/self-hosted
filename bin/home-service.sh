@@ -59,7 +59,6 @@ service::setup() {
     fi
   done
 
-  # Create networks
   service::create_networks
 
   # Confirm that all the source volumes exist. Specifically, any volume that can't be automatically created using the above.
@@ -139,6 +138,7 @@ service::bootstrap() {
   service::source
   service::validate
   service::setup
+  service
 
   if [ -f "bootstrap.sh" ]; then
     ./bootstrap.sh || fatal "Failed to run custom bootstrap"
