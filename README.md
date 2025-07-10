@@ -9,20 +9,33 @@ This is how I am currently organizing my self-hosted services running on a Synol
 
 The guidelines I am trying to follow:
 1. **Portability**: I do not want to be tied to a specific vendor, therefore I am using `docker` to run the services.
-2. **Security**: **I am no expert**, but I do my best to use the tighten what services have access to (network and/or files).
-3. **Testable**: Ability to test locally before deploying.
-4. **Backups**: Automated backups.
-5. **Infrastructure as code**: _Ideally_, I should be able to spin-up the environments without going through UI settings.
+2. **Security**: **I am no expert**, but I do my best.
+3. **Backups**: Automated backups.
+4. **Reproducible**: _Tentatively_, I should be able to spin-up the environments without going through user interfaces.
 
-## Installation
+See [docs](./docs) for more information.
 
-Refer to the `README.md` under [environment](./environments).
+## Usage
 
-## Scripts
+Example of commands available once installed:
+```shell
+$ home-server up service
+$ home-server update service2
+```
 
-Example:
-- Up: `./bin/home-service.sh up service1 service2`.
-- Down: `./bin/home-service.sh down service1 service2`.
+**Note**: during the first time, it might ask for `sudo` to set the ownership of the docker data directories as expected by the container.
 
-It might ask for `sudo` to set the ownership of the docker data directories. This is required to `chown` to the user that actually runs the container. For example, `postgres` does not run without proper ownership.
+## Running locally
 
+Requirements:
+- `yq` from https://github.com/mikefarah/yq
+- Docker with `root` ([rootless `docker`](https://docs.docker.com/engine/security/rootless/) is hit-and-miss for me).
+- Docker compose.
+
+```shell
+$ source .env.local
+$ mkdir /tmp/home-server
+$ ./bin/home-service.sh up memos
+```
+
+Note: I could have made the script more generic but opting out for now.

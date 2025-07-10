@@ -1,5 +1,5 @@
 services:
-  rustic-dropbox: &base
+  rustic-dropbox:
     image: ghcr.io/rustic-rs/rustic:v0.9.5
     container_name: rustic-dropbox
     hostname: rustic-dropbox

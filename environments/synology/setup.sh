@@ -10,7 +10,7 @@ readonly XDG_DATA_HOME="${HOME}/.local/share"
 
 readonly DOCKER_COMPOSE_VERSION=2.30.3
 readonly YQ_VERSION=4.40.5
-readonly SYNOLOGY_HDD_DB_VERSION=3.4.84
+readonly SYNOLOGY_HDD_DB_VERSION=3.6.111
 
 basic_git() {
   git config --global pull.rebase true
@@ -69,7 +69,8 @@ setup_home_server_env() {
   mkdir -p "$HOME/.config/home-server/secrets"
   if [ -z "$HOME_SERVER_ENV" ]; then
     {
-      echo 'export HOME_SERVER_ROOT="$HOME/home-server"'
+      echo 'export HOME_SERVER_INSTALL_DIR="$HOME/home-server"'
+      echo 'export HOME_SERVER_CONFIG_DIR="$XDG_CONFIG_HOME/home-server"'
       echo 'export HOME_SERVER_ENV=prod'
       echo 'eval "$($HOME/home-server/bin/home-service.sh --shell-completions bash)"'
     } >> "${HOME}/.bashrc"

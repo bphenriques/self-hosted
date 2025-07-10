@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-readonly XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
-
 info()    { printf '[ .. ] %s\n' "$1"; }
 success() { printf '[ OK ] %s\n' "$1"; }
 fatal()   { printf '[FAIL] %s\n' "$1" 1>&2; exit 1; }
@@ -75,15 +73,14 @@ service::setup() {
 # 2. Common variables: .env
 # 3. Additional HOME_SERVER_INCLUDE_ENV specified under .env
 service::source() {
-  export CONFIG_DIR
-  __service::source "${CONFIG_DIR}/default.env"
+  __service::source "${HOME_SERVER_CONFIG_DIR}/default.env"
 
   if [ -f ".env" ]; then
     __service::source .env
   fi
 
   if ! test -z "${HOME_SERVER_INCLUDE_ENV}"; then
-    __service::source "${CONFIG_DIR}/${HOME_SERVER_INCLUDE_ENV}.env"
+    __service::source "${HOME_SERVER_CONFIG_DIR}/${HOME_SERVER_INCLUDE_ENV}.env"
   fi
 }
 
@@ -161,21 +158,15 @@ shell_completions::bash() {
   echo 'complete -W "compose up down update restart exec create-networks" home-server'
 }
 
-# shellcheck disable=SC2155
-HOME_SERVER_ENV="${HOME_SERVER_ENV:-test}"
+! test -n "$HOME_SERVER_ENV" && fatal "HOME_SERVER_ENV not set or is empty"
+! test -d "$HOME_SERVER_INSTALL_DIR" && fatal "HOME_SERVER_INSTALL_DIR not set or does not exist"
+! test -d "$HOME_SERVER_CONFIG_DIR" && fatal "HOME_SERVER_CONFIG_DIR not set or does not exist"
 
-if [ "$HOME_SERVER_ENV" != "test" ]; then
-  readonly CONFIG_DIR="${XDG_CONFIG_HOME}/home-server"
-  export HOME_SERVER_SECRETS_DIR="${CONFIG_DIR}/secrets"
-else
-  HOME_SERVER_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/.."
-  readonly CONFIG_DIR="${HOME_SERVER_ROOT}/environments/test"
-  export HOME_SERVER_SECRETS_DIR="${CONFIG_DIR}/secrets"
-  mkdir -p /tmp/home-server # FIXME: hardcoded
-fi
-! test -d "$HOME_SERVER_ROOT" && fatal "HOME_SERVER_ROOT not set or does not exist"
+# export is required so that docker compose can read from it
+export HOME_SERVER_CONFIG_DIR
+export HOME_SERVER_SECRETS_DIR="${CONFIG_DIR}/secrets"
 
-cd "$HOME_SERVER_ROOT" || fatal "failed to go to the root of the home-server project"
+cd "$HOME_SERVER_INSTALL_DIR" || fatal "failed to go to the root of the home-server project"
 
 case "$1" in
   --list)
@@ -190,7 +181,7 @@ case "$1" in
     esac
     ;;
   repo-update)
-    cd "$HOME_SERVER_ROOT" || fatal "failed to go to the root of the home-server project"
+    cd "$HOME_SERVER_INSTALL_DIR" || fatal "failed to go to the root of the home-server project"
     info "Fetching Github changes..."
     git fetch
     git rebase "origin/$(git rev-parse --abbrev-ref HEAD)"
@@ -217,7 +208,7 @@ case "$1" in
     shift
     for service in "$@"; do
       info "Downing $service"
-      cd "$HOME_SERVER_ROOT/services/$service" || fatal "Failed to cd to service directory: $service"
+      cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
       service::bootstrap
       service::compose up -d
     done
@@ -226,7 +217,7 @@ case "$1" in
     shift
     for service in "$@"; do
       info "Downing $service"
-      cd "$HOME_SERVER_ROOT/services/$service" || fatal "Failed to cd to service directory: $service"
+      cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
       service::bootstrap
       service::compose rm --stop --force
     done
@@ -234,9 +225,11 @@ case "$1" in
   update)
     shift
     for service in "$@"; do
-      info "Updating $service"
-      cd "$HOME_SERVER_ROOT/services/$service" || fatal "Failed to cd to service directory: $service"
-      if ! test -f ".skip-update"; then
+      if grep -q "$service" .home-server-update-ignore; then
+        echo "Skipping $service as it is labelled as not to."
+      else
+        info "Updating $service"
+        cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
         info "Updating $service"
         service::bootstrap
         service::compose pull
@@ -245,8 +238,6 @@ case "$1" in
         else
           warn "Skipping restart of $service as it is already down."
         fi
-      else
-        echo "Skipping $service as it is labelled as not to."
       fi
     done
     ;;
@@ -254,7 +245,7 @@ case "$1" in
     shift
     for service in "$@"; do
       info "Restarting $service"
-      cd "$HOME_SERVER_ROOT/services/$service" || fatal "Failed to cd to service directory: $service"
+      cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
       service::bootstrap
       service::compose rm --stop --force
       service::compose up -d
@@ -264,7 +255,7 @@ case "$1" in
     shift
     service="$1"
     shift
-    cd "$HOME_SERVER_ROOT/services/$service" || fatal "Failed to cd to service directory: $service"
+    cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
     if [ -f "exec.sh" ]; then
       service::source
       ./exec.sh "$@" || fatal "Failed to run executable under $service"

@@ -1,4 +1,0 @@
-services:
-  restic-dropbox:
-    environment:
-      - RESTIC_REPOSITORY=rclone:dropbox:integration-test
