@@ -11,9 +11,13 @@ prepare() {
   mkdir -p "$1"/test
   echo "Backing up hello"
   echo "Hello" > "$1"/test/file.txt
-  #home-server backup "$1" || error "Backup linkding failed!"
-  #home-server backup "$1" || error "Backup miniflux failed!"
+  home-server backup gitea "$1" || error "Backup gitea failed!"
+  #home-server backup linkding "$1" || error "Backup linkding failed!"
+  #home-server backup miniflux "$1" || error "Backup miniflux failed!"
 }
+
+# photos
+# gitea
 
 case "${1:-}" in
   init)

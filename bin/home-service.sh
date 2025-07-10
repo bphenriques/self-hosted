@@ -264,6 +264,10 @@ case "$1" in
       info "Nothing to execute for $service"
     fi
     ;;
+  clean)
+    # No warning because I am ok with that. You might not be. Everything running in the server should be tracked to the repo.
+    docker system prune -f
+    docker image prune -af
   *)
     echo "Unrecognized command $1."
     ;;

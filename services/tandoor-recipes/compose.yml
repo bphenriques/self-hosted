@@ -13,7 +13,7 @@ services:
       - tandoor-private
 
   web_recipes:
-    image: vabene1111/recipes:1.5.35
+    image: vabene1111/recipes:2.0.0-beta-3
     restart: unless-stopped
     container_name: tandoor-web
     hostname: tandoor-web
@@ -22,7 +22,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - "ALLOWED_HOSTS=*" # FIXME as it incldues the port and I cant...
+      - "ALLOWED_HOSTS=*"
     env_file:
       - "${HOME_SERVER_SECRETS_DIR}/tandoor-recipes.env"
     volumes:
