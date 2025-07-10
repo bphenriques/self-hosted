@@ -16,8 +16,8 @@ prepare() {
   home-server exec miniflux backup "$1" || error "Backup miniflux failed!"
 
   # FIXME: tandoor
-
-  sudo chown -R "$PUID:$PGID" $1
+  echo "Fixing permissions to $PUID:$PGID"
+  sudo chown -R "$PUID:$PGID" "$1"
 }
 
 case "${1:-}" in
