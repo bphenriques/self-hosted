@@ -8,6 +8,8 @@ repository = "opendal:dropbox"
 [repository.options]
 # root = "..."
 # access_token = "..."
+# refresh_token = "..."
+# client_id = "..."
 
 [backup]
 tags = ["documents"]

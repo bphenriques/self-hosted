@@ -6,6 +6,9 @@ After several iterations, I decided to stick to this iteration:
 - Only supports a single repository. Keeps it simpler and avoids leaking credentials between different storage types.
 - Cron Jobs in docker and non-root is hard. This can be easily solved using the host's scheduler.
 
+# Reference
+- Dropbox: https://nightlies.apache.org/opendal/opendal-docs-release-v0.47.0/docs/services/dropbox/
+
 ## Setup
 
 1. Copy one of the service blocks and rename the container and similar fields accordingly.

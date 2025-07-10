@@ -138,7 +138,6 @@ service::bootstrap() {
   service::source
   service::validate
   service::setup
-  service
 
   if [ -f "bootstrap.sh" ]; then
     ./bootstrap.sh || fatal "Failed to run custom bootstrap"

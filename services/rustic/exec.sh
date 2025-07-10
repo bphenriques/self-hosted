@@ -29,10 +29,13 @@ case "${1:-}" in
     prepare "$target"
 
     export RUSTIC_BACKUP_EXTRA_FILES="${target}"
-    rustic_dropbox backup
-    rustic_dropbox forget
-    rustic_dropbox prune
-    rustic_dropbox check
+
+    echo "Backup folder ready for upload: $target"
+
+    #rustic_dropbox backup
+    #rustic_dropbox forget
+    #rustic_dropbox prune
+    #rustic_dropbox check
     ;;
   ls)
     shift
