@@ -47,3 +47,11 @@ $ tree /tmp//restore-work/
         ├── entrypoint.sh
         └── health.sh
 ```
+
+
+---
+
+How to:
+```shell
+home-server jobs rustic dropbox-backup
+```
