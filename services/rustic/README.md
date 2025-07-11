@@ -53,5 +53,5 @@ $ tree /tmp//restore-work/
 
 How to:
 ```shell
-home-server jobs rustic dropbox-backup
+home-server jobs rustic dropbox-backup backup
 ```
