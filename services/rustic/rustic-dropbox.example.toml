@@ -1,0 +1,4 @@
+# Contains sensitive information
+[repository.options]
+# root = "the-name-of-the-app"
+# access_token = "personal use, therefore generate one under https://www.dropbox.com/developers/apps/"

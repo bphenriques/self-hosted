@@ -3,13 +3,6 @@ use-profiles = ["secrets"]
 
 [repository]
 repository = "opendal:dropbox"
-# password passed as env variable
-
-[repository.options]
-# root = "..."
-# access_token = "..."
-# refresh_token = "..."
-# client_id = "..."
 
 [backup]
 tags = ["documents"]
@@ -20,3 +13,7 @@ sources = [ "/data/target-backup" ]
 [forget]
 prune = true
 keep-last = 5
+keep-daily = 7
+keep-weekly = 5
+keep-monthly = 12
+keep-yearly = 75

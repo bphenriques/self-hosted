@@ -18,5 +18,3 @@ services:
       - "${BPHENRIQUES_NOTES}:/data/target-backup/bphenriques-notes"
       - "${BPHENRIQUES_PRIVATE}:/data/target-backup/bphenriques-notes"
       - "${RUSTIC_BACKUP_EXTRA_FILES}:/data/target-backup/extra-files"
-
-# TODO: check permissions. Set a directory inside to export. Then use docker cp
