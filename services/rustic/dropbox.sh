@@ -7,9 +7,9 @@ cd "$SCRIPT_PATH/../.." || exit 2
 rustic() { bin/home-service.sh compose rustic run --rm rustic-dropbox "$@"; }
 
 prepare() {
-  home-server job backup gitea "$1" || error "Backup gitea failed!"
-  home-server job backup linkding "$1" || error "Backup linkding failed!"
-  home-server job backup miniflux "$1" || error "Backup miniflux failed!"
+  home-server jobs backup gitea "$1" || error "Backup gitea failed!"
+  home-server jobs backup linkding "$1" || error "Backup linkding failed!"
+  home-server jobs backup miniflux "$1" || error "Backup miniflux failed!"
   # FIXME: tandoor
 
   echo "Fixing permissions to $PUID:$PGID"

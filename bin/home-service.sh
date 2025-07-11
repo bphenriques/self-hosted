@@ -267,6 +267,6 @@ case "$1" in
     docker image prune -af
     ;;
   *)
-    echo "Unrecognized command $1."
+    fatal "Unrecognized command $1."
     ;;
 esac
