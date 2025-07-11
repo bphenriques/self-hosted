@@ -37,10 +37,10 @@ case "${1:-}" in
 
 
     export RUSTIC_BACKUP_EXTRA_FILES="${target}"
-    #rustic backup
-    #rustic forget
-    #rustic prune
-    #rustic check
+    rustic backup
+    rustic forget
+    rustic prune
+    rustic check
     ;;
   ls)
     shift
