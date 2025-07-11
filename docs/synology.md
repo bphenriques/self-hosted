@@ -16,6 +16,9 @@ Nothing really relevant to say other than I have two storage pools:
 1. Reinstall the container manager service to ensure it is using the Storage Pool 2 that uses a faster storage. Makes the whole difference.
 2. Grant `Bruno-Admin` permissions to run `docker` commands by setting the group of the socket: `sudo chown root:docker /var/run/docker.sock`
 
+The installed `docker compose` is way too old (`v2.20.1-6047-g6817716` from 2023). Forthat reason, `environments/synology/setup.sh` 
+installs the latest compatible version of docker compose (as of this writing is `2.30.3`) under `$XDG_USR_BIN`.
+
 ## Users
 
 | User             | Type          | Extra Groups                                         | Services |

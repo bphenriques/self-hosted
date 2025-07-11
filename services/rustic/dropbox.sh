@@ -4,25 +4,22 @@ SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 set -ef
 cd "$SCRIPT_PATH/../.." || exit 2
 
-rustic_dropbox() { bin/home-service.sh compose rustic run --rm rustic-dropbox "$@"; }
+rustic() { bin/home-service.sh compose rustic run --rm rustic-dropbox "$@"; }
 
-# TODO: gitea
 prepare() {
-  mkdir -p "$1"/test
-  echo "Backing up hello"
-  echo "Hello" > "$1"/test/file.txt
-  home-server exec gitea backup "$1" || error "Backup gitea failed!"
-  home-server exec linkding backup "$1" || error "Backup linkding failed!"
-  home-server exec miniflux backup "$1" || error "Backup miniflux failed!"
-
+  home-server job backup gitea "$1" || error "Backup gitea failed!"
+  home-server job backup linkding "$1" || error "Backup linkding failed!"
+  home-server job backup miniflux "$1" || error "Backup miniflux failed!"
   # FIXME: tandoor
+
   echo "Fixing permissions to $PUID:$PGID"
-  sudo chown -R "$PUID:$PGID" "$1"
+  sudo chmod -R g+rwx "$target"         # r/w for obvious reasons and x to allow cd'ing to the directory
+  sudo chown -R "$PUID:$PGID" "$1"      # Ensure it is not set to root.
 }
 
 case "${1:-}" in
   init)
-    rustic_dropbox init
+    rustic init
     ;;
   backup)
     shift
@@ -33,19 +30,19 @@ case "${1:-}" in
 
     echo "Backup folder ready for upload: $target"
 
-    #rustic_dropbox backup
-    #rustic_dropbox forget
-    #rustic_dropbox prune
-    #rustic_dropbox check
+    #rustic backup
+    #rustic forget
+    #rustic prune
+    #rustic check
     ;;
   ls)
     shift
     export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d)" # doesnt matter
-    rustic_dropbox ls latest
+    rustic ls latest
     ;;
   restore)
     shift
     export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d)" # doesnt matter
-    rustic_dropbox restore latest "$1"
+    rustic restore latest "$1"
     ;;
 esac

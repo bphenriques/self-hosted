@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Some folders are version controlled and everytime we check-out permissions might be lost. Let's fix that.
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+RESET_GROUP_FILES="config public"
+HOME_SERVER_COMPOSE_BIN="${HOME_SERVER_COMPOSE_BIN:-"docker compose"}"
+HOME_SERVER_CONFIG_DIR="${HOME_SERVER_CONFIG_DIR:-$XDG_CONFIG_HOME/home-server}"
+
 info()    { printf '[ .. ] %s\n' "$1"; }
 success() { printf '[ OK ] %s\n' "$1"; }
 warn()    { printf '[ WARN ] %s\n' "$1"; }
@@ -17,6 +23,7 @@ __service::source() {
   set +o allexport
 }
 
+# In order for chgrp to work, the user that runs this command must share the same group as the user that runs the container.
 service::grant_group_permissions() {
   target="$1"
 
@@ -50,10 +57,8 @@ service::setup() {
     | yq '.services | to_entries | .[] | .value.volumes[] | select(.type == "bind") | .source | select(test(env(DATA_DIR)))' \
     | xargs -I{} sh -c "__service::setup_data_dir \"{}\" $PUID:$PGID"
 
-  # Assumption: some folders are version controlled and everytime we check-out permissions might be lost. Let's fix that.
-  # In order for chgrp to work, the user that runs this command must share the same group as the user that runs the container.
   # shellcheck disable=SC2086
-  for d in ./config ./public; do
+  for d in $RESET_GROUP_FILES; do
     if [ -d "$d" ]; then
       service::grant_group_permissions "$d"
     fi
@@ -109,16 +114,8 @@ service::compose() {
     compose_args="$compose_args -f compose.$HOME_SERVER_ENV.yml"
   fi
 
-  compose_command=""
-  if [ -x "$(command -v docker-compose)" ]; then
-    compose_command="docker-compose"
-  elif docker compose &>/dev/null; then
-    compose_command="docker compose"
-  else
-    fatal "Neither 'docker-compose' nor 'docker compose' is available."
-  fi
   # shellcheck disable=SC2068,SC2086
-  $compose_command $compose_args "$@"
+  $HOME_SERVER_COMPOSE_BIN $compose_args "$@"
 }
 
 service::create_network() {
@@ -251,16 +248,17 @@ case "$1" in
       service::compose up -d
     done
     ;;
-  exec)
+  jobs)
     shift
     service="$1"
-    shift
+    name="$2"
+    shift 2
     cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
-    if [ -f "exec.sh" ]; then
+    if [ -f "$name.sh" ]; then
       service::source
-      ./exec.sh "$@" || fatal "Failed to run executable under $service"
+      bash "./$name.sh" "$@" || fatal "Failed to run '$name' executable under $service"
     else
-      info "Nothing to execute for $service"
+      info "Skipping as '$name' is not present for $service"
     fi
     ;;
   clean)
