@@ -1,4 +1,3 @@
-# Docs: https://gethomepage.dev/v0.8.3/configs/services/
 # Icons: https://github.com/walkxcode/dashboard-icons
 - Media:
     - Miniflux:
@@ -100,8 +99,3 @@
       siteMonitor: https://prowlarr.{{HOMEPAGE_VAR_BASE_URL}}
       description: Manage *rr services
       icon: prowlarr.svg
-  - Bazarr:
-      href: https://bazarr.{{HOMEPAGE_VAR_BASE_URL}}
-      siteMonitor: https://bazarr.{{HOMEPAGE_VAR_BASE_URL}}
-      description: Subtitles Manager
-      icon: bazarr.svg

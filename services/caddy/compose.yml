@@ -28,7 +28,6 @@ services:
       - prowlarr
       - sonarr
       - radarr
-      - bazarr
       - jellyfin
       - jellyseerr
       - immich
@@ -57,8 +56,6 @@ networks:
   sonarr:
     external: true
   radarr:
-    external: true
-  bazarr:
     external: true
   jellyseerr:
     external: true
