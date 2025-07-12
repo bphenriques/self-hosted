@@ -19,7 +19,7 @@ target_services=(
 rustic() { bin/home-service.sh compose rustic run --rm rustic-dropbox "$@"; }
 
 dropbox_available_space() {
-  response="$(curl -X POST https://api.dropboxapi.com/2/users/get_space_usage -H "Authorization: Bearer $TOKEN" | jq -cr)"
+  response="$(curl -X POST https://api.dropboxapi.com/2/users/get_space_usage -H "Authorization: Bearer $HOME_SERVER_DROPBOX_ACCESS_TOKEN" | jq -cr)"
 
   total="$(echo "$response" | jq -r '.allocation.allocated')"
   used="$(echo "$response" | jq -r '.used')"
