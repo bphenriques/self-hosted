@@ -5,16 +5,33 @@ SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 set -ef
 cd "$SCRIPT_PATH/../.." || exit 2
 
+# Enough space to hold a full-extra backup.
+MIN_AVAILABLE=5000000000
+
 target_services=(
   gitea
   linkding
   miniflux
   # FIXME: tandoor
+  #
 )
 
 rustic() { bin/home-service.sh compose rustic run --rm rustic-dropbox "$@"; }
 
+dropbox_available_space() {
+  response="$(curl -X POST https://api.dropboxapi.com/2/users/get_space_usage -H "Authorization: Bearer $TOKEN" | jq -cr)"
+
+  total="$(echo "$response" | jq -r '.allocation.allocated')"
+  used="$(echo "$response" | jq -r '.used')"
+  echo "$total $used" | awk '{print ($1-$2)}'
+}
+
 prepare() {
+  if [ "$(dropbox_available_space)" -lt $MIN_AVAILABLE ]; then
+    echo "Not enough space in Dropbox. Aborting"
+    return 1
+  fi
+
   for service in "${target_services[@]}"; do
     home-server jobs "$service" backup "$1" || error "Backup $service failed!"
   done
@@ -34,7 +51,6 @@ case "${1:-}" in
     shift
     target="$(mktemp -d --suffix -dropbox-backup)"
     prepare "$target"
-
 
     export RUSTIC_BACKUP_EXTRA_FILES="${target}"
     rustic backup
