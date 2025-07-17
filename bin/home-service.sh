@@ -40,7 +40,7 @@ __service::setup_data_dir() {
 
   mkdir -p "$target"
   if [ "$(stat -c "%u:%g" "$target")" != "$owner" ]; then
-    echo "Data directory '$target' is not owned by $owner. Using sudo to chown."
+    echo "Data directory '$target' is not owned by $owner (by $(stat -c "%u:%g")). Using sudo to chown."
     sudo chown -R "$owner" "$target"
   else
     debug "$1 - already has the right owner $owner"
