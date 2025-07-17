@@ -16,6 +16,11 @@ services:
       - jellyfin
       - sonarr
       - radarr
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.jellyseerr.rule=Host("jellyseerr.${HOME_SERVER_CNAME}")'
+      - "traefik.http.services.jellyseerr-websecure.loadbalancer.server.port=5055"
+      - 'traefik.docker.network=jellyseerr'
 
 networks:
   jellyseerr:

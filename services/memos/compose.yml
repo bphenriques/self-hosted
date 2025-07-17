@@ -3,7 +3,7 @@
 # https://www.usememos.com/docs/install/self-hosting. Exposes 5230
 services:
   memos:
-    image: ghcr.io/usememos/memos:0.24.4
+    image: ghcr.io/usememos/memos:0.25.0
     container_name: memos
     hostname: memos
     user: "${PUID}:${PGID}"
@@ -16,6 +16,11 @@ services:
       - "${DATA_DIR}/memos:/var/opt/memos"
     networks:
       - memos
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.memos.rule=Host("memos.${HOME_SERVER_CNAME}")'
+      - "traefik.http.services.memos-websecure.loadbalancer.server.port=5230"
+      - 'traefik.docker.network=memos'
 
 networks:
   memos:

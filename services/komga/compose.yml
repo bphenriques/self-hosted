@@ -13,6 +13,11 @@ services:
       - "${COMICS_DIR}:/data/comics"
     networks:
       - komga
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.komga.rule=Host("komga.${HOME_SERVER_CNAME}")'
+      - "traefik.http.services.komga-websecure.loadbalancer.server.port=25600"
+      - 'traefik.docker.network=komga'
 
 networks:
   komga:

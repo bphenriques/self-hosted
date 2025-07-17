@@ -52,6 +52,7 @@ services:
       PAPERLESS_OCR_LANGUAGES: "eng+por"
       PAPERLESS_OCR_LANGUAGE: eng
       PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'  # Store the original if signed.
+      PAPERLESS_URL: https://paperless.${HOME_SERVER_BASE_URL}
     healthcheck:
       test: ["CMD", "curl", "-fs", "-S", "--max-time", "2", "http://localhost:8000"]
       interval: 30s
@@ -60,6 +61,11 @@ services:
     networks:
       - paperless-internal
       - paperless
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.paperless.rule=Host("paperless.${HOME_SERVER_CNAME}")'
+      - "traefik.http.services.paperless-websecure.loadbalancer.server.port=8000"
+      - 'traefik.docker.network=paperless'
 
 networks:
   paperless:

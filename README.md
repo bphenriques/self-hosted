@@ -13,7 +13,12 @@ The guidelines I am trying to follow:
 3. **Backups**: Automated backups.
 4. **Reproducible**: _Tentatively_, I should be able to spin-up the environments without going through user interfaces.
 
-See [docs](./docs) for more information.
+# Requirements
+
+This repository is tied to what I currently own:
+- Domain registered in Cloudflare
+- Synology NAS as server (not ideal but it is what I started with and is good enough)
+- Tailscale account (not ideal but works "out-of-the-box" with Synology)
 
 ## Usage
 
@@ -25,17 +30,21 @@ $ home-server update service2
 
 **Note**: during the first time, it might ask for `sudo` to set the ownership of the docker data directories as expected by the container.
 
-## Running locally
+## Testing
 
 Requirements:
 - `yq` from https://github.com/mikefarah/yq
 - Docker with `root` ([rootless `docker`](https://docs.docker.com/engine/security/rootless/) is hit-and-miss for me).
 - Docker compose.
 
-```shell
-$ source .env.local
-$ mkdir /tmp/home-server
-$ ./bin/home-service.sh up memos
-```
-
-Note: I could have made the script more generic but opting out for now.
+1. Add a `.env.local`:
+    ```shell
+    export HOME_SERVER_ACME_EMAIL=...
+    export HOME_SERVER_CNAME=...
+    ```
+2. I am using Traefik as reverse proxy, let's set `DNS-01 Challenge`. Check [cloudflare docs](./infrastructure/cloudflare.md).
+3. Depending on what you are using, you might need to copy and adapt the example secret/environment files.
+4. We should be good to go:
+    ```shell
+    $ ./bin/local.sh up traefik
+    ```

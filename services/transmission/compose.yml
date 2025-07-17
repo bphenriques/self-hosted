@@ -16,6 +16,11 @@ services:
     restart: unless-stopped
     networks:
       - transmission
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.transmission.rule=Host("transmission.${HOME_SERVER_CNAME}")'
+      - "traefik.http.services.transmission-websecure.loadbalancer.server.port=9091"
+      - 'traefik.docker.network=transmission'
 
 networks:
   transmission:

@@ -1,0 +1,131 @@
+secrets:
+  cf_api_email_file:
+    file: "${HOME_SERVER_SECRETS_DIR}/traefik/cf_api_email_file.secret"
+  cf_dns_api_token:
+    file: "${HOME_SERVER_SECRETS_DIR}/traefik/cf_dns_api_token.secret"
+
+services:
+  socket-proxy:
+    image: tecnativa/docker-socket-proxy:0.3
+    container_name: socket-proxy
+    restart: unless-stopped
+    environment:
+      CONTAINERS: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - traefik-internal
+
+  traefik:
+    image: traefik:v3.4.4
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      - socket-proxy
+    command:
+      - "--log.level=DEBUG"
+
+      # Providers
+      - "--providers.docker=true"
+      - "--providers.docker.endpoint=tcp://socket-proxy:2375"
+      - "--providers.docker.exposedByDefault=false"
+
+      # Entrypoints
+      - "--entryPoints.web.address=:80"
+      - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entryPoints.websecure.address=:443"
+
+      # Timeouts
+      - "--entryPoints.websecure.transport.respondingTimeouts.readTimeout=600s"   # Defaults to 60s which his too short for uploading big files.
+      - "--entryPoints.websecure.transport.respondingTimeouts.writeTimeout=600s"  # Defaults to no timeout. Setting a timeout (same guide as immich)
+      # - "--entryPoints.websecure.transport.respondingTimeouts.idleTimeout=600s" # Not the same as recommended by immich. I think the default 180s sane for now.
+
+      # Set the default cert resolver to this entrypoint. This removes the need to have the `tls.certresolver` per router.
+      # Given that we are using a DNS Challenge, we need to set the domains and the wildcard.
+      - "--entryPoints.websecure.http.tls.certResolver=default"
+      - "--entryPoints.websecure.http.tls.domains[0].main=${HOME_SERVER_CNAME}"
+      - "--entryPoints.websecure.http.tls.domains[0].sans=*.${HOME_SERVER_CNAME}"
+
+      # Certificate resolver
+      - "--certificatesresolvers.default.acme.email=${HOME_SERVER_ACME_EMAIL}" # The static variable does not work
+      - "--certificatesresolvers.default.acme.dnschallenge=true"
+      - "--certificatesresolvers.default.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.default.acme.storage=/data/letsencrypt/acme.json"
+
+      # TODO:
+      # - Secure headers: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/headers/
+      # - IP Allowlist headers (likely not required atm): ...
+      # https://doc.traefik.io/traefik/expose/docker/#add-middlewares
+    volumes:
+      - "${DATA_DIR}/traefik/letsencrypt/acme.json:/data/letsencrypt/acme.json" # Recommended to avoid re-issuing.
+    ports:
+      - "8482:80"
+      - "8443:443"
+      - "8443:443/udp"
+    secrets:
+      - "cf_api_email_file"
+      - "cf_dns_api_token"
+    environment:
+      - "CF_API_EMAIL_FILE=/run/secrets/cf_api_email_file"
+      - "CF_DNS_API_TOKEN_FILE=/run/secrets/cf_dns_api_token"
+    networks:
+      - traefik-internal
+      - traefik-external
+      - homepage
+      - s-pdf
+      - transmission
+      - miniflux
+      - prowlarr
+      - sonarr
+      - radarr
+      - jellyfin
+      - jellyseerr
+      - immich
+      - linkding
+      - paperless
+      - romm
+      - komga
+      - gitea
+      - tandoor-public
+
+networks:
+  traefik-internal:
+    external: true
+  traefik-external:
+    external: true
+  jellyfin:
+    external: true
+  homepage:
+    external: true
+  s-pdf:
+    external: true
+  transmission:
+    external: true
+  miniflux:
+    external: true
+  prowlarr:
+    external: true
+  sonarr:
+    external: true
+  radarr:
+    external: true
+  jellyseerr:
+    external: true
+  immich:
+    external: true
+  linkding:
+    external: true
+  paperless:
+    external: true
+  romm:
+    external: true
+  readarr:
+    external: true
+  komga:
+    external: true
+  gitea:
+    external: true
+  tandoor-public:
+    external: true

@@ -12,9 +12,16 @@ services:
       - "HOMEPAGE_VAR_BASE_URL=${HOME_SERVER_BASE_URL}"
       - HOMEPAGE_ALLOWED_HOSTS=*
       - LOG_TARGETS=stdout
+      - PUID="$PUID"
+      - PGID="$PGID"
     volumes:
       - ./config:/app/config:ro
       - ./public/images:/app/public/images:ro
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.homepage.rule=Host(`${HOME_SERVER_CNAME}`) || Host(`www.${HOME_SERVER_CNAME}`)'
+      - "traefik.http.services.homepage-websecure.loadbalancer.server.port=3000"
+      - 'traefik.docker.network=homepage'
     networks:
       - homepage
 

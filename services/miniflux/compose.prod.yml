@@ -1,4 +1,0 @@
-services:
-  miniflux:
-    environment:
-      - BASE_URL=https://miniflux.${HOME_SERVER_BASE_URL}

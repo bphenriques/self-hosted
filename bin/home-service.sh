@@ -155,16 +155,15 @@ shell_completions::bash() {
   echo 'complete -W "compose up down update restart exec create-networks" home-server'
 }
 
-! test -n "$HOME_SERVER_ENV" && fatal "HOME_SERVER_ENV not set or is empty"
-! test -d "$HOME_SERVER_INSTALL_DIR" && fatal "HOME_SERVER_INSTALL_DIR not set or does not exist"
-! test -d "$HOME_SERVER_CONFIG_DIR" && fatal "HOME_SERVER_CONFIG_DIR not set or does not exist"
+! test -n "$HOME_SERVER_ENV" && fatal "HOME_SERVER_ENV not set or is empty: $HOME_SERVER_ENV"
+! test -d "$HOME_SERVER_INSTALL_DIR" && fatal "HOME_SERVER_INSTALL_DIR not set or does not exist: $HOME_SERVER_INSTALL_DIR"
+! test -d "$HOME_SERVER_CONFIG_DIR" && fatal "HOME_SERVER_CONFIG_DIR not set or does not exist: $HOME_SERVER_CONFIG_DIR"
 
 # export is required so that docker compose can read from it
-export HOME_SERVER_CONFIG_DIR
 export HOME_SERVER_SECRETS_DIR="${HOME_SERVER_CONFIG_DIR}/secrets"
+! test -d "$HOME_SERVER_SECRETS_DIR" && fatal "HOME_SERVER_SECRETS_DIR not set or does not exist: $HOME_SERVER_SECRETS_DIR"
 
 cd "$HOME_SERVER_INSTALL_DIR" || fatal "failed to go to the root of the home-server project"
-
 case "$1" in
   --list)
     shift

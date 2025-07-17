@@ -30,6 +30,11 @@ services:
     networks:
       - immich
       - immich-private
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.immich.rule=Host("immich.${HOME_SERVER_CNAME}") || Host("photos.${HOME_SERVER_CNAME}")'
+      - "traefik.http.services.immich-websecure.loadbalancer.server.port=2283"
+      - 'traefik.docker.network=immich'
 
   # https://immich.app/docs/FAQ#how-can-i-lower-immichs-cpu-usage
   immich-machine-learning:

@@ -16,6 +16,11 @@ services:
       - "./config/training-data-ocr:/usr/share/tesseract-ocr/5/tessdata"
     networks:
       - s-pdf
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.spdf.rule=Host("pdf.${HOME_SERVER_CNAME}")'
+      - "traefik.http.services.spdf-websecure.loadbalancer.server.port=8080"
+      - 'traefik.docker.network=spdf'
 
 networks:
   s-pdf:

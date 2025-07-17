@@ -22,6 +22,11 @@ services:
     networks:
       - romm-internal
       - romm
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.romm.rule=Host("romm.${HOME_SERVER_CNAME}")'
+      - "traefik.http.services.romm-websecure.loadbalancer.server.port=8080"
+      - 'traefik.docker.network=romm'
 
   romm-db:
     image: mariadb:latest

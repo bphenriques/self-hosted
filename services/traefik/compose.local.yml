@@ -1,0 +1,17 @@
+services:
+  traefik:
+    networks:
+      - whoami
+
+  whoami:
+    image: traefik/whoami
+    labels:
+      - 'traefik.enable=true'                                                     # Expose this container
+      - 'traefik.http.routers.whoami.rule=Host("whoami.${HOME_SERVER_CNAME}")'    # Set the rule to reverse proxy here
+      - "traefik.http.services.whoami-websecure.loadbalancer.server.port=80"
+      - 'traefik.docker.network=whoami'
+    networks:
+      - whoami
+networks:
+  whoami:
+    external: true

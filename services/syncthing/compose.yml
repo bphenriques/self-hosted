@@ -25,3 +25,8 @@ services:
       - "${BPHENRIQUES_SHARED}:/data/bphenriques_shared"
       - "${BPHENRIQUES_NOTES}:/data/bphenriques_notes"
       - "${BPHENRIQUES_PHOTOS_INBOX}:/data/bphenriques_photos_inbox"
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.syncthing.rule=Host("syncthing.${HOME_SERVER_CNAME}")'
+      - "traefik.http.services.syncthing-websecure.loadbalancer.server.url=https://${HOME_SERVER_CNAME}:8384"
+

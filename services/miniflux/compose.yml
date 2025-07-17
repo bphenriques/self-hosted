@@ -13,12 +13,18 @@ services:
     environment:
       - RUN_MIGRATIONS=1
       - CREATE_ADMIN=1
+      - BASE_URL=https://miniflux.${HOME_SERVER_BASE_URL}
     restart: unless-stopped
     networks:
       - miniflux-private
       - miniflux
     healthcheck:
       test: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.miniflux.rule=Host("miniflux.${HOME_SERVER_CNAME}")'
+      - "traefik.http.services.miniflux-websecure.loadbalancer.server.port=8080"
+      - 'traefik.docker.network=miniflux'
 
   miniflux-db:
     image: postgres:15
