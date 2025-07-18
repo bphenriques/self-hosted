@@ -28,5 +28,6 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.syncthing.rule=Host("syncthing.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.syncthing.entrypoints=websecure"
       - "traefik.http.services.syncthing-websecure.loadbalancer.server.url=https://${HOME_SERVER_CNAME}:8384"
 

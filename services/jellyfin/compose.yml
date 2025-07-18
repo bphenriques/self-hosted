@@ -20,6 +20,7 @@ services:
       # TODO: Review the docs: https://jellyfin.org/docs/general/post-install/networking/reverse-proxy/traefik
       - 'traefik.enable=true'
       - 'traefik.http.routers.jellyfin.rule=Host("jellyfin.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.jellyfin.entrypoints=websecure"
       - "traefik.http.services.jellyfin-websecure.loadbalancer.server.port=8096"
       - 'traefik.docker.network=jellyfin'
 

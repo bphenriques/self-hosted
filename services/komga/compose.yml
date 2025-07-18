@@ -16,6 +16,7 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.komga.rule=Host("komga.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.komga.entrypoints=websecure"
       - "traefik.http.services.komga-websecure.loadbalancer.server.port=25600"
       - 'traefik.docker.network=komga'
 

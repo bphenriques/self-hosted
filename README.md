@@ -2,7 +2,7 @@
 
 Hi! 
 
-This is how I am currently organizing my self-hosted services running on a Synology DS923+.
+This is how I am currently organizing my self-hosted services running on a Synology DS923+ (my first setup).
 
 > [!IMPORTANT]
 > **Disclaimer:** This is my setup that works _for me_. I hope it can be of use to you too.
@@ -11,7 +11,14 @@ The guidelines I am trying to follow:
 1. **Portability**: I do not want to be tied to a specific vendor, therefore I am using `docker` to run the services.
 2. **Security**: **I am no expert**, but I do my best.
 3. **Backups**: Automated backups.
-4. **Reproducible**: _Tentatively_, I should be able to spin-up the environments without going through user interfaces.
+4. **Reproducible**: _Tentatively_, I should be able to spin-up the environments without going through user interfaces. Ideally I would use terraform, but.. the benefits do not outweigh the time I have available.
+
+# Stack
+
+- **DNS registration**: [Cloudflare](./infrastructure/cloudflare.md).
+- **Reverse proxy**: [`traefik`](https://github.com/traefik/traefik).
+- **Authentication / Authorization**: [`pocket-id`](https://github.com/pocket-id/pocket-id) as OIDC provider for the apps that support it natively, and [`traefik-oidc-auth`](https://github.com/sevensolutions/traefik-oidc-auth) as proxy for the services that don't.
+- **Remote access**: Tailscale. There are other options but this was seamless on Synology.
 
 # Requirements
 

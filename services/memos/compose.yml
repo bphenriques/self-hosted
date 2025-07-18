@@ -19,6 +19,7 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.memos.rule=Host("memos.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.memos.entrypoints=websecure"
       - "traefik.http.services.memos-websecure.loadbalancer.server.port=5230"
       - 'traefik.docker.network=memos'
 

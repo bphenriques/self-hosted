@@ -22,6 +22,7 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.sonarr.rule=Host("sonarr.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.sonarr.entrypoints=websecure"
       - "traefik.http.services.sonarr-websecure.loadbalancer.server.port=8989"
       - 'traefik.docker.network=sonarr'
 

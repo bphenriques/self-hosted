@@ -22,6 +22,7 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.radarr.rule=Host("radarr.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.radarr.entrypoints=websecure"
       - "traefik.http.services.radarr-websecure.loadbalancer.server.port=7878"
       - 'traefik.docker.network=radarr'
 

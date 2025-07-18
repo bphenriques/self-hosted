@@ -17,6 +17,7 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.linkding.rule=Host("linkding.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.linkding.entrypoints=websecure"
       - "traefik.http.services.linkding-websecure.loadbalancer.server.port=9090"
       - 'traefik.docker.network=linkding'
 

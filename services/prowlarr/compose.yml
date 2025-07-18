@@ -23,6 +23,7 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.prowlarr.rule=Host("prowlarr.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.prowlarr.entrypoints=websecure"
       - "traefik.http.services.prowlarr-websecure.loadbalancer.server.port=9696"
       - 'traefik.docker.network=prowlarr'
 

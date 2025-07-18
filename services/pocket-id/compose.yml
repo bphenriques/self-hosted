@@ -1,0 +1,32 @@
+secrets:
+  pocket_id_encryption_key:
+    file: "${HOME_SERVER_SECRETS_DIR}/pocket-id/pocket_id_encryption_key.secret"
+
+services:
+  pocket-id:
+    image: ghcr.io/pocket-id/pocket-id:v1
+    container_name: pocket-id
+    hostname: homepage
+    user: "${PUID}:${PGID}"
+    restart: unless-stopped
+    environment:
+      APP_URL: "pocket-id.${HOME_SERVER_BASE_URL}"
+      TRUST_PROXY: true
+      PUID: "${PUID}"
+      PGID: "${PGID}"
+      ENCRYPTION_KEY_FILE: "/run/secrets/pocket_id_encryption_key"
+      ANALYTICS_DISABLED: true
+      # FIXME: Add MAXMIND_LICENSE_KEY. I dont need it but I should.
+    volumes:
+      - "${DATA_DIR}/pocket-id/data:/app/data"
+    healthcheck:
+      test: [ "CMD", "/app/pocket-id", "healthcheck" ]
+      interval: 1m30s
+      timeout: 5s
+      retries: 2
+      start_period: 10s
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.pocket-id.rule=Host("pocket-id.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.pocket-id.entrypoints=websecure"
+      - "traefik.http.services.pocket-id-websecure.loadbalancer.server.port=1411"

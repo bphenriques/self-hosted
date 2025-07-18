@@ -25,6 +25,7 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.romm.rule=Host("romm.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.romm.entrypoints=websecure"
       - "traefik.http.services.romm-websecure.loadbalancer.server.port=8080"
       - 'traefik.docker.network=romm'
 

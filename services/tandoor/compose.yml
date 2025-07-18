@@ -36,6 +36,7 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.tandoor.rule=Host("tandoor.${HOME_SERVER_CNAME}") || Host("recipes.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.tandoor.entrypoints=websecure"
       - "traefik.http.services.tandoor-websecure.loadbalancer.server.port=8080"
       - 'traefik.docker.network=tandoor-public'
 

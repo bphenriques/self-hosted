@@ -33,6 +33,7 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.immich.rule=Host("immich.${HOME_SERVER_CNAME}") || Host("photos.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.immich.entrypoints=websecure"
       - "traefik.http.services.immich-websecure.loadbalancer.server.port=2283"
       - 'traefik.docker.network=immich'
 

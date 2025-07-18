@@ -21,6 +21,7 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.homepage.rule=Host(`${HOME_SERVER_CNAME}`) || Host(`www.${HOME_SERVER_CNAME}`)'
+      - "traefik.http.routers.homepage.entrypoints=websecure"
       - "traefik.http.services.homepage-websecure.loadbalancer.server.port=3000"
       - 'traefik.docker.network=homepage'
     networks:
