@@ -10,7 +10,7 @@ services:
     user: "${PUID}:${PGID}"
     restart: unless-stopped
     environment:
-      APP_URL: "pocket-id.${HOME_SERVER_BASE_URL}"
+      APP_URL: "https://pocket-id.${HOME_SERVER_BASE_URL}"
       TRUST_PROXY: true
       PUID: "${PUID}"
       PGID: "${PGID}"

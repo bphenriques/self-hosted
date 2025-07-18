@@ -8,7 +8,7 @@ source .env.local
 export HOME_SERVER_INSTALL_DIR="$(pwd)"
 export HOME_SERVER_CONFIG_DIR="${HOME_SERVER_INSTALL_DIR}/infrastructure/environments/local"
 export HOME_SERVER_ENV=local
-export HOME_SERVER_BASE_URL="${HOME_SERVER_CNAME}:8443"
+export HOME_SERVER_BASE_URL="${HOME_SERVER_CNAME}"
 
 mkdir -p /tmp/home-server
 

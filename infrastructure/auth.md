@@ -4,3 +4,6 @@ Using [`pocket-id`](https://github.com/pocket-id/pocket-id) for the services tha
 
 I will tentatively document the setup process if it can't be done directly in the `compose` files.
 
+# First time
+
+After installing, go to https://pocket-id.MYDOMAIN/signup/setup

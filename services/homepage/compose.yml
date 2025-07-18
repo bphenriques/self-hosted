@@ -10,7 +10,7 @@ services:
       - "${HOME_SERVER_SECRETS_DIR}/homepage.env"
     environment:
       - "HOMEPAGE_VAR_BASE_URL=${HOME_SERVER_BASE_URL}"
-      - "HOME_SERVER_CNAME=${HOME_SERVER_CNAME}"
+      - "HOMEPAGE_VAR_SERVER_CNAME=${HOME_SERVER_CNAME}"
       - HOMEPAGE_ALLOWED_HOSTS=*
       - LOG_TARGETS=stdout
       - PUID="$PUID"

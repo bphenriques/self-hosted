@@ -80,8 +80,8 @@
 
 - Admin:
   - Synology:
-        href: https://synology.{{HOMEPAGE_VAR_BASE_URL}}
-        siteMonitor: https://synology.{{HOMEPAGE_VAR_BASE_URL}}
+        href: https://synology.{{HOMEPAGE_VAR_SERVER_CNAME}}
+        siteMonitor: https://synology.{{HOMEPAGE_VAR_SERVER_CNAME}}
         description: Synology Administration
         icon: synology.svg
   - Syncthing:

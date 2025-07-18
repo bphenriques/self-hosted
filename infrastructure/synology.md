@@ -116,12 +116,13 @@ $ environments/synology.setup.sh
 3. Outside the session, copy the `environments/synolog/*.env` to `.config/home-server` files and adjust them particularly:
 ```
 HOME_SERVER_CNAME=my-url
-HOME_SERVER_BASE_URL=my-url:port
+HOME_SERVER_BASE_URL=my-url
 ```
 
-I suggest https://www.duckdns.org/ as it is and is good enough. Synology reserves the HTTP/HTTPS ports, therefore I also
-recommend using a different port such as `8443` for HTTPS (there is a way to use `443` but I am avoiding as it is a bit
-intrusive for my liking).
+Synology reserves ports 80 and 443 to its own services and I would like to use them. For that reason, set a task scheduler
+to run this [script](./../bin/synology-switch-ports.sh) on boot using the root user.
+
+Reference and credits to https://www.simplehomelab.com/free-ports-80-and-443-on-synology/
 
 Finally:
 1. Depending on the service, you will likely need to copy secrets to `$HOME/.config/home-server/secrets`.

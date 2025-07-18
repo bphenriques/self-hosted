@@ -25,7 +25,7 @@ Have this policy in-place that only grants access to my NAS exposed web-server a
     {
       "src": ["autogroup:member"],
       "dst": ["192.168.1.192"],
-      "ip":  ["tcp:8442-8443"],
+      "ip":  ["tcp:443"],
     },
 
     // Syncthing file sharing running on Synology NAS. Access to specific folders is controlled by the service

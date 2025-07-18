@@ -61,9 +61,9 @@ services:
     volumes:
       - "${DATA_DIR}/traefik/letsencrypt/acme.json:/data/letsencrypt/acme.json" # Recommended to avoid re-issuing.
     ports:
-      - "8482:80"
-      - "8443:443"
-      - "8443:443/udp"
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
     secrets:
       - "cf_api_email_file"
       - "cf_dns_api_token"
