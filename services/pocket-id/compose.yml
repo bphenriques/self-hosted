@@ -21,12 +21,6 @@ services:
       - "${DATA_DIR}/pocket-id/data:/app/data"
     secrets:
       - "pocket_id_encryption_key"
-    healthcheck:
-      test: [ "CMD", "/app/pocket-id", "healthcheck" ]
-      interval: 1m30s
-      timeout: 5s
-      retries: 2
-      start_period: 10s
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.pocket-id.rule=Host("pocket-id.${HOME_SERVER_CNAME}")'
