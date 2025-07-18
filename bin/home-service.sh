@@ -85,7 +85,7 @@ service::source() {
   fi
 
   if ! test -z "${HOME_SERVER_INCLUDE_ENV}"; then
-    __service::source "${HOME_SERVER_INCLUDE_ENV}.env"
+    __service::source "${HOME_SERVER_CONFIG_DIR}/${HOME_SERVER_INCLUDE_ENV}.env"
   fi
 }
 
