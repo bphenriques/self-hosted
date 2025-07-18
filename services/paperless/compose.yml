@@ -1,7 +1,7 @@
 # https://github.com/paperless-ngx/paperless-ngx/
 services:
   broker:
-    image: docker.io/library/redis:7
+    image: docker.io/library/redis:8
     restart: unless-stopped
     user: "${PUID}:${PGID}"
     hostname: paperless-redis
