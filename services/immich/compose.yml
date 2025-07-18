@@ -68,7 +68,7 @@ services:
   database:
     container_name: immich_postgres
     hostname: immich_postgres
-    image: ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0
+    image: ghcr.io/immich-app/postgres:16-vectorchord0.3.0-pgvectors0.2.0
     user: "${PUID}:${PGID}"
     env_file:
       - "${HOME_SERVER_SECRETS_DIR}/immich.env"
