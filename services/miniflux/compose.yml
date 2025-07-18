@@ -14,6 +14,13 @@ services:
       - RUN_MIGRATIONS=1
       - CREATE_ADMIN=1
       - BASE_URL=https://miniflux.${HOME_SERVER_BASE_URL}
+      - OAUTH2_PROVIDER=oidc
+      - OAUTH2_REDIRECT_URL="https://pocket-id.${HOME_SERVER_BASE_URL}/oauth2/oidc/callback"
+      - OAUTH2_OIDC_DISCOVERY_ENDPOINT="https://pocket-id.${HOME_SERVER_BASE_URL}/.well-known/openid-configuration"
+      - OAUTH2_OIDC_PROVIDER_NAME=PocketID
+      - OAUTH2_USER_CREATION=1
+      - DISABLE_LOCAL_AUTH=1
+
     restart: unless-stopped
     networks:
       - miniflux-private
