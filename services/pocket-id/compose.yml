@@ -4,7 +4,7 @@ secrets:
 
 services:
   pocket-id:
-    image: ghcr.io/pocket-id/pocket-id:v1
+    image: ghcr.io/pocket-id/pocket-id:v1.6.2
     container_name: pocket-id
     hostname: homepage
     user: "${PUID}:${PGID}"
@@ -21,8 +21,22 @@ services:
       - "${DATA_DIR}/pocket-id/data:/app/data"
     secrets:
       - "pocket_id_encryption_key"
+    healthcheck:
+      test: [ "CMD", "/app/pocket-id", "healthcheck" ]
+      interval: 1m30s
+      timeout: 5s
+      retries: 2
+      start_period: 10s
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.pocket-id.rule=Host("pocket-id.${HOME_SERVER_CNAME}")'
       - "traefik.http.routers.pocket-id.entrypoints=websecure"
       - "traefik.http.services.pocket-id-websecure.loadbalancer.server.port=1411"
+      - 'traefik.docker.network=pocket-id'
+    networks:
+      - pocket-id
+
+networks:
+  pocket-id:
+    name: pocket-id
+    external: true

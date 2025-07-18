@@ -89,6 +89,7 @@ services:
       - komga
       - gitea
       - tandoor-public
+      - pocket-id
 
 networks:
   traefik-internal:
@@ -96,6 +97,8 @@ networks:
   traefik-external:
     external: true
   jellyfin:
+    external: true
+  pocket-id:
     external: true
   homepage:
     external: true
