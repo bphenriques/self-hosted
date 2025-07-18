@@ -85,8 +85,8 @@
         description: Synology Administration
         icon: synology.svg
   - Syncthing:
-        href: https://{{HOME_SERVER_CNAME}}:8384
-        siteMonitor: https://{{HOME_SERVER_CNAME}}:8384
+        href: https://{{HOMEPAGE_VAR_SERVER_CNAME}}:8384
+        siteMonitor: https://{{HOMEPAGE_VAR_SERVER_CNAME}}:8384
         description: Peer-to-peer file server
         icon: syncthing.svg
   - Prowlarr:
