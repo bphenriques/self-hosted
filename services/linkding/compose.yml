@@ -9,6 +9,15 @@ services:
       - "${HOME_SERVER_SECRETS_DIR}/linkding.env"
     environment:
       LD_SUPERUSER_NAME: bphenriques
+
+      # OIDC
+      LD_ENABLE_OIDC: True
+      OIDC_OP_AUTHORIZATION_ENDPOINT: "https://pocket-id.${HOME_SERVER_BASE_URL}/authorize"
+      OIDC_OP_TOKEN_ENDPOINT: "https://pocket-id.${HOME_SERVER_BASE_URL}/api/oidc/token"
+      OIDC_OP_USER_ENDPOINT: "https://pocket-id.${HOME_SERVER_BASE_URL}/api/oidc/userinfo"
+      OIDC_OP_JWKS_ENDPOINT: "https://pocket-id.${HOME_SERVER_BASE_URL}/.well-known/jwks.json"
+      OIDC_USERNAME_CLAIM: preferred_username
+
     volumes:
       - "${DATA_DIR}/linkding:/etc/linkding/data"
     restart: unless-stopped
