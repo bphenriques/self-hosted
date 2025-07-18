@@ -21,7 +21,7 @@ services:
       - 'traefik.http.routers.spdf.rule=Host("pdf.${HOME_SERVER_CNAME}")'
       - "traefik.http.routers.spdf.entrypoints=websecure"
       - "traefik.http.services.spdf-websecure.loadbalancer.server.port=8080"
-      - 'traefik.docker.network=spdf'
+      - 'traefik.docker.network=s-pdf'
 
 networks:
   s-pdf:

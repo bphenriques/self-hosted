@@ -19,6 +19,8 @@ services:
       # FIXME: Add MAXMIND_LICENSE_KEY. I dont need it but I should.
     volumes:
       - "${DATA_DIR}/pocket-id/data:/app/data"
+    secrets:
+      - "pocket_id_encryption_key"
     healthcheck:
       test: [ "CMD", "/app/pocket-id", "healthcheck" ]
       interval: 1m30s
