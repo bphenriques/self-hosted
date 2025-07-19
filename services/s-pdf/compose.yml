@@ -1,7 +1,7 @@
 # https://github.com/Stirling-Tools/Stirling-PDF/releases
 services:
   s-pdf:
-    image: stirlingtools/stirling-pdf:0.46.2
+    image: stirlingtools/stirling-pdf:1.0.2
     container_name: s-pdf
     hostname: s-pdf
     user: "${PUID}:${PGID}"
