@@ -22,10 +22,11 @@ The guidelines I am trying to follow:
 
 # Requirements
 
-This repository is tied to what I currently own:
+Tied to what I currently own:
 - Domain registered in Cloudflare
-- Synology NAS as server (not ideal but it is what I started with and is good enough)
-- Tailscale account (not ideal but works "out-of-the-box" with Synology)
+- Tailscale account
+
+I am running on a Synology NAS but it is not a requirement as everything runs on top of docker.
 
 ## Usage
 
