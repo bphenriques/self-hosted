@@ -56,8 +56,8 @@ services:
       PAPERLESS_CORS_ALLOWED_HOSTS: https://paperless.${HOME_SERVER_BASE_URL}
       # OIDC
       PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
-      PAPERLESS_DISABLE_REGULAR_LOGIN: False
-      PAPERLESS_REDIRECT_LOGIN_TO_SSO: False
+      PAPERLESS_DISABLE_REGULAR_LOGIN: True
+      PAPERLESS_REDIRECT_LOGIN_TO_SSO: True
     healthcheck:
       test: ["CMD", "curl", "-fs", "-S", "--max-time", "2", "http://localhost:8000"]
       interval: 30s
