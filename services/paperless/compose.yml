@@ -53,7 +53,7 @@ services:
       PAPERLESS_OCR_LANGUAGE: eng
       PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'  # Store the original if signed.
       PAPERLESS_URL: https://paperless.${HOME_SERVER_BASE_URL}
-
+      PAPERLESS_CORS_ALLOWED_HOSTS: https://paperless.${HOME_SERVER_BASE_URL}
       # OIDC
       PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
       PAPERLESS_DISABLE_REGULAR_LOGIN: False
