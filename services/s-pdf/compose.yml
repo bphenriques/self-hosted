@@ -8,6 +8,7 @@ services:
     env_file:
       - "${HOME_SERVER_SECRETS_DIR}/s-pdf.env"
     environment:
+      DISABLE_ADDITIONAL_FEATURES: false
       SECURITY_ENABLELOGIN: true
       SECURITY_OAUTH2_ENABLED: true
       SECURITY_OAUTH2_AUTOCREATEUSER: false
