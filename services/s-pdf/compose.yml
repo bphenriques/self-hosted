@@ -5,19 +5,10 @@ services:
     container_name: s-pdf
     hostname: s-pdf
     user: "${PUID}:${PGID}"
-    env_file:
-      - "${HOME_SERVER_SECRETS_DIR}/s-pdf.env"
     environment:
-      DOCKER_ENABLE_SECURITY: true
-      DISABLE_ADDITIONAL_FEATURES: false
-      SECURITY_ENABLELOGIN: true
-      SECURITY_OAUTH2_ENABLED: true
-      SECURITY_OAUTH2_AUTOCREATEUSER: false
-      SECURITY_OAUTH2_ISSUER: https://pocket-id.${HOME_SERVER_BASE_URL}
-      SECURITY_OAUTH2_BLOCKREGISTRATION: false
-      SECURITY_OAUTH2_SCOPES: "openid, profile, email"
-      SECURITY_OAUTH2_USEASUSERNAME: preferred_username
-      SECURITY_OAUTH2_PROVIDER: "pocket-id"
+      - DOCKER_ENABLE_SECURITY=false
+      - SECURITY_ENABLE_LOGIN=false
+      # Not setting up OIDC as it is a paid feature. Therefore, I will set a proxy to authenticate beforehand.
     restart: unless-stopped
     volumes:
       - "${DATA_DIR}/stirling-pdf/configs:/configs"
