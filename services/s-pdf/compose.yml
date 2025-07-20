@@ -8,6 +8,7 @@ services:
     env_file:
       - "${HOME_SERVER_SECRETS_DIR}/s-pdf.env"
     environment:
+      DOCKER_ENABLE_SECURITY: true
       DISABLE_ADDITIONAL_FEATURES: false
       SECURITY_ENABLELOGIN: true
       SECURITY_OAUTH2_ENABLED: true
