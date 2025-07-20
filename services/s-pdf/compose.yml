@@ -22,6 +22,8 @@ services:
       - "${DATA_DIR}/stirling-pdf/configs:/configs"
       - "${DATA_DIR}/stirling-pdf/custom-files:/customFiles"
       - "${DATA_DIR}/stirling-pdf/logs:/logs"
+      - "${DATA_DIR}/stirling-pdf/pipeline:/pipeline"
+      - "${DATA_DIR}/stirling-pdf/tmp:/tmp/"
       - "./config/training-data-ocr:/usr/share/tesseract-ocr/5/tessdata"
     networks:
       - s-pdf
