@@ -5,9 +5,17 @@ services:
     container_name: s-pdf
     hostname: s-pdf
     user: "${PUID}:${PGID}"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/s-pdf.env"
     environment:
-      - DOCKER_ENABLE_SECURITY=false  # No need as I do not want logic-page. This is an internal tool.
-      - SECURITY_ENABLE_LOGIN=false   # No need as I do not want logic-page. This is an internal tool.
+      SECURITY_ENABLELOGIN: true
+      SECURITY_OAUTH2_ENABLED: true
+      SECURITY_OAUTH2_AUTOCREATEUSER: false
+      SECURITY_OAUTH2_ISSUER: https://pocket-id.${HOME_SERVER_BASE_URL}
+      SECURITY_OAUTH2_BLOCKREGISTRATION: false
+      SECURITY_OAUTH2_SCOPES: "openid, profile, email"
+      SECURITY_OAUTH2_USEASUSERNAME: preferred_username
+      SECURITY_OAUTH2_PROVIDER: "pocket-id"
     restart: unless-stopped
     volumes:
       - "${DATA_DIR}/stirling-pdf/configs:/configs"

@@ -20,6 +20,8 @@ The guidelines I am trying to follow:
 - **Authentication / Authorization**: [`pocket-id`](https://github.com/pocket-id/pocket-id) as OIDC provider for the apps that support it natively, and [`traefik-oidc-auth`](https://github.com/sevensolutions/traefik-oidc-auth) as proxy for the services that don't.
 - **Remote access**: Tailscale. There are other options but this was seamless on Synology.
 
+**Tip**: create a regular account and then link to pocket-id if the service has a mobile app that does not support OIDC.
+
 # Requirements
 
 Tied to what I currently own:
@@ -56,6 +58,3 @@ Requirements:
     ```shell
     $ ./bin/local.sh up traefik
     ```
-   
-
-## Acknowledments
