@@ -25,7 +25,7 @@ services:
     depends_on:
       - socket-proxy
     command:
-      - "--log.level=DEBUG"
+      - "--log.level=ERROR"
 
       # Providers
       - "--providers.docker=true"
