@@ -124,10 +124,6 @@ to run this [script](./../bin/synology-switch-ports.sh) on boot using the root u
 
 Reference and credits to https://www.simplehomelab.com/free-ports-80-and-443-on-synology/
 
-Finally:
-1. Depending on the service, you will likely need to copy secrets to `$HOME/.config/home-server/secrets`.
-2. Follow the instructions on the `README.md` on how to run the services.
-
 ## Misc
 
 - Disable automatically power on when the power is restored.
