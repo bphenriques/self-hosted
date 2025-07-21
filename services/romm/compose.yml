@@ -44,8 +44,8 @@ services:
       - "traefik.http.services.romm-websecure.loadbalancer.server.port=8080"
       - 'traefik.docker.network=romm'
       # EmulatorJS specific settings: https://emulatorjs.org/docs/options#ejs_threads
-      - "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customResponseHeaders[0].Cross-Origin-Resource-Policy=cross-origin"
-      - "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customResponseHeaders[1].Cross-Origin-Embedder-Policy=require-corp"
+      - "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customrequestheaders[0].Cross-Origin-Resource-Policy=cross-origin"
+      - "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customrequestheaders[1].Cross-Origin-Embedder-Policy=require-corp"
       - "traefik.http.routers.romm.middlewares=emulatorjs-sharedarraybuffer@docker"
 
 
