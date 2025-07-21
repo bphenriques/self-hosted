@@ -53,7 +53,6 @@ services:
       - "--certificatesresolvers.default.acme.dnschallenge=true"
       - "--certificatesresolvers.default.acme.dnschallenge.provider=cloudflare"
       - "--certificatesresolvers.default.acme.storage=/data/letsencrypt/acme.json"
-
       # TODO:
       # - Secure headers: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/headers/
       # - IP Allowlist headers (likely not required atm): ...
