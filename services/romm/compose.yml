@@ -17,23 +17,21 @@ services:
       - "${DATA_DIR}/romm/redis:/redis-data"          # Cached data for background tasks
       - "${DATA_DIR}/romm/assets:/romm/assets"        # Uploaded saves, states, etc.
       - "${DATA_DIR}/romm/config:/romm/config"        # configuration
-
-      - "${EMULATION_DIR}:/romm/library:ro"
       # The library. I don't need everything exposed.
-      # - "${EMULATION_DIR}/bios:/romm/library/bios:ro"
-      # - "${EMULATION_DIR}/roms/gb:/romm/library/roms/gb:ro"
-      # - "${EMULATION_DIR}/roms/gba:/romm/library/roms/gba:ro"
-      # - "${EMULATION_DIR}/roms/gbc:/romm/library/roms/gbc:ro"
-      # - "${EMULATION_DIR}/roms/dos:/romm/library/roms/dos:ro"
-      # - "${EMULATION_DIR}/roms/dreamcast:/romm/library/roms/dreamcast:ro"
-      # - "${EMULATION_DIR}/roms/fbneo:/romm/library/roms/fbneo:ro"
-      # - "${EMULATION_DIR}/roms/megadrive:/romm/library/roms/megadrive:ro"
-      # - "${EMULATION_DIR}/roms/n64:/romm/library/roms/n64:ro"
-      # - "${EMULATION_DIR}/roms/nds:/romm/library/roms/nds:ro"
-      # - "${EMULATION_DIR}/roms/nes:/romm/library/roms/nes:ro"
-      # - "${EMULATION_DIR}/roms/psp:/romm/library/roms/psp:ro"
-      # - "${EMULATION_DIR}/roms/psx:/romm/library/roms/psx:ro"
-      # - "${EMULATION_DIR}/roms/snes:/romm/library/roms/snes:ro"
+      - "${EMULATION_DIR}/bios:/romm/library/bios:ro"
+      - "${EMULATION_DIR}/roms/gb:/romm/library/roms/gb:ro"
+      - "${EMULATION_DIR}/roms/gba:/romm/library/roms/gba:ro"
+      - "${EMULATION_DIR}/roms/gbc:/romm/library/roms/gbc:ro"
+      - "${EMULATION_DIR}/roms/dos:/romm/library/roms/dos:ro"
+      - "${EMULATION_DIR}/roms/dreamcast:/romm/library/roms/dreamcast:ro"
+      - "${EMULATION_DIR}/roms/fbneo:/romm/library/roms/fbneo:ro"
+      - "${EMULATION_DIR}/roms/megadrive:/romm/library/roms/megadrive:ro"
+      - "${EMULATION_DIR}/roms/n64:/romm/library/roms/n64:ro"
+      - "${EMULATION_DIR}/roms/nds:/romm/library/roms/nds:ro"
+      - "${EMULATION_DIR}/roms/nes:/romm/library/roms/nes:ro"
+      - "${EMULATION_DIR}/roms/psp:/romm/library/roms/psp:ro"
+      - "${EMULATION_DIR}/roms/psx:/romm/library/roms/psx:ro"
+      - "${EMULATION_DIR}/roms/snes:/romm/library/roms/snes:ro"
     depends_on:
       - romm-db
     networks:
@@ -46,9 +44,9 @@ services:
       - "traefik.http.services.romm-websecure.loadbalancer.server.port=8080"
       - 'traefik.docker.network=romm'
       # EmulatorJS specific settings: https://emulatorjs.org/docs/options#ejs_threads
-      - "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customResponseHeaders[0].Cross-Origin-Resource-Policy=cross-origin"
-      - "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customResponseHeaders[1].Cross-Origin-Embedder-Policy=require-corp"
-      - "traefik.http.routers.romm.middlewares=emulatorjs-sharedarraybuffer@docker"
+      #- "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customResponseHeaders[0].Cross-Origin-Resource-Policy=cross-origin"
+      #- "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customResponseHeaders[1].Cross-Origin-Embedder-Policy=require-corp"
+      #- "traefik.http.routers.romm.middlewares=emulatorjs-sharedarraybuffer@docker"
 
 
   romm-db:
