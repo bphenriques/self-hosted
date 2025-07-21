@@ -46,7 +46,7 @@ services:
       # EmulatorJS specific settings: https://emulatorjs.org/docs/options#ejs_threads
       - "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customrequestheaders.Cross-Origin-Resource-Policy=cross-origin"
       - "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customrequestheaders.Cross-Origin-Embedder-Policy=require-corp"
-      - "traefik.http.routers.romm.middlewares=emulatorjs-sharedarraybuffer@docker"
+      - "traefik.http.routers.romm.middlewares=emulatorjs-sharedarraybuffer"
 
 
   romm-db:
