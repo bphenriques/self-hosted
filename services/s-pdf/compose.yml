@@ -26,6 +26,7 @@ services:
       - "traefik.http.services.spdf-websecure.loadbalancer.server.port=8080"
       - 'traefik.docker.network=s-pdf'
 
+
 networks:
   s-pdf:
     external: true

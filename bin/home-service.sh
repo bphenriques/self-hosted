@@ -38,6 +38,8 @@ __service::setup_data_dir() {
   target="$1"
   owner="$2"
 
+
+  # TODO check if the file has an extension, if so, just touch the file (a heusrisitc)
   mkdir -p "$target"
   if [ "$(stat -c "%u:%g" "$target")" != "$owner" ]; then
     echo "Data directory '$target' is not owned by $owner (by $(stat -c "%u:%g" "$target")). Using sudo to chown."
