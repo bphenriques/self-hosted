@@ -22,7 +22,9 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - "ALLOWED_HOSTS=*"
+      - "ALLOWED_HOSTS=tandoor.${HOME_SERVER_CNAME},recipes.${HOME_SERVER_CNAME}"
+      # OIDC
+      - SOCIAL_PROVIDERS=allauth.socialaccount.providers.openid_connect
     env_file:
       - "${HOME_SERVER_SECRETS_DIR}/tandoor-recipes.env"
     volumes:
