@@ -1,21 +1,14 @@
-# https://github.com/immich-app/immich/releases
-# https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml. Exposes 3001
 services:
   immich-server:
     container_name: immich_server
     hostname: immich_server
-    image: ghcr.io/immich-app/immich-server:v1.135.3
+    image: ghcr.io/immich-app/immich-server:v1.137.0
     user: "${PUID}:${PGID}"
     volumes:
-      - "${BPHENRIQUES_PHOTOS_LIBRARY}:/mnt/media/bphenriques:ro"           # Using external library
-      #- "${BPHENRIQUES_PHOTOS_INBOX}:/usr/src/app/upload/library/admin"    # TODO: perhaps create a subfolder inbox?
-      - "${DATA_DIR}/immich/cache/library:/usr/src/app/upload/library"
-      - "${DATA_DIR}/immich/cache/uploads:/usr/src/app/upload/upload"
-      - "${DATA_DIR}/immich/cache/backups:/usr/src/app/upload/backups"
-      - "${DATA_DIR}/immich/cache/thumbs:/usr/src/app/upload/thumbs"
-      - "${DATA_DIR}/immich/cache/profile:/usr/src/app/upload/profile"
-      - "${DATA_DIR}/immich/cache/encoded-video:/usr/src/app/upload/encoded-video"
+      - "${DATA_DIR}/immich/cache:/data"
       - "/etc/localtime:/etc/localtime:ro"
+      # Using external libraries
+      - "${BPHENRIQUES_PHOTOS_LIBRARY}:/mnt/media/bphenriques:ro"
     environment:
       - DB_USERNAME=postgres
       - DB_DATABASE_NAME=immich
@@ -41,7 +34,7 @@ services:
   immich-machine-learning:
     container_name: immich_machine_learning
     hostname: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:v1.133.0
+    image: ghcr.io/immich-app/immich-machine-learning:v1.137.0
     user: "${PUID}:${PGID}"
     environment:
       - MPLCONFIGDIR=/data/matplotlib-cache
@@ -55,7 +48,7 @@ services:
   redis:
     container_name: immich_redis
     hostname: immich_redis
-    image: docker.io/valkey/valkey:8-bookworm@sha256:ff21bc0f8194dc9c105b769aeabf9585fea6a8ed649c0781caeac5cb3c247884
+    image: docker.io/valkey/valkey:8-bookworm@sha256:facc1d2c3462975c34e10fccb167bfa92b0e0dbd992fc282c29a61c3243afb11
     healthcheck:
       test: redis-cli ping || exit 1
     user: "${PUID}:${PGID}"
@@ -68,7 +61,7 @@ services:
   database:
     container_name: immich_postgres
     hostname: immich_postgres
-    image: ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:32324a2f41df5de9efe1af166b7008c3f55646f8d0e00d9550c16c9822366b4a
     user: "${PUID}:${PGID}"
     env_file:
       - "${HOME_SERVER_SECRETS_DIR}/immich.env"
@@ -78,6 +71,7 @@ services:
     volumes:
       - "${DATA_DIR}/immich/postgres:/var/lib/postgresql/data"
     restart: unless-stopped
+    shm_size: 128mb
     networks:
       - immich-private
 
