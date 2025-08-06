@@ -23,7 +23,8 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - "ALLOWED_HOSTS=tandoor.${HOME_SERVER_CNAME}"
-      - MEDIA_URL=https://tandoor.${HOME_SERVER_CNAME}/media/
+      #- MEDIA_URL=https://tandoor.${HOME_SERVER_CNAME}/media/
+      - GUNICORN_MEDIA=1 # Fix images showing up
       # OIDC
       - SOCIAL_PROVIDERS=allauth.socialaccount.providers.openid_connect
     env_file:
