@@ -22,7 +22,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - "ALLOWED_HOSTS=tandoor.${HOME_SERVER_CNAME},recipes.${HOME_SERVER_CNAME}"
+      - "ALLOWED_HOSTS=tandoor.${HOME_SERVER_CNAME}"
+      - MEDIA_URL=https://tandoor.${HOME_SERVER_CNAME}/media/
       # OIDC
       - SOCIAL_PROVIDERS=allauth.socialaccount.providers.openid_connect
     env_file:
@@ -37,7 +38,7 @@ services:
       - tandoor-public
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.tandoor.rule=Host("tandoor.${HOME_SERVER_CNAME}") || Host("recipes.${HOME_SERVER_CNAME}")'
+      - 'traefik.http.routers.tandoor.rule=Host("tandoor.${HOME_SERVER_CNAME}")'
       - "traefik.http.routers.tandoor.entrypoints=websecure"
       - "traefik.http.services.tandoor-websecure.loadbalancer.server.port=8080"
       - 'traefik.docker.network=tandoor-public'
