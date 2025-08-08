@@ -14,15 +14,6 @@
         siteMonitor: https://photos.{{HOMEPAGE_VAR_BASE_URL}}
         description: Photo & Video Gallery
         icon: immich.svg
-    - Paperless:
-        href: https://paperless.{{HOMEPAGE_VAR_BASE_URL}}
-        siteMonitor: https://paperless.{{HOMEPAGE_VAR_BASE_URL}}
-        description: Documents
-        icon: paperless.svg
-        widget:
-          type: paperlessngx
-          url: https://paperless.{{HOMEPAGE_VAR_BASE_URL}}
-          key: {{HOMEPAGE_VAR_PAPERLESS_TOKEN}}
     - Jellyfin:
         href: https://jellyfin.{{HOMEPAGE_VAR_BASE_URL}}
         description: Media Player
@@ -72,12 +63,6 @@
         siteMonitor: https://tandoor.{{HOMEPAGE_VAR_BASE_URL}}
         description: Tandoor
         icon: tandoor.svg
-    - Gitea:
-        href: https://gitea.{{HOMEPAGE_VAR_BASE_URL}}
-        siteMonitor: https://gitea.{{HOMEPAGE_VAR_BASE_URL}}
-        description: Gitea
-        icon: gitea.svg
-
 - Admin:
   - Synology:
         href: https://synology.{{HOMEPAGE_VAR_SERVER_CNAME}}
@@ -94,3 +79,8 @@
       siteMonitor: https://prowlarr.{{HOMEPAGE_VAR_BASE_URL}}
       description: Manage *rr services
       icon: prowlarr.svg
+  - Gitea:
+      href: https://gitea.{{HOMEPAGE_VAR_BASE_URL}}
+      siteMonitor: https://gitea.{{HOMEPAGE_VAR_BASE_URL}}
+      description: Gitea
+      icon: gitea.svg

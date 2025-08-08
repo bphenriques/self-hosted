@@ -83,7 +83,6 @@ services:
       - jellyseerr
       - immich
       - linkding
-      - paperless
       - romm
       - komga
       - gitea
@@ -118,8 +117,6 @@ networks:
   immich:
     external: true
   linkding:
-    external: true
-  paperless:
     external: true
   romm:
     external: true
