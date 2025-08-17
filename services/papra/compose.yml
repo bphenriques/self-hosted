@@ -1,0 +1,29 @@
+services:
+  papra:
+    container_name: papra
+    image: ghcr.io/papra-hq/papra:latest
+    restart: unless-stopped
+    hostname: papra
+    user: "${PUID}:${PGID}"
+    volumes:
+      - "${BPHENRIQUES_DOCUMENTS}:/app/app-data"
+      - "${BPHENRIQUES_DOCUMENTS_CONSUME}:/app/ingestion"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/papra.env"
+    environment:
+      APP_BASE_URL: https://papra.${HOME_SERVER_BASE_URL}
+      DOCUMENTS_OCR_LANGUAGES: eng,por
+      DOCUMENT_STORAGE_FILESYSTEM_ROOT: "./app-data/documents"
+      INGESTION_FOLDER_IS_ENABLED: true
+    networks:
+      - papra
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.paperless.rule=Host("papra.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.paperless.entrypoints=websecure"
+      - "traefik.http.services.paperless-websecure.loadbalancer.server.port=1221"
+      - 'traefik.docker.network=papra'
+
+networks:
+  papra:
+    external: true
