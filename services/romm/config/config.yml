@@ -1,0 +1,18 @@
+exclude:
+  platforms: []
+
+  roms:
+    single_file:
+      extensions: [ 'stfolder' ]
+      names: [ ".stignore", ""]
+    multi_file:
+      names: [ ".stfolder" ]
+      parts:
+        names: []
+        extensions: []
+
+system:
+  platforms: {}
+  versions: {}
+
+filesystem: {}

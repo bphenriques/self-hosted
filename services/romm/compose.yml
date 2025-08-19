@@ -1,6 +1,6 @@
 services:
   romm:
-    image: rommapp/romm:4.0.1
+    image: rommapp/romm:4.1.3
     container_name: romm
     hostname: romm
     user: "${PUID}:${PGID}"
@@ -22,6 +22,7 @@ services:
       - "${DATA_DIR}/romm/redis:/redis-data"          # Cached data for background tasks
       - "${DATA_DIR}/romm/assets:/romm/assets"        # Uploaded saves, states, etc.
       - "${DATA_DIR}/romm/config:/romm/config"        # configuration
+      - "./config:/romm/config:ro"
       # The library. I don't need everything exposed.
       - "${EMULATION_DIR}/bios:/romm/library/bios:ro"
       - "${EMULATION_DIR}/roms/gb:/romm/library/roms/gb:ro"
