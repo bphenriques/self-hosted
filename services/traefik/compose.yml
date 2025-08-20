@@ -36,6 +36,7 @@ services:
       - "--entryPoints.web.address=:80"
       - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
       - "--entryPoints.websecure.address=:443"
+      - "--entryPoints.ssh.address=:222"
 
       # Timeouts
       - "--entryPoints.websecure.transport.respondingTimeouts.readTimeout=600s"   # Defaults to 60s which his too short for uploading big files.
