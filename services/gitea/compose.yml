@@ -22,13 +22,6 @@ services:
       - 'traefik.http.routers.gitea.rule=Host("gitea.${HOME_SERVER_CNAME}")'
       - "traefik.http.routers.gitea.entrypoints=websecure"
       - "traefik.http.services.gitea-websecure.loadbalancer.server.port=3000"
-
-      # host resolving doesn't work for ssh, so you can only use "*"
-      - "traefik.tcp.routers.gitea-ssh.rule=HostSNI(`*`)"
-      - "traefik.tcp.routers.gitea-ssh.entrypoints=ssh"
-      - "traefik.tcp.routers.gitea-ssh.service=gitea-ssh-svc"
-      - "traefik.tcp.services.gitea-ssh-svc.loadbalancer.server.port=222"
-
       - 'traefik.docker.network=gitea'
 networks:
   gitea:
