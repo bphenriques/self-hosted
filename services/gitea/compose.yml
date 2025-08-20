@@ -5,8 +5,11 @@ services:
     restart: unless-stopped
     hostname: gitea
     environment:
-      - USER_UID=${PUID}
-      - USER_GID=${PGID}
+      USER_UID: "${PUID}"
+      USER_GID: "${PGID}"
+      # Use different port to avoid conflicting with host's ssh port.
+      GITEA__server__START_SSH_SERVER: true
+      GITEA__server__SSH_PORT: 222
     volumes:
       - "${DATA_DIR}/gitea:/data"
       - /etc/TZ:/etc/timezone:ro

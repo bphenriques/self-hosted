@@ -64,7 +64,7 @@ services:
       - "80:80"
       - "443:443"
       - "443:443/udp"
-      - "222:22/tcp" # ssh
+      - "222:222/tcp" # ssh
     secrets:
       - "cf_api_email_file"
       - "cf_dns_api_token"
