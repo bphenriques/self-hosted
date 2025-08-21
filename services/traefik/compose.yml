@@ -85,7 +85,6 @@ services:
       - linkding
       - romm
       - komga
-      - gitea
       - tandoor-public
       - pocket-id
       - obsidian-livesync
@@ -124,8 +123,6 @@ networks:
   readarr:
     external: true
   komga:
-    external: true
-  gitea:
     external: true
   tandoor-public:
     external: true
