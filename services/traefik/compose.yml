@@ -127,4 +127,4 @@ networks:
   tandoor-public:
     external: true
   obsidian-livesync:
-    external: obsidian-livesync
+    external: true
