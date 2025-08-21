@@ -16,12 +16,12 @@ services:
       PGID: "${PGID}"
       TZ: "${TZ}"
       COUCHDB_USER: admin
-    healthcheck:
-      test: curl --fail -s http://localhost:5984/_up | grep -Eo '\"status\":\"ok\"' || exit 1
-      start_period: 60s
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    #healthcheck:
+    #  test: curl --fail -s http://localhost:5984/_up | grep -Eo '\"status\":\"ok\"' || exit 1
+    #  start_period: 60s
+    #  interval: 30s
+    #  timeout: 10s
+    #  retries: 3
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.obsidian-livesync.rule=Host("obsidian-livesync.${HOME_SERVER_CNAME}")'
