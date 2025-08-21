@@ -27,7 +27,7 @@ services:
       - 'traefik.http.routers.obsidian-livesync.rule=Host("obsidian-livesync.${HOME_SERVER_CNAME}")'
       - "traefik.http.routers.obsidian-livesync.entrypoints=websecure"
       - "traefik.http.services.obsidian-livesync-websecure.loadbalancer.server.port=5984"
-      - 'traefik.docker.network=obsidian'
+      - 'traefik.docker.network=obsidian-livesync'
       # CORS setup as documented in here: https://github.com/vrtmrz/obsidian-livesync/blob/5d24c3b984e403e87f067df99cdea0a73f86134a/docs/setup_own_server.md#traefik
       - "traefik.http.routers.obsidian-livesync.middlewares=obsidiancors"
       - "traefik.http.middlewares.obsidiancors.headers.accesscontrolallowmethods=GET,PUT,POST,HEAD,DELETE"
