@@ -16,6 +16,8 @@ services:
       PGID: "${PGID}"
       TZ: "${TZ}"
       COUCHDB_USER: admin
+    networks:
+      - obsidian-livesync
     #healthcheck:
     #  test: curl --fail -s http://localhost:5984/_up | grep -Eo '\"status\":\"ok\"' || exit 1
     #  start_period: 60s
@@ -38,4 +40,4 @@ services:
       - "traefik.http.middlewares.obsidiancors.headers.accessControlAllowCredentials=true"
 networks:
   obsidian-livesync:
-    name: obsidian-livesync
+    external: true
