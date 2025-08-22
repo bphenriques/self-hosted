@@ -1,0 +1,62 @@
+services:
+  booklore:
+    image: booklore/booklore-app:v0.37.0
+    container_name: booklore
+    hostname: booklore
+    user: "${PUID}:${PGID}"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/booklore.env"
+    environment:
+      PUID: "${PUID}"
+      PGID: "${PGID}"
+      TZ: "${TZ}"
+      DATABASE_URL: jdbc:mariadb://mariadb:3306/booklore
+      DATABASE_USERNAME: booklore
+      SWAGGER_ENABLED: false
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    volumes:
+      - "${DATA_DIR}/booklore/data:/app/data"
+      - "${BOOKS_DIR}:/data/books"
+      - "${COMICS_DIR}:/data/comics"
+      - "${BOOKS_INBOX_DIR}:/data/bookdrop"
+    restart: unless-stopped
+    networks:
+      - booklore-internal
+      - booklore
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.komga.rule=Host("booklore.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.komga.entrypoints=websecure"
+      - "traefik.http.services.komga-websecure.loadbalancer.server.port=6060"
+      - 'traefik.docker.network=booklore'
+
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:11.4.5
+    container_name: mariadb
+    hostname: mariadb
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/booklore.env"
+    environment:
+      PUID: "${PUID}"
+      PGID: "${PGID}"
+      TZ: "${TZ}"
+      MYSQL_DATABASE: booklore
+      MYSQL_USER: booklore
+    volumes:
+      - "${DATA_DIR}/booklore/mariadb/config:/config"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - booklore-internal
+
+networks:
+  booklore-internal:
+    external: true
+  booklore:
+    external: true

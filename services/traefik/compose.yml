@@ -88,6 +88,7 @@ services:
       - tandoor-public
       - pocket-id
       - obsidian-livesync
+      - booklore
 
 networks:
   traefik-internal:
@@ -127,4 +128,6 @@ networks:
   tandoor-public:
     external: true
   obsidian-livesync:
+    external: true
+  booklore:
     external: true
