@@ -1,5 +1,0 @@
-services:
-  server:
-    ports:
-      - "3007:3000"
-      - "222:22"

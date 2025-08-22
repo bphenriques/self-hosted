@@ -79,8 +79,3 @@
       siteMonitor: https://prowlarr.{{HOMEPAGE_VAR_BASE_URL}}
       description: Manage *rr services
       icon: prowlarr.svg
-  - Gitea:
-      href: https://gitea.{{HOMEPAGE_VAR_BASE_URL}}
-      siteMonitor: https://gitea.{{HOMEPAGE_VAR_BASE_URL}}
-      description: Gitea
-      icon: gitea.svg
