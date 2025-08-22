@@ -58,6 +58,11 @@
         siteMonitor: https://komga.{{HOMEPAGE_VAR_BASE_URL}}
         description: Komga
         icon: komga.svg
+    - Booklore:
+          href: https://booklore.{{HOMEPAGE_VAR_BASE_URL}}
+          siteMonitor: https://booklore.{{HOMEPAGE_VAR_BASE_URL}}
+          description: Booklore
+          icon: booklore.svg
     - Tandoor:
         href: https://tandoor.{{HOMEPAGE_VAR_BASE_URL}}
         siteMonitor: https://tandoor.{{HOMEPAGE_VAR_BASE_URL}}
