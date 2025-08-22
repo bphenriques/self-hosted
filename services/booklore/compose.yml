@@ -19,7 +19,6 @@ services:
     volumes:
       - "${DATA_DIR}/booklore/data:/app/data"
       - "${BOOKS_DIR}:/data/books"
-      - "${COMICS_DIR}:/data/comics"
       - "${BOOKS_INBOX_DIR}:/bookdrop" # It has to be this folder
     restart: unless-stopped
     networks:
