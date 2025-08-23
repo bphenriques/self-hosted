@@ -53,11 +53,6 @@
         siteMonitor: https://romm.{{HOMEPAGE_VAR_BASE_URL}}
         description: Romm
         icon: romm.svg
-    - Komga:
-        href: https://komga.{{HOMEPAGE_VAR_BASE_URL}}
-        siteMonitor: https://komga.{{HOMEPAGE_VAR_BASE_URL}}
-        description: Komga
-        icon: komga.svg
     - Booklore:
           href: https://booklore.{{HOMEPAGE_VAR_BASE_URL}}
           siteMonitor: https://booklore.{{HOMEPAGE_VAR_BASE_URL}}
