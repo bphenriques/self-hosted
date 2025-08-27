@@ -6,7 +6,7 @@ services:
     volumes:
       - "${DATA_DIR}/cleanuparr:/config"
     environment:
-      BASE_PATH: "https://cleanuparr.${HOME_SERVER_CNAME}"
+      BASE_PATH: ""
       PUID: ${PUID}
       PGID: ${PGID}
       TZ: ${TZ}
