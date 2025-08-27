@@ -84,7 +84,6 @@ services:
       - immich
       - linkding
       - romm
-      - komga
       - tandoor-public
       - pocket-id
       - obsidian-livesync
@@ -122,8 +121,6 @@ networks:
   romm:
     external: true
   readarr:
-    external: true
-  komga:
     external: true
   tandoor-public:
     external: true

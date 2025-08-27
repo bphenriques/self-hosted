@@ -26,9 +26,9 @@ services:
       - booklore
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.komga.rule=Host("booklore.${HOME_SERVER_CNAME}")'
-      - "traefik.http.routers.komga.entrypoints=websecure"
-      - "traefik.http.services.komga-websecure.loadbalancer.server.port=6060"
+      - 'traefik.http.routers.booklore.rule=Host("booklore.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.booklore.entrypoints=websecure"
+      - "traefik.http.services.booklore-websecure.loadbalancer.server.port=6060"
       - 'traefik.docker.network=booklore'
 
   mariadb:

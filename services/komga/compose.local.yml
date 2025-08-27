@@ -1,4 +1,0 @@
-services:
-  komga:
-    ports:
-      - "25600:25600"
