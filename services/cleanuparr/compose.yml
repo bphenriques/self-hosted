@@ -1,0 +1,37 @@
+services:
+  cleanuparr:
+    image: ghcr.io/cleanuparr/cleanuparr:v2.1.6
+    container_name: cleanuparr
+    restart: unless-stopped
+    volumes:
+      - "${DATA_DIR}/cleanuparr:/config"
+    environment:
+      BASE_PATH: "https://cleanuparr.${HOME_SERVER_CNAME}"
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      UMASK: 022
+    networks:
+      - cleanuparr
+      - radarr
+      - sonarr
+      - transmission
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.cleanuparr.rule=Host("cleanuparr.${HOME_SERVER_CNAME}")'
+      - "traefik.http.routers.cleanuparr.entrypoints=websecure"
+      - "traefik.http.services.cleanuparr-websecure.loadbalancer.server.port=11011"
+      - 'traefik.docker.network=cleanuparr'
+
+networks:
+  radarr:
+    name: radarr
+    external: true
+  sonarr:
+    name: sonarr
+    external: true
+  transmission:
+    name: transmission
+    external: true
+  cleanuparr:
+    external: true

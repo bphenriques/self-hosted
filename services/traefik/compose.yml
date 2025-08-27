@@ -88,6 +88,7 @@ services:
       - pocket-id
       - obsidian-livesync
       - booklore
+      - cleanuparr
 
 networks:
   traefik-internal:
@@ -127,4 +128,6 @@ networks:
   obsidian-livesync:
     external: true
   booklore:
+    external: true
+  cleanuparr:
     external: true
