@@ -79,3 +79,8 @@
       siteMonitor: https://prowlarr.{{HOMEPAGE_VAR_BASE_URL}}
       description: Manage *rr services
       icon: prowlarr.svg
+  - Cleanuparr:
+      href: https://cleanuparr.{{HOMEPAGE_VAR_BASE_URL}}
+      siteMonitor: https://cleanuparr.{{HOMEPAGE_VAR_BASE_URL}}
+      description: Healthy *rr services
+      icon: cleanuparr.svg
