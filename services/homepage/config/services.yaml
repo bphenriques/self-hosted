@@ -23,11 +23,6 @@
         siteMonitor: https://transmission.{{HOMEPAGE_VAR_BASE_URL}}
         description: Torrent Client
         icon: transmission.svg
-    - Linkding:
-        href: https://linkding.{{HOMEPAGE_VAR_BASE_URL}}
-        siteMonitor: https://linkding.{{HOMEPAGE_VAR_BASE_URL}}
-        description: Bookmark Manager
-        icon: linkding.svg
     - Jellyseerr:
         href: https://jellyseerr.{{HOMEPAGE_VAR_BASE_URL}}
         siteMonitor: https://jellyseerr.{{HOMEPAGE_VAR_BASE_URL}}

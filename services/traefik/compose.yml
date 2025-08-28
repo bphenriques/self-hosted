@@ -82,7 +82,6 @@ services:
       - jellyfin
       - jellyseerr
       - immich
-      - linkding
       - romm
       - tandoor-public
       - pocket-id
@@ -116,8 +115,6 @@ networks:
   jellyseerr:
     external: true
   immich:
-    external: true
-  linkding:
     external: true
   romm:
     external: true

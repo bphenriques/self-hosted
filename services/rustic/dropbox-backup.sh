@@ -9,7 +9,6 @@ cd "$SCRIPT_PATH/../.." || exit 2
 MIN_AVAILABLE=5000000000
 
 target_services=(
-  linkding
   miniflux
   # FIXME: tandoor
   #
