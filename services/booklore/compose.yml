@@ -1,6 +1,6 @@
 services:
   booklore:
-    image: booklore/booklore:v0.38.2
+    image: booklore/booklore:v1.0.0
     container_name: booklore
     hostname: booklore
     #user: "${PUID}:${PGID}"
