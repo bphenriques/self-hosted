@@ -6,7 +6,7 @@ secrets:
 
 services:
   socket-proxy:
-    image: tecnativa/docker-socket-proxy:0.3
+    image: tecnativa/docker-socket-proxy:0.4.1
     container_name: socket-proxy
     restart: unless-stopped
     environment:
