@@ -1,6 +1,6 @@
 services:
   romm:
-    image: rommapp/romm:4.1.6
+    image: rommapp/romm:4.2.0
     container_name: romm
     hostname: romm
     user: "${PUID}:${PGID}"
@@ -39,7 +39,9 @@ services:
       - "${EMULATION_DIR}/roms/psx:/romm/library/roms/psx:ro"
       - "${EMULATION_DIR}/roms/snes:/romm/library/roms/snes:ro"
     depends_on:
-      - romm-db
+      romm-db:
+        condition: service_healthy
+        restart: true
     networks:
       - romm-internal
       - romm
@@ -49,12 +51,6 @@ services:
       - "traefik.http.routers.romm.entrypoints=websecure"
       - "traefik.http.services.romm-websecure.loadbalancer.server.port=8080"
       - 'traefik.docker.network=romm'
-      # EmulatorJS specific settings: https://emulatorjs.org/docs/options#ejs_threads
-      - "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customrequestheaders.Cross-Origin-Resource-Policy=cross-origin"
-      - "traefik.http.middlewares.emulatorjs-sharedarraybuffer.headers.customrequestheaders.Cross-Origin-Embedder-Policy=require-corp"
-      - "traefik.http.routers.romm.middlewares=emulatorjs-sharedarraybuffer"
-      # Not working in FF
-      # Working in Chrome iif: google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --disable-web-security --enable-features=SharedArrayBuffer
 
   romm-db:
     image: mariadb:latest
@@ -69,6 +65,13 @@ services:
       - MYSQL_USER=romm-user
     volumes:
       - "${DATA_DIR}/romm/mysql:/var/lib/mysql"
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 30s
+      start_interval: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - romm-internal
 
