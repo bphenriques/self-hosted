@@ -39,9 +39,7 @@ services:
       - "${EMULATION_DIR}/roms/psx:/romm/library/roms/psx:ro"
       - "${EMULATION_DIR}/roms/snes:/romm/library/roms/snes:ro"
     depends_on:
-      romm-db:
-        condition: service_healthy
-        restart: true
+      - Zromm-db
     networks:
       - romm-internal
       - romm
@@ -65,13 +63,6 @@ services:
       - MYSQL_USER=romm-user
     volumes:
       - "${DATA_DIR}/romm/mysql:/var/lib/mysql"
-    healthcheck:
-      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
-      start_period: 30s
-      start_interval: 10s
-      interval: 10s
-      timeout: 5s
-      retries: 5
     networks:
       - romm-internal
 
