@@ -39,7 +39,7 @@ services:
       - "${EMULATION_DIR}/roms/psx:/romm/library/roms/psx:ro"
       - "${EMULATION_DIR}/roms/snes:/romm/library/roms/snes:ro"
     depends_on:
-      - Zromm-db
+      - romm-db
     networks:
       - romm-internal
       - romm
