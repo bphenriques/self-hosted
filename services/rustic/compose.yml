@@ -1,6 +1,6 @@
 services:
   rustic-dropbox:
-    image: ghcr.io/rustic-rs/rustic:v0.9.5
+    image: ghcr.io/rustic-rs/rustic:v0.10.0
     container_name: rustic-dropbox
     hostname: rustic-dropbox
     restart: unless-stopped
