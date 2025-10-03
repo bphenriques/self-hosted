@@ -2,7 +2,7 @@ services:
   immich-server:
     container_name: immich_server
     hostname: immich_server
-    image: ghcr.io/immich-app/immich-server:v1.142.1
+    image: ghcr.io/immich-app/immich-server:v2.0.0
     user: "${PUID}:${PGID}"
     volumes:
       - "${DATA_DIR}/immich/cache:/data"
@@ -34,7 +34,7 @@ services:
   immich-machine-learning:
     container_name: immich_machine_learning
     hostname: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:v1.142.1
+    image: ghcr.io/immich-app/immich-machine-learning:v2.0.0
     user: "${PUID}:${PGID}"
     environment:
       - MPLCONFIGDIR=/data/matplotlib-cache
