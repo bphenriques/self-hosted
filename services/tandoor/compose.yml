@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
     container_name: tandoor-web
     hostname: tandoor-web
-    user: "${PUID}:${PGID}"
+    #user: "${PUID}:${PGID}"
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
