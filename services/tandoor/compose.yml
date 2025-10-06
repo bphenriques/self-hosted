@@ -13,7 +13,7 @@ services:
       - tandoor-private
 
   web_recipes:
-    image: vabene1111/recipes:2.2.7
+    image: vabene1111/recipes:2.3.0
     restart: unless-stopped
     container_name: tandoor-web
     hostname: tandoor-web
@@ -24,8 +24,8 @@ services:
       - TZ=${TZ}
       - "ALLOWED_HOSTS=tandoor.${HOME_SERVER_CNAME}"
       # Fixes images now showing up
-      - MEDIA_URL=https://tandoor.${HOME_SERVER_CNAME}/media/
-      - GUNICORN_MEDIA=1
+      #- MEDIA_URL=https://tandoor.${HOME_SERVER_CNAME}/media/
+      #- GUNICORN_MEDIA=1
       # OIDC
       - SOCIAL_PROVIDERS=allauth.socialaccount.providers.openid_connect
     env_file:
@@ -42,7 +42,7 @@ services:
       - 'traefik.enable=true'
       - 'traefik.http.routers.tandoor.rule=Host("tandoor.${HOME_SERVER_CNAME}")'
       - "traefik.http.routers.tandoor.entrypoints=websecure"
-      - "traefik.http.services.tandoor-websecure.loadbalancer.server.port=8080"
+      - "traefik.http.services.tandoor-websecure.loadbalancer.server.port=80"
       - 'traefik.docker.network=tandoor-public'
 
 networks:

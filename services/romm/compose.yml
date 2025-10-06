@@ -1,6 +1,6 @@
 services:
   romm:
-    image: rommapp/romm:4.3.0
+    image: rommapp/romm:4.3.1
     container_name: romm
     hostname: romm
     user: "${PUID}:${PGID}"
@@ -12,6 +12,7 @@ services:
       - DB_NAME=romm
       - DB_USER=romm-user
       - HASHEOUS_API_ENABLED=true # I try to keep my library tidy.
+      - DISABLE_SETUP_WIZARD=true
       # OIDC
       - OIDC_ENABLED=true
       - OIDC_PROVIDER=pocketid
