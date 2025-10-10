@@ -1,19 +1,6 @@
 services:
-  db_recipes:
-    image: postgres:16-alpine
-    container_name: tandoor-db
-    hostname: tandoor-db
-    user: "${PUID}:${PGID}"
-    volumes:
-      - "${DATA_DIR}/tandoor-recipes/db:/var/lib/postgresql/data"
-    env_file:
-      - "${HOME_SERVER_SECRETS_DIR}/tandoor-recipes.env"
-    restart: unless-stopped
-    networks:
-      - tandoor-private
-
   web_recipes:
-    image: vabene1111/recipes:2.3.0
+    image: vabene1111/recipes:2.3.1
     restart: unless-stopped
     container_name: tandoor-web
     hostname: tandoor-web
@@ -44,6 +31,19 @@ services:
       - "traefik.http.routers.tandoor.entrypoints=websecure"
       - "traefik.http.services.tandoor-websecure.loadbalancer.server.port=80"
       - 'traefik.docker.network=tandoor-public'
+
+  db_recipes:
+    image: postgres:16-alpine
+    container_name: tandoor-db
+    hostname: tandoor-db
+    user: "${PUID}:${PGID}"
+    volumes:
+      - "${DATA_DIR}/tandoor-recipes/db:/var/lib/postgresql/data"
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/tandoor-recipes.env"
+    restart: unless-stopped
+    networks:
+      - tandoor-private
 
 networks:
   tandoor-private:

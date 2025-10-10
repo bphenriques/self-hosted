@@ -5,9 +5,9 @@
   "prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}",
   "packageRules": [
     {
+      "enabled": false,
       "matchManagers": ["docker-compose", "dockerfile"],
-      "matchPackageNames": ["redis", "postgres", "docker.io/library/postgres"],
-      "enabled": false
+      "matchPackageNames": [ "docker.io/valkey/valkey", "ghcr.io/immich-app/postgres", "redis", "postgres" ]
     },
     {
       "packagePatterns": ["*"],
@@ -15,12 +15,9 @@
     }
   ],
   "extends": [
-    ":dependencyDashboard",
     ":semanticPrefixFixDepsChoreOthers",
-    ":ignoreModulesAndTests",
     "group:monorepos",
     "group:recommended",
-    "replacements:all",
-    "workarounds:all"
+    "replacements:all"
   ]
 }
