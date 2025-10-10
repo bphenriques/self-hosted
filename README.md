@@ -17,7 +17,7 @@ The guidelines I am trying to follow:
 
 - **DNS registration**: [Cloudflare](./infrastructure/cloudflare.md).
 - **Reverse proxy**: [`traefik`](https://github.com/traefik/traefik).
-- **Authentication / Authorization**: [`pocket-id`](https://github.com/pocket-id/pocket-id) as OIDC provider for the apps that support it natively, and [`traefik-oidc-auth`](https://github.com/sevensolutions/traefik-oidc-auth) as proxy for the services that don't.
+- **Authentication / Authorization**: [`pocket-id`](https://github.com/pocket-id/pocket-id) as OIDC provider for the apps that support it natively.
 - **Remote access**: Tailscale. There are other options but this was seamless on Synology.
 
 **Tip**: create a regular account and then link to `Pocket ID` if the service has a mobile app that does not support OIDC.
