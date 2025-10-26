@@ -249,7 +249,7 @@ case "$1" in
       service::compose up -d
     done
     ;;
-  jobs)
+  jobs|tasks)
     shift
     service="$1"
     name="$2"
