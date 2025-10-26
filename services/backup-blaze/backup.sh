@@ -10,7 +10,7 @@ target_services=(
   # FIXME: tandoor
 )
 
-rustic() { bin/home-service.sh compose rustic run --rm rustic-dropbox "$@"; }
+rustic() { bin/home-service.sh compose rustic run --rm backup-blaze "$@"; }
 
 prepare() {
   for service in "${target_services[@]}"; do
@@ -27,7 +27,7 @@ prepare() {
 case "${1:-}" in
   backup)
     shift
-    target="$(mktemp -d --suffix -dropbox-backup)"
+    target="$(mktemp -d --suffix -backup)"
     prepare "$target"
 
     export RUSTIC_BACKUP_EXTRA_FILES="${target}"
