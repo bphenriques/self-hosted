@@ -27,7 +27,7 @@ prepare() {
 case "${1:-}" in
   init)
     shift
-    export RUSTIC_BACKUP_EXTRA_FILES="${target}"
+    export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d)" # doesnt matter
     rustic init
     ;;
   backup)
