@@ -1,0 +1,18 @@
+[repository]
+repository = "opendal:b2"
+password-file = "/run/secrets/rustic_repository_password"
+
+[backup]
+init = true
+label = "backup"
+
+[[backup.snapshots]]
+sources = [ "/data/target-backup" ]
+#hooks = { run-before = [], run-after = [], run-failed = [], run-finally = [] }
+
+[forget]
+prune = true
+keep-daily = 7
+keep-weekly = 5
+keep-monthly = 12
+keep-yearly = 2
