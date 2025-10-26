@@ -9,8 +9,8 @@ cd "$SCRIPT_PATH/../.." || exit 2
 target_services=(
   miniflux
 )
-
-rustic() { bin/home-service.sh compose run --rm backup-blaze "$@"; }
+i
+rustic() { bin/home-service.sh compose backup-blaze run --rm backup-blaze "$@"; }
 
 prepare() {
   for service in "${target_services[@]}"; do
