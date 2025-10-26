@@ -10,7 +10,7 @@ target_services=(
   miniflux
 )
 
-rustic() { bin/home-service.sh compose backup-blaze run --rm backup-blaze "$@"; }
+rustic() { bin/home-service.sh compose run --rm backup-blaze "$@"; }
 
 prepare() {
   for service in "${target_services[@]}"; do
