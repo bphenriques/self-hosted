@@ -9,7 +9,7 @@ cd "$SCRIPT_PATH/../.." || exit 2
 target_services=(
   miniflux
 )
-i
+
 rustic() { bin/home-service.sh compose backup-blaze run --rm backup-blaze "$@"; }
 
 prepare() {
