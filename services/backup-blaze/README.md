@@ -1,14 +1,36 @@
 # Rustic
 
-## Cron
+Requirements:
+- Backblaze account with B2 Storage active
 
-In Synology:
-1. User Defined Script
-2. As `root` because the script requires changing permissions so that the docker user can write onto some locations (current limitation)
-3. Set the desired backup periodicity.
-4. Add the following: `HOME_SERVER_ENV=synology /volume1/homes/Bruno-Admin/home-server/synology/services/restic/service.sh dropbox-backup`
+## Initial setup
+
+1. Create a bucket in Backblaze.
+2. Setup the secrets:
+   1. The `secrets.toml` containing the integration settings.
+   2. The `repository_password.secret` containing the password to encrypt/decrypt the backup.
+3. Init the repository: `home-server jobs backup-blaze backup init`
+
+Once done, create a Cronjob:
+1. Create a User Defined Script (as root due to limitation)
+2. Set the script to run daily at night.
+3. Add the following: `HOME_SERVER_ENV=synology /volume1/homes/Bruno-Admin/home-server/bin/home-server.sh jobs backup-blaze backup backup`
+
+## Commands
+
+Backup:
+```
+$ home-server jobs backup-blaze backup
+```
+
+List:
+```
+$ home-server jobs backup-blaze ls
+```
 
 ## Test
+
+FIXME
 
 1. Retrieve a copy of the backup: `rclone copyto dropbox:integration-test /tmp/dropbox-integration-test-backup`
 2. Restore: `restic -r /tmp/dropbox-integration-test-backup restore latest --target /tmp/restore-work`
@@ -22,14 +44,3 @@ $ tree /tmp//restore-work/
         ├── entrypoint.sh
         └── health.sh
 ```
-
-
----
-
-How to:
-```shell
-home-server jobs rustic dropbox-backup backup
-```
-
-
-https://www.dropbox.com/developers/apps
