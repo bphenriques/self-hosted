@@ -3,7 +3,7 @@ secrets:
     file: "${HOME_SERVER_SECRETS_DIR}/backup-backblaze/repository_password.secret"
 
 services:
- backup-backblaze:
+  backup-blaze:
     image: ghcr.io/rustic-rs/rustic:v0.10.0
     container_name: backup-backblaze
     hostname: backup-backblaze
