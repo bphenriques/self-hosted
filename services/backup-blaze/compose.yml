@@ -17,6 +17,7 @@ services:
     volumes:
       - "${DATA_DIR}/backup-backblaze/cache:/data/.cache"
       - "./rustic.toml:/etc/rustic/rustic.toml:ro"
+      - "${HOME_SERVER_SECRETS_DIR}/backup-backblaze/secrets.toml:/etc/rustic/secrets.toml"
 
       # Files to backup mounted under `/data/target-backup`
       - "${BPHENRIQUES_PHONE_BACKUP}:/data/target-backup/bphenriques-phone-backup"

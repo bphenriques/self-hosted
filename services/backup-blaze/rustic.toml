@@ -1,3 +1,6 @@
+[global]
+use-profiles = ["secrets"]
+
 [repository]
 repository = "opendal:b2"
 password-file = "/run/secrets/rustic_repository_password"
