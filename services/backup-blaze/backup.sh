@@ -5,12 +5,12 @@ SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 set -ef
 cd "$SCRIPT_PATH/../.." || exit 2
 
+# FIXME tandoor
 target_services=(
   miniflux
-  # FIXME: tandoor
 )
 
-rustic() { bin/home-service.sh compose rustic run --rm backup-blaze "$@"; }
+rustic() { bin/home-service.sh compose backup-blaze run --rm backup-blaze "$@"; }
 
 prepare() {
   for service in "${target_services[@]}"; do
