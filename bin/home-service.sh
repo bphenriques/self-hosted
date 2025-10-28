@@ -85,9 +85,9 @@ service::setup() {
 # 2. Common variables: .env
 # 3. Additional HOME_SERVER_INCLUDE_ENV specified under .env
 service::source() {
-  echo "Sourcing default" 
   __service::source "${HOME_SERVER_CONFIG_DIR}/default.env"
 
+  unset HOME_SERVER_INCLUDE_ENV
   if [ -f ".env" ]; then
     __service::source .env
   fi
@@ -261,10 +261,10 @@ case "$1" in
   task)
     shift
     task="$1"
-    shift 2
+    shift
     cd "$HOME_SERVER_INSTALL_DIR/tasks" || fatal "Failed to cd to task directory"
     if [ -f "$task.sh" ]; then
-      service::source
+      export -f service::source
       bash "./$task.sh" "$@" || fatal "Failed to run '$task.sh' executable"
     else
       info "Skipping as '$task.sh' does not exist"
