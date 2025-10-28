@@ -85,6 +85,7 @@ service::setup() {
 # 2. Common variables: .env
 # 3. Additional HOME_SERVER_INCLUDE_ENV specified under .env
 service::source() {
+  echo "Sourcing default" 
   __service::source "${HOME_SERVER_CONFIG_DIR}/default.env"
 
   if [ -f ".env" ]; then
