@@ -37,11 +37,15 @@ __service::setup_data_dir() {
   local target="$1"
   local owner="$2"
 
-  if [[ $target =~ \.[a-zA-Z0-9]+$ ]]; then    
-    echo "Creating file $target it it does not exist."
+  if [[ $target =~ \.[a-zA-Z0-9]+$ ]]; then
+    if ! test -f "$target"; then
+      echo "Creating file $target b/c it does not exist."
+    fi
     touch "$target"
   else
-    echo "Creating directory $target if it does not exist."
+    if ! test -d "$target"; then
+      echo "Creating directory $target if it does not exist."
+    fi  
     mkdir -p "$target"
   fi
 
