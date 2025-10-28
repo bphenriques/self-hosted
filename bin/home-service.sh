@@ -165,6 +165,8 @@ tasks::list() { find tasks -maxdepth 1 -type f -name "*.sh"; }
 
 service::update() {
   local service="$1"
+
+  cd "$HOME_SERVER_INSTALL_DIR" || fatal "failed to go to the root of the home-server project"
   if grep -q "$service" "$HOME_SERVER_IGNORE_FILE"; then
     echo "Skipping $service as it is labelled as not to."
   else
