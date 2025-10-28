@@ -56,7 +56,7 @@ __service::setup_data_dir() {
 }
 
 service::setup() {
-  export -f debug fatal service::grant_group_permissions __service::setup_data_dir # Expose functions to xargs
+  export -f debug fatal info service::grant_group_permissions __service::setup_data_dir # Expose functions to xargs
 
   # shellcheck disable=SC2086
   ! test -d "${DATA_DIR}" && fatal "DATA_DIR is not a directory or does not exist!"
@@ -130,7 +130,7 @@ service::create_network() {
 }
 
 service::create_networks() {
-  export -f service::create_network
+  export -f info service::create_network
   service::compose config \
     | yq '.networks | to_entries | .[].value | select(.external == true) | .name' \
     | uniq \
