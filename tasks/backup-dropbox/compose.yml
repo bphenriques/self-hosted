@@ -3,7 +3,6 @@ services:
     image: ghcr.io/rustic-rs/rustic:v0.10.0
     container_name: rustic-dropbox
     hostname: rustic-dropbox
-    restart: unless-stopped
     environment:
       RUSTIC_CACHE_DIR: "/data/.cache"
     env_file:

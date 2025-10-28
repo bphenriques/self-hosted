@@ -72,7 +72,7 @@ setup_home_server_env() {
       echo 'export HOME_SERVER_ENV=prod'
       echo 'export HOME_SERVER_INSTALL_DIR="$HOME/home-server"'
       echo 'export HOME_SERVER_COMPOSE_BIN="docker-compose"' # FIXME: remove this once Synology ships with a docker compose version > v2.30.3
-      echo 'eval "$($HOME/home-server/bin/home-service.sh --shell-completions bash)"'
+      echo 'eval "$($HOME/home-server/bin/home-service.sh shell-completions bash)"'
 
     } >> "${HOME}/.bashrc"
     source "${HOME}/.bashrc"

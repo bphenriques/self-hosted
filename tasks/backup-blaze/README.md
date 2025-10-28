@@ -9,23 +9,23 @@ Requirements:
 2. Setup the secrets:
    1. The `secrets.toml` containing the integration settings.
    2. The `repository_password.secret` containing the password to encrypt/decrypt the backup.
-3. Init the repository: `home-server jobs backup-blaze backup init`
+3. Init the repository: `home-server tasks backup-blaze backup init`
 
 Once done, create a Cronjob:
 1. Create a User Defined Script (as root due to limitation)
 2. Set the script to run daily at night.
-3. Add the following: `HOME_SERVER_ENV=synology /volume1/homes/Bruno-Admin/home-server/bin/home-server.sh jobs backup-blaze backup backup`
+3. Add the following: `HOME_SERVER_ENV=synology /volume1/homes/Bruno-Admin/home-server/bin/home-server.sh tasks backup-blaze backup backup`
 
 ## Commands
 
 Backup:
 ```
-$ home-server jobs backup-blaze backup
+$ home-server tasks backup-blaze backup
 ```
 
 List:
 ```
-$ home-server jobs backup-blaze ls
+$ home-server tasks backup-blaze ls
 ```
 
 ## Test

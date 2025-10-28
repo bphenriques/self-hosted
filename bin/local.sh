@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#shellcheck disable=SC2155,SC1091
 
 fatal() { printf '[FAIL] %s\n' "$1" 1>&2; exit 1; }
 

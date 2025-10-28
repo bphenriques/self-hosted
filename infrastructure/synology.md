@@ -68,9 +68,10 @@ And also enable the tickbox that makes the snapshots visible.
 - Weekly script that updates the server (this requires setting up a `renovate` token):
 ```
 source /var/services/homes/Bruno-Admin/.bashrc
-/volume1/homes/Bruno-Admin/home-server /bin/check-updates.sh
-/volume1/homes/Bruno-Admin/home-server /bin/update.sh
+home-server task update
+home-server task renovate
 ```
+
 - Weekly script to trim my SSD.
 
 ## SSH

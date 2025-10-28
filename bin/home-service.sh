@@ -5,10 +5,9 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 RESET_GROUP_FILES="config public"
 HOME_SERVER_COMPOSE_BIN="${HOME_SERVER_COMPOSE_BIN:-"docker compose"}"
 HOME_SERVER_CONFIG_DIR="${HOME_SERVER_CONFIG_DIR:-$XDG_CONFIG_HOME/home-server}"
+HOME_SERVER_IGNORE_FILE=".home-server-update-ignore"
 
 info()    { printf '[ .. ] %s\n' "$1"; }
-success() { printf '[ OK ] %s\n' "$1"; }
-warn()    { printf '[ WARN ] %s\n' "$1"; }
 fatal()   { printf '[FAIL] %s\n' "$1" 1>&2; exit 1; }
 debug() { [ "$DEBUG" = "1" ] && printf '[DEBG] %s\n' "$*"; }
 
@@ -27,7 +26,7 @@ __service::source() {
 service::grant_group_permissions() {
   target="$1"
 
-  chmod -R g+rwx "$target"          # r/w for obvious reasons and x to allow cd'ing to the directory if need be (restic example)
+  chmod -R g+rwx "$target"          # r/w for obvious reasons and x to allow cd'ing to the directory if need be
   chgrp -R "${PGID}" "$target"
 }
 
@@ -35,24 +34,30 @@ service::grant_group_permissions() {
 # Assumption: any new file created inside will be owned by the user running the container.
 # This is required to postgres databases where the owner must match the user running the container.
 __service::setup_data_dir() {
-  target="$1"
-  owner="$2"
+  local target="$1"
+  local owner="$2"
 
+  if [[ $target =~ \.[a-zA-Z0-9]+$ ]]; then    
+    echo "Creating file $target it it does not exist."
+    touch "$target"
+  else
+    echo "Creating directory $target if it does not exist."
+    mkdir -p "$target"
+  fi
 
-  # TODO check if the file has an extension, if so, just touch the file (a heusrisitc)
-  mkdir -p "$target"
-  if [ "$(stat -c "%u:%g" "$target")" != "$owner" ]; then
-    echo "Data directory '$target' is not owned by $owner (by $(stat -c "%u:%g" "$target")). Using sudo to chown."
+  local current_owner
+  current_owner="$(stat -c "%u:%g" "$target")"
+  if [ "$current_owner" != "$owner" ]; then
+    info "Data '$target' is not owned by $owner (by $current_owner)). Using sudo to chown."
     sudo chown -R "$owner" "$target"
   else
-    debug "$1 - already has the right owner $owner"
+    debug "$target is already owned correctly by $owner"
   fi
 }
 
 service::setup() {
   export -f debug fatal service::grant_group_permissions __service::setup_data_dir # Expose functions to xargs
 
-  # Assumption: any references within ${DATA_DIR} is a folder. Let's create them and set the owner.
   # shellcheck disable=SC2086
   ! test -d "${DATA_DIR}" && fatal "DATA_DIR is not a directory or does not exist!"
   service::compose config \
@@ -151,10 +156,67 @@ services::list() {
     | uniq
 }
 
+tasks::list() { find tasks -maxdepth 1 -type f -name "*.sh"; }
+
+service::update() {
+  local service="$1"
+  if grep -q "$service" "$HOME_SERVER_IGNORE_FILE"; then
+    echo "Skipping $service as it is labelled as not to."
+  else
+    info "Updating $service"
+    cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
+    info "Updating $service"
+    service::bootstrap
+    service::compose pull
+    if [[ $(service::compose ps | wc -l) -gt 1 ]]; then
+      service::compose up -d
+    else
+      info "$service is already down."
+    fi
+  fi
+}
+
+service::restart() {
+  info "Restarting $service"
+  cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
+  service::bootstrap
+  service::compose rm --stop --force
+  service::compose up -d
+}
+
+service::up() {
+  info "Up $service"
+  cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
+  service::bootstrap
+  service::compose up -d
+}
+
+service::down() {
+  local service="$1"
+  info "Downing $service"
+  cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
+  service::bootstrap
+  service::compose rm --stop --force
+}
+
 shell_completions::bash() {
-  local services_list
+  #local services_list
   #services_list="$(services::list | tr '\n' ' ')"
   echo 'complete -W "compose up down update restart exec create-networks" home-server'
+}
+
+service::foreach() {
+  operation="$1"
+  shift
+  if [[ "$1" = "--all" ]]; then
+    services::list | while read -r service; do
+      $operation "$service"
+    done
+  else
+    for service in "$@"; do
+      $operation "$service"
+    done
+  fi
 }
 
 ! test -n "$HOME_SERVER_ENV" && fatal "HOME_SERVER_ENV not set or is empty: $HOME_SERVER_ENV"
@@ -167,23 +229,9 @@ export HOME_SERVER_SECRETS_DIR="${HOME_SERVER_CONFIG_DIR}/secrets"
 
 cd "$HOME_SERVER_INSTALL_DIR" || fatal "failed to go to the root of the home-server project"
 case "$1" in
-  --list)
-    shift
-    services::list
-    ;;
-  --shell-completions)
-    shift
-    case "$1" in
-      bash) shell_completions::bash ;;
-      *)  ;;
-    esac
-    ;;
-  repo-update)
-    cd "$HOME_SERVER_INSTALL_DIR" || fatal "failed to go to the root of the home-server project"
-    info "Fetching Github changes..."
-    git fetch
-    git rebase "origin/$(git rev-parse --abbrev-ref HEAD)"
-    ;;
+  shell-completions) shell_completions::bash ;;
+  list-services)     shift && services::list   ;;
+  list-tasks)        shift && tasks::list      ;;
   create-networks)
     shift
     service="$1"
@@ -195,77 +243,31 @@ case "$1" in
     ;;
   compose)
     shift
-    service="$1"
-    cd "services/$service" || fatal "Failed to cd to service directory: $service"
+    if [ -d "$1" ]; then
+      cd "$1" || fatal "Failed to cd to directory: $1"
+    else
+      cd "services/$service" || fatal "Failed to cd to service directory: $1"
+    fi
     shift
 
     service::bootstrap
     service::compose "$@"
     ;;
-  up)
+  up)       shift && service::foreach service::up "$@"       ;;
+  down)     shift && service::foreach service::down "$@"     ;;
+  update)   shift && service::foreach service::update "$@"   ;;
+  restart)  shift && service::foreach service::restart "$@"  ;;
+  task)
     shift
-    for service in "$@"; do
-      info "Downing $service"
-      cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
-      service::bootstrap
-      service::compose up -d
-    done
-    ;;
-  down)
-    shift
-    for service in "$@"; do
-      info "Downing $service"
-      cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
-      service::bootstrap
-      service::compose rm --stop --force
-    done
-    ;;
-  update)
-    shift
-    for service in "$@"; do
-      if grep -q "$service" .home-server-update-ignore; then
-        echo "Skipping $service as it is labelled as not to."
-      else
-        info "Updating $service"
-        cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
-        info "Updating $service"
-        service::bootstrap
-        service::compose pull
-        if [[ $(service::compose ps | wc -l) -gt 1 ]]; then
-          service::compose up -d
-        else
-          warn "Skipping restart of $service as it is already down."
-        fi
-      fi
-    done
-    ;;
-  restart)
-    shift
-    for service in "$@"; do
-      info "Restarting $service"
-      cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
-      service::bootstrap
-      service::compose rm --stop --force
-      service::compose up -d
-    done
-    ;;
-  jobs|tasks)
-    shift
-    service="$1"
-    name="$2"
+    task="$1"
     shift 2
-    cd "$HOME_SERVER_INSTALL_DIR/services/$service" || fatal "Failed to cd to service directory: $service"
-    if [ -f "$name.sh" ]; then
+    cd "$HOME_SERVER_INSTALL_DIR/tasks" || fatal "Failed to cd to task directory"
+    if [ -f "$task.sh" ]; then
       service::source
-      bash "./$name.sh" "$@" || fatal "Failed to run '$name' executable under $service"
+      bash "./$task.sh" "$@" || fatal "Failed to run '$task.sh' executable"
     else
-      info "Skipping as '$name' is not present for $service"
+      info "Skipping as '$task.sh' does not exist"
     fi
-    ;;
-  clean)
-    # No warning because I am ok with that. You might not be. Everything running in the server should be tracked to the repo.
-    docker system prune -f
-    docker image prune -af
     ;;
   *)
     fatal "Unrecognized command $1."
