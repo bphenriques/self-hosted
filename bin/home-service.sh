@@ -278,7 +278,7 @@ case "$1" in
     shift
     task_path=
     if [ -f "tasks/$1.sh" ]; then
-      task_path="tasks/$1"
+      task_path="tasks/$1.sh"
       shift
     elif [ -f "services/$1/$2.sh" ]; then
       task_path="./services/$1/$2.sh"
