@@ -3,6 +3,7 @@
 set -euf
 set -o pipefail
 
+DEBUG=0
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 RESET_GROUP_FILES="config public" # Git may change permissions, so this sets the common directories to review permissions
 HOME_SERVER_COMPOSE_BIN="${HOME_SERVER_COMPOSE_BIN:-"docker compose"}"
