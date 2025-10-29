@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eu
+set -e
 
 DEBUG=0
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
