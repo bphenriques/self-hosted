@@ -16,19 +16,16 @@ init() {
 }
 
 backup() {
-  id -u "$PUID" 1> /dev/null || fatal "No such user with id $PUID!"
-  grep -qE ":$PGID:" /etc/group || fatal "No such group with id $PGID!"
-  id --groups "$PUID" | grep -qw "$PGID" >/dev/null || fatal "$PUID does not belong to $PGID"
-   
   target="$(mktemp -d --suffix -backup)"
   for service in "${target_services[@]}"; do
     home-server task "$service" backup "$target" || fatal "Backup $service failed!"
   done
 
-  echo "Fixing permissions to $PUID:$PGID"
-  ls -la "$target"
-  sudo chmod -R g+rwx "$target"         # r/w for obvious reasons and x to allow cd'ing to the directory
-  sudo chown -R "$PUID:$PGID" "$target"      # Ensure it is not set to root.
+  # FIXME: Do this per service.
+  #echo "Fixing permissions to $PUID:$PGID"
+  #ls -la "$target"
+  #sudo chmod -R g+rwx "$target"         # r/w for obvious reasons and x to allow cd'ing to the directory
+  #sudo chown -R "$PUID:$PGID" "$target"      # Ensure it is not set to root.
   ls -la "$target"
   echo "Backup folder ready for upload: $target"
 
@@ -53,7 +50,6 @@ RUSTIC_REPOSITORY="$1"
 shift
 
 echo "Running rustic for repository: $RUSTIC_REPOSITORY"
-home-server source tasks/rustic
 case "${1:-}" in
   init)     init                  ;;
   backup)   backup                ;;

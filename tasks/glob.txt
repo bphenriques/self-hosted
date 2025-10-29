@@ -1,0 +1,8 @@
+# Synology folders for either snapshot or trash-can
+!@eaDir
+
+# Syncthing  
+!.stfolder
+
+# Linux trash can
+!.Trash*

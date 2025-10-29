@@ -19,8 +19,9 @@ services:
       - "${DATA_DIR}/rustic/backblaze/cache:/data/.cache"
       - "./backblaze.toml:/etc/rustic/rustic.toml:ro"
       - "${HOME_SERVER_SECRETS_DIR}/rustic/backblaze.toml:/etc/rustic/secrets.toml"
+      - "./glob.txt:/data/glob.txt:ro"
 
-      # Files to backup mounted under `/data/target-backup`
+       # Files to backup mounted under `/data/target-backup`
       - "${BPHENRIQUES_PHONE_BACKUP}:/data/target-backup/bphenriques-phone-backup"
       - "${BPHENRIQUES_NOTES}:/data/target-backup/bphenriques-notes"
       - "${BPHENRIQUES_PRIVATE}:/data/target-backup/bphenriques-notes"
@@ -37,8 +38,9 @@ services:
     volumes:
       - "${DATA_DIR}/rustic/dropbox/cache:/data/.cache"
       - "./dropbox.toml:/etc/rustic/rustic.toml:ro"
-      - "${HOME_SERVER_SECRETS_DIR}/rustic/dropbox.toml:/etc/rustic/secrets.toml"
-     
+      - "${HOME_SERVER_SECRETS_DIR}/rustic/dropbox.toml:/etc/rustic/secrets.toml"     
+      - "./glob.txt:/data/glob.txt:ro"
+
       # Files to backup mounted under `/data/target-backup`
       - "${BPHENRIQUES_PHONE_BACKUP}:/data/target-backup/bphenriques-phone-backup"
       - "${BPHENRIQUES_NOTES}:/data/target-backup/bphenriques-notes"
