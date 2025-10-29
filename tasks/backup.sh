@@ -45,7 +45,7 @@ restore_snapshot() {
 
 RUSTIC_REPOSITORY="$1"
 shift
-services::source
+home-server source tasks/rustic
 case "${1:-}" in
   init)     init                  ;;
   backup)   backup                ;;

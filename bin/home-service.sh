@@ -263,12 +263,19 @@ case "$1" in
   down)     shift && service::foreach service::down "$@"     ;;
   update)   shift && service::foreach service::update "$@"   ;;
   restart)  shift && service::foreach service::restart "$@"  ;;
+  source)
+    shift
+    service="$1"
+    cd "services/$service" || fatal "Failed to cd to service directory: $service"
+    shift
+
+    service::source
+    ;;
   task)
     shift
     task="$1"
     shift
    if [ -f "tasks/$task.sh" ]; then
-      export -f service::source
       bash "./tasks/$task.sh" "$@" || fatal "Failed to run 'tasks/$task.sh'"
     else
       fatal "Unknown task: $task"
