@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -ef
+set -euf
+set -o pipefail
 
 # shellcheck disable=SC2155
 readonly PROJECT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/.."
