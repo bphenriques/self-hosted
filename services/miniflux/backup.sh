@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # https://miniflux.app/docs/api.html#endpoint-export
 
+set -euf
+set -o pipefail
+
 if ! test -d "$1"; then
   echo "Not a directory or does not exist: $1"
   exit 1

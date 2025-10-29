@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2155
 
+set -euf
+set -o pipefail
+
 # FIXME tandoor, pocket-id
 target_services=(
   miniflux
