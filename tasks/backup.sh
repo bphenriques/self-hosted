@@ -55,4 +55,5 @@ case "${1:-}" in
   backup)   backup                ;;
   ls)       list_snapshots        ;;
   restore)  restore_snapshot "$2" ;;
+  rustic)   rustic "$@"           ;;
 esac
