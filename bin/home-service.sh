@@ -104,7 +104,7 @@ service::source() {
 service::validate() {
   id -u "$PUID" 1> /dev/null || fatal "No such user with id $PUID!"
   grep -qE ":$PGID:" /etc/group || fatal "No such group with id $PGID!"
-  id --groups "$UID" | grep -qw "$PGID" >/dev/null || fatal "$UID does not belong to $PGID"
+  id --groups "$PUID" | grep -qw "$PGID" >/dev/null || fatal "$PUID does not belong to $PGID"
   test -d "${DATA_DIR}" || fatal "DATA_DIR does not exist or is not a directory: $DATA_DIR"
 
   # Double-checking the setup before doing anything else. This checks both errors and warnings.

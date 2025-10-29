@@ -16,6 +16,10 @@ init() {
 }
 
 backup() {
+  id -u "$PUID" 1> /dev/null || fatal "No such user with id $PUID!"
+  grep -qE ":$PGID:" /etc/group || fatal "No such group with id $PGID!"
+  id --groups "$PUID" | grep -qw "$PGID" >/dev/null || fatal "$PUID does not belong to $PGID"
+   
   target="$(mktemp -d --suffix -backup)"
   for service in "${target_services[@]}"; do
     home-server task "$service" backup "$target" || fatal "Backup $service failed!"
