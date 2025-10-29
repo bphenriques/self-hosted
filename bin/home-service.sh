@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -eu
 
 DEBUG=0
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
