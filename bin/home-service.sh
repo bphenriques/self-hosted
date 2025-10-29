@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-# Some folders are version controlled and everytime we check-out permissions might be lost. Let's fix that.
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-RESET_GROUP_FILES="config public"
+RESET_GROUP_FILES="config public" # Git may change permissions, so this sets the common directories to review permissions
 HOME_SERVER_COMPOSE_BIN="${HOME_SERVER_COMPOSE_BIN:-"docker compose"}"
 HOME_SERVER_CONFIG_DIR="${HOME_SERVER_CONFIG_DIR:-$XDG_CONFIG_HOME/home-server}"
 HOME_SERVER_IGNORE_FILE=".home-server-update-ignore"
@@ -24,7 +23,7 @@ __service::source() {
 
 # In order for chgrp to work, the user that runs this command must share the same group as the user that runs the container.
 service::grant_group_permissions() {
-  target="$1"
+  local target="$1"
 
   chmod -R g+rwx "$target"          # r/w for obvious reasons and x to allow cd'ing to the directory if need be
   chgrp -R "${PGID}" "$target"
@@ -213,7 +212,7 @@ shell_completions::bash() {
 }
 
 service::foreach() {
-  operation="$1"
+  local operation="$1"
   shift
   if [[ "$1" = "--all" ]]; then
     services::list | while read -r service; do
@@ -236,7 +235,7 @@ export HOME_SERVER_SECRETS_DIR="${HOME_SERVER_CONFIG_DIR}/secrets"
 
 cd "$HOME_SERVER_INSTALL_DIR" || fatal "failed to go to the root of the home-server project"
 case "$1" in
-  shell-completions) shell_completions::bash ;;
+  shell-completions) shell_completions::bash   ;;
   list-services)     shift && services::list   ;;
   list-tasks)        shift && tasks::list      ;;
   create-networks)
@@ -268,12 +267,11 @@ case "$1" in
     shift
     task="$1"
     shift
-    cd "$HOME_SERVER_INSTALL_DIR/tasks" || fatal "Failed to cd to task directory"
-    if [ -f "$task.sh" ]; then
+   if [ -f "tasks/$task.sh" ]; then
       export -f service::source
-      bash "./$task.sh" "$@" || fatal "Failed to run '$task.sh' executable"
+      bash "./tasks/$task.sh" "$@" || fatal "Failed to run 'tasks/$task.sh'"
     else
-      info "Skipping as '$task.sh' does not exist"
+      fatal "Unknown task: $task"
     fi
     ;;
   *)

@@ -1,0 +1,48 @@
+name: rustic
+
+secrets:
+  backblaze_rustic_repository_password:
+    file: "${HOME_SERVER_SECRETS_DIR}/rustic/backblaze_repository_password.secret"
+  dropbox_rustic_repository_password:
+    file: "${HOME_SERVER_SECRETS_DIR}/rustic/dropbox_repository_password.secret"
+
+services:
+  backblaze:
+    extends: rustic
+    image: ghcr.io/rustic-rs/rustic:v0.10.0
+    container_name: backblaze
+    hostname: backblaze
+    secrets:
+      - "backblaze_rustic_repository_password"
+    environment:
+      RUSTIC_CACHE_DIR: "/data/.cache"
+    volumes:
+      - "${DATA_DIR}/rustic/backblaze/cache:/data/.cache"
+      - "./backblaze.toml:/etc/rustic/rustic.toml:ro"
+      - "${HOME_SERVER_SECRETS_DIR}/rustic/backblaze.toml:/etc/rustic/secrets.toml"
+
+      # Files to backup mounted under `/data/target-backup`
+      - "${BPHENRIQUES_PHONE_BACKUP}:/data/target-backup/bphenriques-phone-backup"
+      - "${BPHENRIQUES_NOTES}:/data/target-backup/bphenriques-notes"
+      - "${BPHENRIQUES_PRIVATE}:/data/target-backup/bphenriques-notes"
+      - "${RUSTIC_BACKUP_EXTRA_FILES}:/data/target-backup/extra-files"
+
+  dropbox:
+    image: ghcr.io/rustic-rs/rustic:v0.10.0
+    container_name: dropbox
+    hostname: dropbox
+    secrets:
+     - "dropbox_rustic_repository_password"
+    environment:
+      RUSTIC_CACHE_DIR: "/data/.cache"
+    volumes:
+      - "${DATA_DIR}/rustic/dropbox/cache:/data/.cache"
+      - "./dropbox.toml:/etc/rustic/rustic.toml:ro"
+      - "${HOME_SERVER_SECRETS_DIR}/rustic/dropbox.toml:/etc/rustic/secrets.toml"
+     
+      # Files to backup mounted under `/data/target-backup`
+      - "${BPHENRIQUES_PHONE_BACKUP}:/data/target-backup/bphenriques-phone-backup"
+      - "${BPHENRIQUES_NOTES}:/data/target-backup/bphenriques-notes"
+      - "${BPHENRIQUES_PRIVATE}:/data/target-backup/bphenriques-notes"
+      - "${RUSTIC_BACKUP_EXTRA_FILES}:/data/target-backup/extra-files"
+

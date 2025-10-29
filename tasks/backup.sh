@@ -6,7 +6,7 @@ target_services=(
   miniflux
 )
 
-rustic() { home-server compose tasks/backup-blaze run --rm backup-blaze "$@"; }
+rustic() { home-server compose tasks/rustic run --rm "$RUSTIC_REPOSITORY" "$@"; }
 
 init() {
   export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d)" # doesnt matter
@@ -43,6 +43,9 @@ restore_snapshot() {
   rustic restore latest "$snapshot"
 }
 
+RUSTIC_REPOSITORY="$1"
+shift
+services::source
 case "${1:-}" in
   init)     init                  ;;
   backup)   backup                ;;

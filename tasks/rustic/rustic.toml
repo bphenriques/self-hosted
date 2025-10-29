@@ -2,10 +2,8 @@
 use-profiles = ["secrets"]
 
 [repository]
-repository = "opendal:dropbox"
-
-[backup]
-tags = ["documents"]
+repository = "opendal:b2"
+password-file = "/run/secrets/backblaze_rustic_repository_password"
 
 [[backup.snapshots]]
 sources = [ "/data/target-backup" ]
@@ -15,4 +13,4 @@ prune = true
 keep-daily = 7
 keep-weekly = 5
 keep-monthly = 12
-keep-yearly = 75
+keep-yearly = 2
