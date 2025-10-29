@@ -16,7 +16,7 @@ init() {
 backup() {
   target="$(mktemp -d --suffix -backup)"
   for service in "${target_services[@]}"; do
-    home-server tasks "$service" backup "$target" || error "Backup $service failed!"
+    home-server task "$service" backup "$target" || error "Backup $service failed!"
   done
 
   echo "Fixing permissions to $PUID:$PGID"

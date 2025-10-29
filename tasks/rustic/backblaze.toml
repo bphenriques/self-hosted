@@ -11,9 +11,7 @@ git-ignore = true
 globs = [
   # Synology folders for either snapshot or trash-can
   "!@eaDir"
-  "!#recycle"
-  "!#snapshot"
-
+  
   # Other
   "!.stfolder"  # Syncthing temporary folder
   "!.Trash*"    # Linux trash-can

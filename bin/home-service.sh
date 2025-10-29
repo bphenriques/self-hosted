@@ -276,13 +276,18 @@ case "$1" in
     ;;
   task)
     shift
-    task="$1"
-    shift
-   if [ -f "tasks/$task.sh" ]; then
-      bash "./tasks/$task.sh" "$@" || fatal "Failed to run 'tasks/$task.sh'"
-    else
-      fatal "Unknown task: $task"
+    task_path=
+    if [ -f "tasks/$1.sh" ]; then
+      task_path="tasks/$1"
+      shift
+    elif [ -f "services/$1/$2.sh" ]; then
+      task_path="./services/$1/$2.sh"
+      shift 2
+    else      
+      fatal "Failed to find task under 'tasks/' or under a service"
     fi
+  
+    bash "$task_path" "$@" || fatal "Failed to run '$task_path'"
     ;;
   *)
     fatal "Unrecognized command $1."
