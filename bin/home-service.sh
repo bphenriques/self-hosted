@@ -265,10 +265,13 @@ case "$1" in
   restart)  shift && service::foreach service::restart "$@"  ;;
   source)
     shift
-    service="$1"
-    cd "services/$service" || fatal "Failed to cd to service directory: $service"
+    if [ -d "$1" ]; then
+      cd "$1" || fatal "Failed to cd to directory: $1"
+    else
+      cd "services/$1" || fatal "Failed to cd to service directory: $1"
+    fi
     shift
-
+    
     service::source
     ;;
   task)
