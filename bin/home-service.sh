@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 DEBUG=0
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 RESET_GROUP_FILES="config public" # Git may change permissions, so this sets the common directories to review permissions
