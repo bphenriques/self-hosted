@@ -5,6 +5,20 @@ use-profiles = ["secrets"]
 repository = "opendal:b2"
 password-file = "/run/secrets/backblaze_rustic_repository_password"
 
+[backup]
+exclude-if-present = [ ".nobackup" ]
+git-ignore = true
+globs = [
+  # Synology folders for either snapshot or trash-can
+  "!@eaDir"
+  "!#recycle"
+  "!#snapshot"
+
+  # Other
+  "!.stfolder"  # Syncthing temporary folder
+  "!.Trash*"    # Linux trash-can
+]
+
 [[backup.snapshots]]
 sources = [ "/data/target-backup" ]
 
