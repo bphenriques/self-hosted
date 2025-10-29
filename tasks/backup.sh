@@ -55,5 +55,9 @@ case "${1:-}" in
   backup)   backup                ;;
   ls)       list_snapshots        ;;
   restore)  restore_snapshot "$2" ;;
-  rustic)   export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d)" && rustic "$@" ;;
+  rustic)
+    export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d)"
+    shift
+    rustic "$@"
+    ;;
 esac
