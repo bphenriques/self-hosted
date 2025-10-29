@@ -45,6 +45,8 @@ restore_snapshot() {
 
 RUSTIC_REPOSITORY="$1"
 shift
+
+echo "Running rustic for repository: $RUSTIC_REPOSITORY"
 home-server source tasks/rustic
 case "${1:-}" in
   init)     init                  ;;
