@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2155
 
+fatal()   { printf '[FAIL] %s\n' "$1" 1>&2; exit 1; }
+
 # FIXME tandoor, pocket-id
 target_services=(
   miniflux
@@ -16,7 +18,7 @@ init() {
 backup() {
   target="$(mktemp -d --suffix -backup)"
   for service in "${target_services[@]}"; do
-    home-server task "$service" backup "$target" || error "Backup $service failed!"
+    home-server task "$service" backup "$target" || fatal "Backup $service failed!"
   done
 
   echo "Fixing permissions to $PUID:$PGID"
