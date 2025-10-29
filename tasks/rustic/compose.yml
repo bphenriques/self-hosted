@@ -8,7 +8,6 @@ secrets:
 
 services:
   backblaze:
-    extends: rustic
     image: ghcr.io/rustic-rs/rustic:v0.10.0
     container_name: backblaze
     hostname: backblaze
