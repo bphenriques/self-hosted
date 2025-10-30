@@ -21,17 +21,30 @@ backup() {
   echo "--------"
   echo "Backup folder ready for upload: $RUSTIC_BACKUP_EXTRA_FILES'"
   echo "--------"
+  echo
   ls -la "$RUSTIC_BACKUP_EXTRA_FILES"
-
   rustic backup
+
+  echo "--------"
+  echo "Forgetting and pruning data..."
+  echo "--------"  
   rustic forget
+
+  echo "--------"
+  echo "Checking integrity of the repository..."
+  echo "--------"
+  rustic check
+ 
+  echo "--------"
+  echo "Checking integrity of the data (higher bandwidth)..."
+  echo "--------"  
   
   # To be fine-tuned:
   # - I dont change the data _that_ often.
   # - Backblaze allows up 3 times the average of the data stored as egress.
   # - Backup happens daily.
   # - But..  downloading >1GB per days seem excessive and after a while, this value seems reasonable.
-  rustic check --read-data-subset=100MB
+  rustic check --read-data --read-data-subset=100MB
 }
 
 RUSTIC_REPOSITORY="$1"
