@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2155
 
-fatal()   { printf '[FAIL] %s\n' "$1" 1>&2; exit 1; }
+fatal() { printf '[FAIL] %s\n' "$1" 1>&2; exit 1; }
 
 # FIXME tandoor, pocket-id
 target_services=(
@@ -10,54 +10,29 @@ target_services=(
 
 rustic() { home-server compose tasks/rustic run --rm "$RUSTIC_REPOSITORY" "$@"; }
 
-init() {
-  export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d)" # doesnt matter
-  rustic init
-}
-
 backup() {
-  target="$(mktemp -d --suffix -backup)"
+  test -d "$RUSTIC_BACKUP_EXTRA_FILES" || fatal "Not a folder or does not exist: $RUSTIC_BACKUP_EXTRA_FILES"
+  
   for service in "${target_services[@]}"; do
-    home-server task "$service" backup "$target" || fatal "Backup $service failed!"
+    echo "Backing up service $service"
+    home-server task "$service" backup "$RUSTIC_BACKUP_EXTRA_FILES" || fatal "Backup $service failed!"
   done
 
-  # FIXME: Do this per service.
-  #echo "Fixing permissions to $PUID:$PGID"
-  #ls -la "$target"
-  #sudo chmod -R g+rwx "$target"         # r/w for obvious reasons and x to allow cd'ing to the directory
-  #sudo chown -R "$PUID:$PGID" "$target"      # Ensure it is not set to root.
-  ls -la "$target"
-  echo "Backup folder ready for upload: $target"
+  ls -la "$RUSTIC_BACKUP_EXTRA_FILES"
+  echo "Backup folder ready for upload: $RUSTIC_BACKUP_EXTRA_FILES"
 
-  export RUSTIC_BACKUP_EXTRA_FILES="${target}"
   rustic backup
   rustic forget
   rustic check #--read-data-subset=nS -> daily backup means 30 runs -> lets chunk by 30.
 }
 
-list_snapshots() {
-  export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d)" # doesnt matter
-  rustic ls latest
-}
-
-restore_snapshot() {
-  local snapshot="$1"
-  export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d)" # doesnt matter
-  rustic restore latest "$snapshot"
-}
-
 RUSTIC_REPOSITORY="$1"
 shift
 
-echo "Running rustic for repository: $RUSTIC_REPOSITORY"
+export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d --suffix -backup)"
+echo "Running rustic for repository: $RUSTIC_REPOSITORY and working directory '$RUSTIC_BACKUP_EXTRA_FILES'"
+
 case "${1:-}" in
-  init)     init                  ;;
   backup)   backup                ;;
-  ls)       list_snapshots        ;;
-  restore)  restore_snapshot "$2" ;;
-  rustic)
-    export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d)"
-    shift
-    rustic "$@"
-    ;;
+  rustic)   shift && rustic "$@"  ;;
 esac

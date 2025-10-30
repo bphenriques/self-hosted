@@ -10,7 +10,7 @@ Requirements:
 
 1. Create a bucket in Backblaze.
 2. Setup the secrets using the example file as starting point.
-3. Init the repository: `home-server tasks backup backblaze init`
+3. Init the repository: `home-server tasks backup backblaze rustic init`
 
 In Synology, create a user-defined cronjob as root (b/c we need to convert root permissions to user permissions):
 ```
@@ -27,7 +27,7 @@ $ home-server tasks backup backblaze backup
 
 List:
 ```
-$ home-server tasks backup backblaze ls
+$ home-server tasks backup backblaze rustic ls
 ```
 
 ## Test
