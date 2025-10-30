@@ -32,7 +32,7 @@ backup() {
   export RUSTIC_BACKUP_EXTRA_FILES="${target}"
   rustic backup
   rustic forget
-  rustic check
+  rustic check #--read-data-subset=nS -> daily backup means 30 runs -> lets chunk by 30.
 }
 
 list_snapshots() {
