@@ -15,7 +15,8 @@ sources = [ "/data/target-backup" ]
 
 [forget]
 prune = true
-keep-daily = 7
-keep-weekly = 5
-keep-monthly = 12
-keep-yearly = 2
+
+keep-within-daily = "7 days"
+keep-within-weekly = "1 month"
+keep-within-monthly = "1 year"
+keep-within-yearly = "2 years"

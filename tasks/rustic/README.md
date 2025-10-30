@@ -27,7 +27,7 @@ $ home-server tasks backup backblaze backup
 
 List:
 ```
-$ home-server tasks backup backblaze rustic ls
+$ home-server tasks backup backblaze rustic snapshots
 ```
 
 ## Test
