@@ -20,34 +20,12 @@ Requirements:
 In Synology, create a user-defined cronjob as root (b/c we need to convert root permissions to user permissions):
 ```
 source /var/services/homes/Bruno-Admin/.bashrc
-home-server task backup backblaze backup
+home-server tasks backup backblaze backup
 ```
 
 ## Commands
 
-Backup:
-```
-$ home-server tasks backup backblaze backup
-```
-
-List:
-```
-$ home-server tasks backup backblaze rustic snapshots
-```
-
-## Test
-
-FIXME
-
-1. Retrieve a copy of the backup: `rclone copyto dropbox:integration-test /tmp/dropbox-integration-test-backup`
-2. Restore: `restic -r /tmp/dropbox-integration-test-backup restore latest --target /tmp/restore-work`
-3. Let's list it:
-```shell
-$ tree /tmp//restore-work/
-/tmp//restore-work/
-└── backup-target
-    └── docker-build-restic
-        ├── backup.sh
-        ├── entrypoint.sh
-        └── health.sh
-```
+Backup: `home-server tasks backup backblaze backup`
+List Snapshots: `home-server tasks backup backblaze rustic snapshots`
+List files: `home-server tasks backup backblaze rustic ls latest`
+Stream single file: `home-server tasks backbup backblaze rustic dump latest {file}`

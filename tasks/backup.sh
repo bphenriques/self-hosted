@@ -29,10 +29,6 @@ backup_repositories() {
   done
 }
 
-backup_summary() {
-  jq -r '.summary | "Backup complete in \(.total_duration) seconds (A:\(.files_new) M:\(.files_changed) S:\(.total_bytes_processed) bytes)."'
-}
-
 backup() {
   test -d "$RUSTIC_BACKUP_EXTRA_FILES" || fatal "Not a folder or does not exist: $RUSTIC_BACKUP_EXTRA_FILES"
   test -z "${GITHUB_BACKUP_TOKEN}" && echo "GITHUB_BACKUP_TOKEN is not set!" && exit 1
@@ -43,9 +39,7 @@ backup() {
   done
   backup_repositories
 
-  #local output     
-  #output="$(rustic backup --json | jq -rc '.')"
-  #echo "$output" | backup_summary
+  printf "\nBacking up...\n"
   rustic backup
 
   printf "\nForgetting and prunning data...\n"
