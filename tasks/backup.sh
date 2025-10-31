@@ -24,7 +24,7 @@ backup_repositories() {
   mkdir -p "$RUSTIC_BACKUP_EXTRA_FILES"/github
   for repo in "${target_repositories[@]}"; do
     echo "Backing up $repo"
-    curl -H "Authorization: Bearer ${GITHUB_BACKUP_TOKEN}" -L "https://api.github.com/repos/$repo/tarball" \
+    curl --silent -H "Authorization: Bearer ${GITHUB_BACKUP_TOKEN}" -L "https://api.github.com/repos/$repo/tarball" \
       > "$RUSTIC_BACKUP_EXTRA_FILES/github/$(echo "$repo" | tr '/' '_').tar.gz"
   done
 }
@@ -51,12 +51,18 @@ backup() {
   rustic forget
 
   printf "\nChecking repository integrity\n"
-  rustic check
+  if ! rustic check; then
+    rustic repair index
+    rustic repair packs
+  fi
 
   printf "\nChecking repository and data integrity\n"
 
   # 500MB offers a good balance given the write frequency and the backup periodicity.
-  rustic check --read-data --read-data-subset=500MB  
+  if ! rustic check --read-data --read-data-subset=500MB; then
+    rustic repair index
+    rustic repair packs
+  fi 
 
   rm -r "$RUSTIC_BACKUP_EXTRA_FILES"
 }
