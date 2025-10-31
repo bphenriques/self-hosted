@@ -27,10 +27,10 @@ services:
       - "${BPHENRIQUES_NOTES}:/data/target-backup/bphenriques-notes:ro"
       - "${BPHENRIQUES_PRIVATE}:/data/target-backup/bphenriques-notes:ro"
       - "${RUSTIC_BACKUP_EXTRA_FILES}:/data/target-backup/extra-files:ro"
-      - "${MUSIC_DIR}:/data/target-backup/music:ro"
       # Files too large to store elsewhere  
-      #- "${EMULATION_DIR}:/data/target-backup:ro"
- 
+      - "${EMULATION_DIR}:/data/target-backup/emulation:ro"
+      - "${MUSIC_DIR}:/data/target-backup/music:ro"
+
   dropbox:
     image: ghcr.io/rustic-rs/rustic:v0.10.0
     container_name: dropbox
