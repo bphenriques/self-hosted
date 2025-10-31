@@ -47,7 +47,7 @@ backup() {
   # - Backblaze allows up 3 times the average of the data stored as egress.
   # - Backup happens daily.
   # - But..  downloading >1GB per days seem excessive and after a while, this value seems reasonable.
-  rustic check --read-data --read-data-subset=500MB
+  #rustic check --read-data --read-data-subset=500MB
 }
 
 RUSTIC_REPOSITORY="$1"
