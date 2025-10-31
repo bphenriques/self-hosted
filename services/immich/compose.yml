@@ -9,7 +9,7 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
       # Using external libraries
       - "${BPHENRIQUES_PHOTOS_LIBRARY}:/mnt/media/bphenriques"
-      - "${BPHENRIQUES_PHOTOS_INBOX}:/mnt/media/bphenriques/inbox"      
+      - "${BPHENRIQUES_PHOTOS_INBOX}:/mnt/media/bphenriques-inbox"      
     environment:
       - DB_USERNAME=postgres
       - DB_DATABASE_NAME=immich
