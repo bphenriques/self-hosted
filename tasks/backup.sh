@@ -43,9 +43,10 @@ backup() {
   done
   backup_repositories
 
-  local output     
-  output="$(rustic backup --json | jq -rc '.')"
-  echo "$output" | backup_summary
+  #local output     
+  #output="$(rustic backup --json | jq -rc '.')"
+  #echo "$output" | backup_summary
+  rustic backup
 
   printf "\nForgetting and prunning data...\n"
   rustic forget
