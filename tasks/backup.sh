@@ -23,14 +23,14 @@ backup_repositories() {
 
   mkdir -p "$RUSTIC_BACKUP_EXTRA_FILES"/github
   for repo in "${target_repositories[@]}"; do
-    echo "Backing up $repo"
+    echo "Backing up $repo..."
     curl --silent -H "Authorization: Bearer ${GITHUB_BACKUP_TOKEN}" -L "https://api.github.com/repos/$repo/tarball" \
       > "$RUSTIC_BACKUP_EXTRA_FILES/github/$(echo "$repo" | tr '/' '_').tar.gz"
   done
 }
 
 backup_summary() {
-  jq -c '.summary | "Backup complete in \(.total_duration) seconds (A:\(.files_new) M:\(.files_changed) S:\(.total_bytes_processed) bytes)."'
+  jq -r '.summary | "Backup complete in \(.total_duration) seconds (A:\(.files_new) M:\(.files_changed) S:\(.total_bytes_processed) bytes)."'
 }
 
 backup() {
@@ -38,7 +38,7 @@ backup() {
   test -z "${GITHUB_BACKUP_TOKEN}" && echo "GITHUB_BACKUP_TOKEN is not set!" && exit 1
 
   for service in "${target_services[@]}"; do
-    echo "Backing up service $service"
+    echo "Backing up service $service..."
     home-server task "$service" backup "$RUSTIC_BACKUP_EXTRA_FILES" || fatal "Backup $service failed!"
   done
   backup_repositories
@@ -47,22 +47,21 @@ backup() {
   output="$(rustic backup --json | jq -rc '.')"
   echo "$output" | backup_summary
 
-  printf "\nForgetting and prunning data\n"
+  printf "\nForgetting and prunning data...\n"
   rustic forget
 
-  printf "\nChecking repository integrity\n"
-  if ! rustic check; then
-    rustic repair index
-    rustic repair packs
-  fi
+  printf "\nChecking repository integrity...\n"
+  rustic check
 
-  printf "\nChecking repository and data integrity\n"
+  printf "\nChecking repository and data integrity...\n"
 
   # 500MB offers a good balance given the write frequency and the backup periodicity.
-  if ! rustic check --read-data --read-data-subset=500MB; then
-    rustic repair index
-    rustic repair packs
-  fi 
+  rustic check --read-data --read-data-subset=500MB
+
+  # FIXME: the checks do not return the error code :shrug:
+  printf "\nRepairing repository...\n"
+  rustic repair index
+  rustic repair snapshots
 
   rm -r "$RUSTIC_BACKUP_EXTRA_FILES"
 }
