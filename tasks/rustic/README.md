@@ -15,9 +15,9 @@ Requirements:
    3. The type is set to 'Private'.
 
 2. Setup the secrets using the example file as starting point.
-3. Init the repository: `home-server tasks backup backblaze rustic init`
+3. Init the repository: `home-server task backup backblaze rustic init`
 
-In Synology, create a user-defined cronjob as root (b/c we need to convert root permissions to user permissions):
+In Synology, create a user-defined cronjob as `Bruno-Admin`:
 ```
 source /var/services/homes/Bruno-Admin/.bashrc
 home-server tasks backup backblaze backup
@@ -25,7 +25,7 @@ home-server tasks backup backblaze backup
 
 ## Commands
 
-Backup: `home-server tasks backup backblaze backup`
-List Snapshots: `home-server tasks backup backblaze rustic snapshots`
-List files: `home-server tasks backup backblaze rustic ls latest`
-Stream single file: `home-server tasks backbup backblaze rustic dump latest {file}`
+Backup: `home-server task backup backblaze backup`
+List Snapshots: `home-server task backup backblaze rustic snapshots`
+List files: `home-server task backup backblaze rustic ls latest`
+Stream single file: `home-server task backbup backblaze rustic dump latest {file}`
