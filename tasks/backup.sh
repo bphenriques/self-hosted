@@ -23,7 +23,7 @@ backup() {
   echo "--------"
   echo
   ls -la "$RUSTIC_BACKUP_EXTRA_FILES"
-  rustic backup --quiet --json
+  rustic backup --json > /tmp/bananas
   # Fields: .time, .summary.files_new, .summary.files_changed, .summary.total_bytes_processed
   # .summary.backup_duration, .summary.total_duration
 
