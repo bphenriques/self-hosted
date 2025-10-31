@@ -10,6 +10,11 @@ target_services=(
 
 rustic() { home-server compose tasks/rustic run "$RUSTIC_REPOSITORY" "$@"; }
 
+get_backup_container_id() {  
+  home-server compose tasks/rustic ps --status=exited --format json \
+   | jq -r 'select( (.Command | contains("backup")) and (.Service = env(RUSTIC_REPOSITORY)))) | .ID' 
+}
+
 backup() {
   test -d "$RUSTIC_BACKUP_EXTRA_FILES" || fatal "Not a folder or does not exist: $RUSTIC_BACKUP_EXTRA_FILES"
   
@@ -23,8 +28,8 @@ backup() {
   echo "--------"
   echo
   ls -la "$RUSTIC_BACKUP_EXTRA_FILES"
-  rustic backup --json
-  docker logs "$RUSTIC_REPOSITORY" > /tmp/bananas
+  rustic backup --json > /tmp/bananas
+  #docker logs "$()" > /tmp/bananas
   # Fields: .time, .summary.files_new, .summary.files_changed, .summary.total_bytes_processed
   # .summary.backup_duration, .summary.total_duration
 
@@ -52,7 +57,7 @@ backup() {
   # - But..  downloading >1GB per days seem excessive and after a while, this value seems reasonable.
   #rustic check --read-data --read-data-subset=500MB
   #
-  rm -r "$RUSTIC_BACKUP_EXTRA_FILES"
+  #rm -r "$RUSTIC_BACKUP_EXTRA_FILES"
 }
 
 RUSTIC_REPOSITORY="$1"
