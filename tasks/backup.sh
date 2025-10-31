@@ -23,14 +23,15 @@ backup() {
   echo "--------"
   echo
   ls -la "$RUSTIC_BACKUP_EXTRA_FILES"
-  rustic backup --json > /tmp/bananas
+  rustic backup --json
+  docker logs "$RUSTIC_REPOSITORY" > /tmp/bananas
   # Fields: .time, .summary.files_new, .summary.files_changed, .summary.total_bytes_processed
   # .summary.backup_duration, .summary.total_duration
 
   echo "--------"
   echo "Forgetting and pruning data..."
   echo "--------"
-  echo  
+  echo
   rustic forget
 
   echo "--------"
@@ -50,6 +51,8 @@ backup() {
   # - Backup happens daily.
   # - But..  downloading >1GB per days seem excessive and after a while, this value seems reasonable.
   #rustic check --read-data --read-data-subset=500MB
+  #
+  rm -r "$RUSTIC_BACKUP_EXTRA_FILES"
 }
 
 RUSTIC_REPOSITORY="$1"

@@ -22,6 +22,7 @@ __service::source() {
   set +o allexport
 }
 
+# TODO: depending on the service, I need to chgrp the secrets file
 # In order for chgrp to work, the user that runs this command must share the same group as the user that runs the container.
 service::grant_group_permissions() {
   local target="$1"
