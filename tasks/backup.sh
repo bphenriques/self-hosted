@@ -23,7 +23,7 @@ backup() {
   echo "--------"
   echo
   ls -la "$RUSTIC_BACKUP_EXTRA_FILES"
-  rustic backup
+  rustic backup --json
 
   echo "--------"
   echo "Forgetting and pruning data..."

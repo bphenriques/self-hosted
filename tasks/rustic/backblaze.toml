@@ -8,7 +8,9 @@ password-file = "/run/secrets/backblaze_rustic_repository_password"
 [backup]
 exclude-if-present = [ ".nobackup" ]
 git-ignore = true
+no-require-git = true
 glob-files = [ "/data/glob.txt" ] 
+
 
 [[backup.snapshots]]
 sources = [ "/data/target-backup" ]
