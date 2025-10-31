@@ -21,7 +21,7 @@ rustic() { home-server compose tasks/rustic run --rm "$RUSTIC_REPOSITORY" "$@"; 
 backup_repositories() {
   test -z "${GITHUB_BACKUP_TOKEN}" && fatal "GITHUB_BACKUP_TOKEN is not set!"
 
-  mkdir -f "$RUSTIC_BACKUP_EXTRA_FILES"/github
+  mkdir -p "$RUSTIC_BACKUP_EXTRA_FILES"/github
   for repo in "${target_repositories[@]}"; do
     echo "Backing up $repo"
     curl -H "Authorization: Bearer ${GITHUB_BACKUP_TOKEN}" -L "https://api.github.com/repos/$repo/tarball" \
