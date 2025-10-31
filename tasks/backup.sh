@@ -8,7 +8,7 @@ target_services=(
   miniflux
 )
 
-rustic() { home-server compose tasks/rustic run --rm "$RUSTIC_REPOSITORY" "$@"; }
+rustic() { home-server compose tasks/rustic run "$RUSTIC_REPOSITORY" "$@"; }
 
 backup() {
   test -d "$RUSTIC_BACKUP_EXTRA_FILES" || fatal "Not a folder or does not exist: $RUSTIC_BACKUP_EXTRA_FILES"

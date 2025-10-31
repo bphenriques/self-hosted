@@ -8,7 +8,12 @@ Requirements:
 
 ### Backblaze
 
-1. Create a bucket in Backblaze.
+1. Create a bucket in Backblaze:
+
+   1. Encryption is not required as the files will be encrypted by Rustic.
+   2. Ensure Lifecycle settings are set to "Keep only the last version of the file".
+   3. The type is set to 'Private'.
+
 2. Setup the secrets using the example file as starting point.
 3. Init the repository: `home-server tasks backup backblaze rustic init`
 
