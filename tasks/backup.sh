@@ -47,6 +47,6 @@ export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d --suffix -backup)"
 echo "Running rustic for repository: '$RUSTIC_REPOSITORY' and working directory '$RUSTIC_BACKUP_EXTRA_FILES'"
 
 case "${1:-}" in
-  backup)   shift && backup "$@"  ;;
+  backup)   backup ;;
   rustic)   shift && rustic "$@"  ;;
 esac
