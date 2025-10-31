@@ -10,9 +10,8 @@ target_services=(
 
 rustic() { home-server compose tasks/rustic run --rm "$RUSTIC_REPOSITORY" "$@"; }
 
-get_backup_container_id() {  
-  home-server compose tasks/rustic ps --status=exited --format json \
-   | jq -r 'select( (.Command | contains("backup")) and (.Service = env(RUSTIC_REPOSITORY)))) | .ID' 
+backup_summary() {
+  jq '.summary | "Backup took \(.total_duration) seconds (A: \(.files_new) M: \(.files_changed)). Size: \(.total_bytes_processed) bytes."'
 }
 
 backup() {
@@ -23,41 +22,22 @@ backup() {
     home-server task "$service" backup "$RUSTIC_BACKUP_EXTRA_FILES" || fatal "Backup $service failed!"
   done
 
-  echo "--------"
-  echo "Backup folder ready for upload: $RUSTIC_BACKUP_EXTRA_FILES'"
-  echo "--------"
-  echo
-  ls -la "$RUSTIC_BACKUP_EXTRA_FILES"
-  rustic backup --json > /tmp/bananas
-  #docker logs "$()" > /tmp/bananas
-  # Fields: .time, .summary.files_new, .summary.files_changed, .summary.total_bytes_processed
-  # .summary.backup_duration, .summary.total_duration
+  local output     
+  output="$(rustic backup --json | jq -rc)"
+  echo "$output" | backup_summary
 
-  echo "--------"
-  echo "Forgetting and pruning data..."
-  echo "--------"
-  echo
+  print "\nForgetting and prunning data"
   rustic forget
 
-  echo "--------"
-  echo "Checking integrity of the repository..."
-  echo "--------"
-  echo
+  print "\nChecking repository integrity"
   rustic check
- 
-  echo "--------"
-  echo "Checking integrity of the data (higher bandwidth)..."
-  echo "--------"
-  echo
-  
-  # To be fine-tuned:
-  # - I dont change the data _that_ often.
-  # - Backblaze allows up 3 times the average of the data stored as egress.
-  # - Backup happens daily.
-  # - But..  downloading >1GB per days seem excessive and after a while, this value seems reasonable.
-  #rustic check --read-data --read-data-subset=500MB
-  #
-  #rm -r "$RUSTIC_BACKUP_EXTRA_FILES"
+
+  print "\nChecking repository and data integrity"
+
+  # 500MB offers a good balance given the write frequency and the backup periodicity.
+  rustic check --read-data --read-data-subset=500MB  
+
+  rm -r "$RUSTIC_BACKUP_EXTRA_FILES"
 }
 
 RUSTIC_REPOSITORY="$1"
@@ -67,6 +47,6 @@ export RUSTIC_BACKUP_EXTRA_FILES="$(mktemp -d --suffix -backup)"
 echo "Running rustic for repository: '$RUSTIC_REPOSITORY' and working directory '$RUSTIC_BACKUP_EXTRA_FILES'"
 
 case "${1:-}" in
-  backup)   backup                ;;
+  backup)   shift && backup "$@"  ;;
   rustic)   shift && rustic "$@"  ;;
 esac
