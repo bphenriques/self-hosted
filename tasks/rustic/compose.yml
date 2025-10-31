@@ -16,7 +16,7 @@ services:
     environment:
       RUSTIC_CACHE_DIR: "/data/.cache"
       RUSTIC_LOG_LEVEL: warn
-    annotations:
+    volumes:
       - "${DATA_DIR}/rustic/backblaze/cache:/data/.cache"
       - "./backblaze.toml:/etc/rustic/rustic.toml:ro"
       - "${HOME_SERVER_SECRETS_DIR}/rustic/backblaze.toml:/etc/rustic/secrets.toml:ro"
