@@ -25,7 +25,7 @@ backup_repositories() {
   for repo in "${target_repositories[@]}"; do
     echo "Backing up $repo"
     curl -H "Authorization: Bearer ${GITHUB_BACKUP_TOKEN}" -L "https://api.github.com/repos/$repo/tarball" \
-      > "$RUSTIC_BACKUP_EXTRA_FILES/github/$repo.tar.gz"
+      > "$RUSTIC_BACKUP_EXTRA_FILES/github/$(echo "$repo" | tr '/' '_').tar.gz"
   done
 }
 
