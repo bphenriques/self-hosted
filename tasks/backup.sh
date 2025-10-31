@@ -5,13 +5,13 @@ fatal() { printf '[FAIL] %s\n' "$1" 1>&2; exit 1; }
 
 # FIXME tandoor, pocket-id
 target_services=(
-  miniflux
+  # miniflux
 )
 
 rustic() { home-server compose tasks/rustic run --rm "$RUSTIC_REPOSITORY" "$@"; }
 
 backup_summary() {
-  jq '.summary | "Backup took \(.total_duration) seconds (A: \(.files_new) M: \(.files_changed)). Size: \(.total_bytes_processed) bytes."'
+  jq -c '.summary | "Backup took \(.total_duration) seconds (A: \(.files_new) M: \(.files_changed)). Size: \(.total_bytes_processed) bytes."'
 }
 
 backup() {
@@ -26,13 +26,13 @@ backup() {
   output="$(rustic backup --json | jq -rc '.')"
   echo "$output" | backup_summary
 
-  print "\nForgetting and prunning data"
+  printf "\nForgetting and prunning data"
   rustic forget
 
-  print "\nChecking repository integrity"
+  printf "\nChecking repository integrity"
   rustic check
 
-  print "\nChecking repository and data integrity"
+  printf "\nChecking repository and data integrity"
 
   # 500MB offers a good balance given the write frequency and the backup periodicity.
   rustic check --read-data --read-data-subset=500MB  
