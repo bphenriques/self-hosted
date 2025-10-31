@@ -15,7 +15,7 @@ services:
       - "backblaze_rustic_repository_password"
     environment:
       RUSTIC_CACHE_DIR: "/data/.cache"
-      RUSTIC_LOG_LEVEL: warn
+      RUSTIC_LOG_LEVEL: info
     volumes:
       - "${DATA_DIR}/rustic/backblaze/cache:/data/.cache"
       - "./backblaze.toml:/etc/rustic/rustic.toml:ro"
