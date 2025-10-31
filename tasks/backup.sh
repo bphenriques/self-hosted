@@ -23,7 +23,9 @@ backup() {
   echo "--------"
   echo
   ls -la "$RUSTIC_BACKUP_EXTRA_FILES"
-  rustic backup --json
+  rustic backup --quiet --json
+  # Fields: .time, .summary.files_new, .summary.files_changed, .summary.total_bytes_processed
+  # .summary.backup_duration, .summary.total_duration
 
   echo "--------"
   echo "Forgetting and pruning data..."
