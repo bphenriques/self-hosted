@@ -11,7 +11,7 @@ target_services=(
 rustic() { home-server compose tasks/rustic run --rm "$RUSTIC_REPOSITORY" "$@"; }
 
 backup_summary() {
-  jq -c '.summary | "Backup took \(.total_duration) seconds (A: \(.files_new) M: \(.files_changed)). Size: \(.total_bytes_processed) bytes."'
+  jq -c '.summary | "Backup complete in \(.total_duration) seconds (A:\(.files_new) M:\(.files_changed) S:\(.total_bytes_processes) bytes)."'
 }
 
 backup() {
