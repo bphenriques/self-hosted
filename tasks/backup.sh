@@ -8,7 +8,7 @@ target_services=(
   miniflux
 )
 
-rustic() { home-server compose tasks/rustic run "$RUSTIC_REPOSITORY" "$@"; }
+rustic() { home-server compose tasks/rustic run --rm "$RUSTIC_REPOSITORY" "$@"; }
 
 get_backup_container_id() {  
   home-server compose tasks/rustic ps --status=exited --format json \
