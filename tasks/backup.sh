@@ -23,7 +23,7 @@ backup() {
   done
 
   local output     
-  output="$(rustic backup --json | jq -rc)"
+  output="$(rustic backup --json | jq -rc '.')"
   echo "$output" | backup_summary
 
   print "\nForgetting and prunning data"
