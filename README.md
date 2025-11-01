@@ -10,7 +10,7 @@ This is how I am currently self-hosting services on a Synology DS923+ (my first 
 The guidelines I am trying to follow:
 1. **Portability**: Using `docker` to avoid being tied to a specific vendor.
 2. **Security**: I am not an expert, but I do my best.
-3. **3-2-1 Backups**: External drive, [backblaze](https://www.backblaze.com/), and [dropbox](www.dropbox.com).
+3. **3-2-1 Backups**: to physical external drive, and encrypted to the cloud ([backblaze](https://www.backblaze.com/)).
 4. **Reproducible**: _For the most part_ the services should run locally.
 
 # Stack
