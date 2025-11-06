@@ -2,7 +2,7 @@ services:
   immich-server:
     container_name: immich_server
     hostname: immich_server
-    image: ghcr.io/immich-app/immich-server:v2.2.2
+    image: ghcr.io/immich-app/immich-server:v2.2.3
     user: "${PUID}:${PGID}"
     volumes:
       - "${DATA_DIR}/immich/cache:/data"
