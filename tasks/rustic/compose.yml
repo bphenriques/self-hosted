@@ -8,7 +8,7 @@ secrets:
 
 services:
   backblaze:
-    image: ghcr.io/rustic-rs/rustic:v0.10.0
+    image: ghcr.io/rustic-rs/rustic:v0.10.1
     container_name: backblaze
     hostname: backblaze
     secrets:
