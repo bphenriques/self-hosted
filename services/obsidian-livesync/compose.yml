@@ -1,6 +1,6 @@
 services:
   couchdb:
-    image: couchdb:3.5.0
+    image: couchdb:3.5.1
     container_name: obsidian-livesync-couchdb
     hostname: obsidian-livesync-couchdb
     restart: unless-stopped
