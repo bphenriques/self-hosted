@@ -1,6 +1,6 @@
 services:
   web_recipes:
-    image: vabene1111/recipes:2.3.4
+    image: vabene1111/recipes:2.3.5
     restart: unless-stopped
     container_name: tandoor-web
     hostname: tandoor-web
