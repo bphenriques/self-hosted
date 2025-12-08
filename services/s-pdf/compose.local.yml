@@ -1,4 +1,0 @@
-services:
-  s-pdf:
-    ports:
-      - "3003:8080"
