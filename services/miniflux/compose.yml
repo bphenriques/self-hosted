@@ -1,7 +1,7 @@
 # https://github.com/miniflux/v2/releases
 services:
   miniflux:
-    image: miniflux/miniflux:2.2.14
+    image: miniflux/miniflux:2.2.15
     container_name: miniflux
     hostname: miniflux
     user: "${PUID}:${PGID}"
