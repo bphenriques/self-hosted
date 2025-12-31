@@ -38,11 +38,6 @@
         siteMonitor: https://sonarr.{{HOMEPAGE_VAR_BASE_URL}}
         description: TV Tracker
         icon: sonarr.svg
-    - Stirling PDF:
-        href: https://pdf.{{HOMEPAGE_VAR_BASE_URL}}
-        siteMonitor: https://pdf.{{HOMEPAGE_VAR_BASE_URL}}
-        description: PDF Tools
-        icon: stirling-pdf.svg
     - Emulation:
         href: https://romm.{{HOMEPAGE_VAR_BASE_URL}}
         siteMonitor: https://romm.{{HOMEPAGE_VAR_BASE_URL}}

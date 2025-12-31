@@ -5,7 +5,7 @@ services:
     container_name: homepage
     restart: unless-stopped
     hostname: homepage
-    #user: "${PUID}:${PGID}"
+    user: "${PUID}:${PGID}"
     env_file:
       - "${HOME_SERVER_SECRETS_DIR}/homepage.env"
     environment:
