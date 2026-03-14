@@ -1,3 +1,9 @@
+This server is being archived as I am moving to a [NixOS based installation](https://github.com/bphenriques/dotfiles).
+
+This repository is still relevant if you have a Docker based solution.
+
+---
+
 # Home Server
 
 Hi! 
