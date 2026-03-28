@@ -11,6 +11,23 @@ services:
       - 'traefik.http.routers.whoami.rule=Host("whoami.${HOME_SERVER_CNAME}")'    # Set the rule to reverse proxy here
       - "traefik.http.services.whoami-websecure.loadbalancer.server.port=80"
       - 'traefik.docker.network=whoami'
+
+      # Validating a middleware.
+      - "traefik.http.middlewares.whoami-custom-headers.headers.customrequestheaders.Cross-Origin-Resource-Policy=cross-origin"
+      - "traefik.http.middlewares.whoami-custom-headers.headers.customrequestheaders.Cross-Origin-Embedder-Policy=require-corp"
+
+      # Setting the OIDC
+      - 'traefik.http.middlewares.whoami-oidc-auth.plugin.traefik-oidc-auth.loglevel=debug'
+      - 'traefik.http.middlewares.whoami-oidc-auth.plugin.traefik-oidc-auth.callbackuri=https://whoami.${HOME_SERVER_BASE_URL}'
+      - 'traefik.http.middlewares.whoami-oidc-auth.plugin.traefik-oidc-auth.sessioncookie.domain=.${HOME_SERVER_BASE_URL}'  # prevents redirect
+      - 'traefik.http.middlewares.whoami-oidc-auth.plugin.traefik-oidc-auth.scopes=openid,profile,email,groups'
+      - "traefik.http.middlewares.whoami-oidc-auth.plugin.traefik-oidc-auth.provider.url=http://pocket-id:1411"
+      - "traefik.http.middlewares.whoami-oidc-auth.plugin.traefik-oidc-auth.provider.usepkce=false"
+      - "traefik.http.middlewares.whoami-oidc-auth.plugin.traefik-oidc-auth.secret=MLFs4TT99kOOq8h3UAVRtYoCTDYXiRcZ" # From the examples to try things out
+      - "traefik.http.middlewares.whoami-oidc-auth.plugin.traefik-oidc-auth.provider.clientid=FILLMEOUT"
+      - "traefik.http.middlewares.whoami-oidc-auth.plugin.traefik-oidc-auth.provider.clientsecret=FILLMEOUT"
+      # Assigning the list
+      - 'traefik.http.routers.whoami.middlewares=whoami-oidc-auth,whoami-custom-headers'
     networks:
       - whoami
 networks:

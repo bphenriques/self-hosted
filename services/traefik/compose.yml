@@ -24,8 +24,12 @@ services:
       - no-new-privileges:true
     depends_on:
       - socket-proxy
+    env_file:
+      - "${HOME_SERVER_SECRETS_DIR}/traefik/traefik.env"
+    extra_hosts:
+      - "localhost:172.17.0.1" # To make OIDC discovery work correctly
     command:
-      - "--log.level=ERROR"
+      - "--log.level=DEBUG"
 
       # Providers
       - "--providers.docker=true"
@@ -53,6 +57,11 @@ services:
       - "--certificatesresolvers.default.acme.dnschallenge=true"
       - "--certificatesresolvers.default.acme.dnschallenge.provider=cloudflare"
       - "--certificatesresolvers.default.acme.storage=/data/letsencrypt/acme.json"
+
+      # Proxy for the services that do not support OIDC
+      - "--experimental.plugins.traefik-oidc-auth.moduleName=github.com/sevensolutions/traefik-oidc-auth"
+      - "--experimental.plugins.traefik-oidc-auth.version=v0.13.0"
+
       # TODO:
       # - Secure headers: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/headers/
       # - IP Allowlist headers (likely not required atm): ...
