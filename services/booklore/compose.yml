@@ -32,7 +32,7 @@ services:
       - 'traefik.docker.network=booklore'
 
   mariadb:
-    image: lscr.io/linuxserver/mariadb:11.4.5
+    image: lscr.io/linuxserver/mariadb:11.4.9
     container_name: mariadb
     hostname: mariadb
     env_file:
